@@ -1,21 +1,18 @@
 FROM node:lts-alpine as builder
 
+RUN mkdir -p /app
 WORKDIR /app
 
-ADD . ./
-RUN rm -rf node_modules
-RUN yarn install --frozen-lockfile --immutable --immutable-cache --check-cache
+COPY . .
+RUN yarn install
 RUN yarn build
 
 FROM node:lts-alpine
 
-WORKDIR /app
+COPY --from=builder /app/.output /app/.output
 
-COPY --from=builder /app/.output ./.output
-COPY --from=builder /app/.nuxt ./.nuxt
-
-ENV HOST=0.0.0.0
+ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=$PORT
 ENV NODE_ENV=production
 
-ENTRYPOINT ["node", ".output/server/index.mjs"]
+ENTRYPOINT ["node", "/app/.output/server/index.mjs"]
