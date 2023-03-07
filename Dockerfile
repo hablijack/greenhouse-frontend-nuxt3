@@ -12,6 +12,7 @@ FROM node:lts-alpine
 WORKDIR /app
 
 COPY --from=builder /app/.output ./.output
+COPY --from=builder /app/.nuxt ./.nuxt
 
 ENV HOST=0.0.0.0
 ENV NUXT_PORT=$PORT
