@@ -18,13 +18,13 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiBaseUrl: process.env.HTTP_BACKEND_BASE_URL,
-            wssBaseUrl: process.env.WSS_BACKEND_BASE_URL,
+            apiBaseUrl: '',
+            wssBaseUrl: ''
         },
         auth0: {
-            clientId: process.env.AUTH0_CLIENT_ID,
-            clientSecret: process.env.AUTH0_CLIENT_SECRET,
-            issuer: process.env.AUTH0_ISSUER
+            clientId: '',
+            clientSecret: '',
+            issuer: 'https://greenhouse-home-webserver.eu.auth0.com'
         },
     }
 })
