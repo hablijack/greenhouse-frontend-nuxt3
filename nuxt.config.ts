@@ -18,8 +18,8 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiBaseUrl: 'https://greenhouse.home-webserver.de',
-            wssBaseUrl: 'wss://greenhouse.home-webserver.de',
+            apiBaseUrl: process.env.HTTP_BACKEND_BASE_URL,
+            wssBaseUrl: process.env.WSS_BACKEND_BASE_URL,
         },
         auth0: {
             clientId: process.env.AUTH0_CLIENT_ID,
