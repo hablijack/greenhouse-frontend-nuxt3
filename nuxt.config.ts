@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     auth: {
         enableGlobalAppMiddleware: true,
     },
+    experimental: { writeEarlyHints: false, },
     runtimeConfig: {
         public: {
             apiBaseUrl: process.env.HTTP_BACKEND_BASE_URL,
