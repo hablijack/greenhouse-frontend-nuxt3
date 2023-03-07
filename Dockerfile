@@ -11,8 +11,8 @@ FROM node:lts-alpine
 
 COPY --from=builder /app/.output /app/.output
 
-ENV NUXT_HOST=0.0.0.0
-ENV NUXT_PORT=$PORT
+ENV HOST=0.0.0.0
+ENV PORT=$PORT
 ENV NODE_ENV=production
 
 ENTRYPOINT ["node", "/app/.output/server/index.mjs"]
