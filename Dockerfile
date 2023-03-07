@@ -4,8 +4,6 @@ WORKDIR /app
 
 ADD . ./
 RUN rm -rf node_modules
-RUN yarn install --frozen-lockfile --immutable --immutable-cache --check-cache
-RUN yarn cache clean --all
 RUN yarn build
 
 FROM node:lts-alpine
@@ -16,5 +14,6 @@ COPY --from=builder /app/.output ./.output
 
 ENV HOST=0.0.0.0
 ENV NUXT_PORT=$PORT
+ENV NODE_ENV=production
 
 ENTRYPOINT ["node", ".output/server/index.mjs"]
