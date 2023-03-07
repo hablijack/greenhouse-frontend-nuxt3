@@ -4,6 +4,7 @@ WORKDIR /app
 
 ADD . ./
 RUN rm -rf node_modules
+RUN yarn install --frozen-lockfile --immutable --immutable-cache --check-cache
 RUN yarn build
 
 FROM node:lts-alpine
