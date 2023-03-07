@@ -1,0 +1,5 @@
+@font-face {
+    font-family: "Orbitron";
+    src: local("Orbitron"),
+     url(@/assets/fonts/Orbitron-Black.ttf) format("truetype");
+}
