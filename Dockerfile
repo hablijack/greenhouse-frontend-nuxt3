@@ -1,4 +1,4 @@
-FROM node:lts-alpine as builder
+FROM node:lts-slim as builder
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -7,7 +7,7 @@ COPY . .
 RUN yarn install
 RUN yarn build
 
-FROM node:lts-alpine
+FROM node:lts-slim
 
 COPY --from=builder /app/.output /app/.output
 
