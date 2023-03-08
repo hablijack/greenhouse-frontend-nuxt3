@@ -27,7 +27,7 @@
   })
 
   const config = useRuntimeConfig()
-  const { data:dbstats } = await useAsyncData( 'dbstats', () => $fetch( config.apiBaseUrl+'/api/database/stats') );
+  const { data:dbstats } = await useAsyncData( 'dbstats', () => $fetch( config.apiBaseUrl+'/backend/database/stats') );
 
   const calculateCurrentTime = () => {
     const date = new Date();
@@ -107,7 +107,7 @@
     calculateCurrentTime()
     setInterval(calculateCurrentTime, 10000);
     const socket = new WebSocket(
-      config.wssBaseUrl + '/api/sensors/measurements/socket'
+      config.wssBaseUrl + '/backend/sensors/measurements/socket'
     );
     socket.onmessage = function (message) {
       let measurements = JSON.parse(message.data)

@@ -48,7 +48,7 @@ const relayStyle = computed(() => {
 
 const toggleButtonChangedEvent = (newValue) => {
   transmitting.value = true;
-  $fetch(`${apiBaseUrl}/api/relay/${props.id}/switch`, {
+  $fetch(`${apiBaseUrl}/backend/relay/${props.id}/switch`, {
     method: 'POST',
     body: {
       initiator: username,

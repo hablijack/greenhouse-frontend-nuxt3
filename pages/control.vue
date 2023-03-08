@@ -49,11 +49,11 @@ const username = ses.data.value?.user?.name
 const logs = ref([])
 const config = useRuntimeConfig()
 
-const { data: relays } = await useAsyncData('relays', () => $fetch(config.apiBaseUrl + '/api/relays'));
+const { data: relays } = await useAsyncData('relays', () => $fetch(config.apiBaseUrl + '/backend/relays'));
 
 onMounted(() => {
   const socket = new WebSocket(
-    config.wssBaseUrl + '/api/relays/socket/' + username
+    config.wssBaseUrl + '/backend/relays/socket/' + username
   );
   socket.onmessage = function (message) {
     let newLogEntries = JSON.parse(message.data)

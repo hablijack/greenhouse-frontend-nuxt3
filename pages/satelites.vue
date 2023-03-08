@@ -55,6 +55,6 @@
     );
   }
 
-  const { data:children } = await useAsyncData( 'children', () => $fetch( config.apiBaseUrl+'/api/satelites') );
+  const { data:children } = await useAsyncData( 'children', () => $fetch( config.apiBaseUrl+'/backend/satelites') );
   architecture.children = children.value;
 </script>

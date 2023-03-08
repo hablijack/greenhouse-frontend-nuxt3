@@ -96,12 +96,12 @@
   const measurements = ref({})
   const config = useRuntimeConfig()
 
-  const { data:sensors } = await useAsyncData( 'sensors', () => $fetch( config.apiBaseUrl+'/api/sensors') );
-  const { data:relays } = await useAsyncData( 'relays', () => $fetch( config.apiBaseUrl+'/api/relays') );
+  const { data:sensors } = await useAsyncData( 'sensors', () => $fetch( config.apiBaseUrl+'/backend/sensors') );
+  const { data:relays } = await useAsyncData( 'relays', () => $fetch( config.apiBaseUrl+'/backend/relays') );
 
   onMounted(() => {
     const socket = new WebSocket(
-      config.wssBaseUrl + '/api/sensors/measurements/socket'
+      config.wssBaseUrl + '/backend/sensors/measurements/socket'
     );
     socket.onmessage = function (message) {
       measurements.value = JSON.parse(message.data);
