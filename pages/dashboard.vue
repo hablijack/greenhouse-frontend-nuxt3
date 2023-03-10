@@ -38,6 +38,7 @@
             <MiniRelay
               :color="relay.value ? relay.color : '#343a40'"
               :name="relay.identifier"
+              :target="relay.target"
               :icon="relay.icon"
             />
           </v-col>
