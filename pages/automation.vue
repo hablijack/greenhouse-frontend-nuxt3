@@ -5,6 +5,7 @@
           <AutomationCard 
             :id="relay.id"
             :icon="relay.icon" 
+            :target="relay.target"
             :headline="relay.name" 
             :description="relay.description"
             :initialTimeTriggerActive="relay.timeTrigger.active"

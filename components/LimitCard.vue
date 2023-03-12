@@ -3,6 +3,7 @@
         <v-card-title>
             <v-icon size="30" class="mr-3">{{ icon }}</v-icon>
             {{ headline }}
+            <span :if="target">{{ target }}</span>
         </v-card-title>
         <v-card-subtitle>
             {{ description }}
@@ -49,6 +50,10 @@ const props = defineProps({
     icon: {
         type: String,
         required: true,
+    },
+    target: {
+        type: String, 
+        required: false,
     },
     unit: {
         type: String,

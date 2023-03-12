@@ -4,7 +4,7 @@
       <v-col cols="12" sm="12" md="12" lg="6">
         <v-row dense>
           <v-col v-for="relay in relays" v-bind:key="relay.name" cols="12">
-            <Relay :id="relay.identifier" :name="relay.name" :initialValue="relay.value" :description="relay.description"
+            <Relay :id="relay.identifier" :name="relay.name" :target="relay.target" :initialValue="relay.value" :description="relay.description"
               :icon="relay.icon" :color="relay.color" />
           </v-col>
         </v-row>
@@ -13,7 +13,7 @@
         <v-card style="height: 100%">
           <v-list-item three-line>
             <div class="text-overline">Logbuch:</div>
-            <v-table>
+            <v-table class="elevation-1" density="compact">
               <template v-slot:default>
                 <thead>
                   <tr>
@@ -24,11 +24,13 @@
                 </thead>
                 <tbody>
                   <tr v-for="log in logs" :key="log.id">
-                    <td>{{ log.timestamp }}</td>
+                    <td>{{ formatTimestamp(log.timestamp) }}</td>
                     <td>{{ log.initiator }}</td>
                     <td>
-                      hat
-                      <v-chip label outlined :color="log.value ? 'green' : 'gray'">{{ log.relay.name }}</v-chip>
+                      <v-chip label outlined :color="log.value ? 'green' : 'gray'">
+                        {{ log.relay.target }}
+                        {{ log.relay.name }}
+                      </v-chip>
                       {{ log.value ? "angeschaltet" : "ausgeschaltet" }}
                     </td>
                   </tr>
@@ -50,6 +52,14 @@ const logs = ref([])
 const config = useRuntimeConfig()
 
 const { data: relays } = await useAsyncData('relays', () => $fetch(config.apiBaseUrl + '/backend/relays'));
+
+const formatTimestamp = (timestamp) => {
+  try {
+    return Intl.DateTimeFormat("de-DE", { dateStyle: 'medium', timeStyle: 'medium' }).format(new Date(timestamp))
+  } catch (e) {
+    return e.message;
+  }
+}
 
 onMounted(() => {
   const socket = new WebSocket(

@@ -1,7 +1,10 @@
 <template>
   <v-card :v-bind="relayValue" :theme="relayValue ? 'dark' : 'bright'" :style="relayStyle">
     <v-list-item three-line>
-      <div class="text-overline">{{ name }}</div>
+      <div class="text-overline">
+        {{ name }}
+        <span :if="target">: <strong>{{ target }}</strong></span>
+      </div>
       <v-list-item-title style="height: auto">
         <ToggleButton :id="id" :defaultState="initialValue" :color="color"
           :style="transmitting ? 'display: none' : 'display: block'" labelEnableText="AN" labelDisableText="AUS"
@@ -27,10 +30,11 @@
 <script setup>
 const props = defineProps({
   id: String,
-  name: String,
-  initialValue: Boolean, 
-  description: String, 
-  icon: String, 
+  name: String, 
+  target: String,
+  initialValue: Boolean,
+  description: String,
+  icon: String,
   color: String
 })
 
@@ -55,8 +59,8 @@ const toggleButtonChangedEvent = (newValue) => {
       newValue: newValue,
     }
   }).then(() => {
-      transmitting.value = false;
-      relayValue.value = newValue;
+    transmitting.value = false;
+    relayValue.value = newValue;
   })
 }
 </script>
