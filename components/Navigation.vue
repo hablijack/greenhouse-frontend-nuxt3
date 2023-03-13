@@ -1,10 +1,10 @@
 <template>
-    <v-navigation-drawer app theme="dark" absolute color="#343a40">
+    <v-navigation-drawer v-model="internalShow" app theme="dark" :location="navbarPosition" :style="navbarStyle" color="#343a40">
         <v-list>
-            <v-list-item>
+            <v-list-item class="hidden-md-and-down">
                 <img width="220" src="/img/green_sphere.gif" />
             </v-list-item>
-            <v-list-item 
+            <v-list-item
                 style="text-shadow: 2px 0px 2px black; color: #5cad8a; font-weight: bold; font-size: 26px; font-family: 'Orbitron'">
                 <template v-slot:prepend>
                     <img height="40" class="mr-2" src="/img/logo_shadow.png" />
@@ -58,17 +58,17 @@
                     <v-icon>mdi-logout</v-icon>
                     logout
                 </v-btn>
-           </v-list-item>
-            <v-list-item link >
+            </v-list-item>
+            <v-list-item link>
                 <template v-slot:prepend>
                     <v-avatar color="black">
                         <v-icon>mdi-account</v-icon>
                     </v-avatar>
                 </template>
                 <v-list-item-title class="text-h6">
-                    {{username}}
+                    {{ username }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
             </v-list-item>
             <v-divider />
             <v-list-item style="min-height: 20px;">
@@ -81,15 +81,49 @@
 </template>
 
 <script setup>
+import { useDisplay } from 'vuetify'
+
 const ses = useSession()
+
+const props = defineProps({
+    show: Boolean,
+})
+
+const internalShow = ref(false);
+
+watch(() => props.show, (oldValue, newValue) => {
+    internalShow.value = newValue;
+});
+
+watch(() => internalShow, (oldValue, newValue) => {
+    if (newValue !== props.show) {
+        this.$emit("change-drawer-state");
+    }
+});
 
 const logout = () => ses.signOut('auth0');
 
+const navbarPosition = computed(() => {
+    const display = ref(useDisplay())
+    if(display.value.mobile){
+        return 'bottom'
+    } else {
+        return 'left'
+    }
+})
+
+const navbarStyle = computed(() => {
+    const display = ref(useDisplay())
+    if(display.value.mobile){
+        return 'height: 100vh; padding-left: 60px; padding-top: 60px;'
+    }
+})
+
 const username = computed(() => {
-  return ses.data.value?.user?.name
+    return ses.data.value?.user?.name
 })
 const email = computed(() => {
-  return ses.data.value?.user?.email
+    return ses.data.value?.user?.email
 })
 </script>
 
