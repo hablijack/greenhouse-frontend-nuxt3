@@ -1,11 +1,11 @@
 <template>
-    <v-navigation-drawer v-model="internalShow" app theme="dark" :location="navbarPosition" :style="navbarStyle" color="#343a40">
+    <v-navigation-drawer v-model="internalShow" app theme="dark" location="left" :style="navbarStyle"
+        color="#343a40">
         <v-list>
             <v-list-item class="hidden-md-and-down">
                 <img width="220" src="/img/green_sphere.gif" />
             </v-list-item>
-            <v-list-item
-                style="text-shadow: 2px 0px 2px black; color: #5cad8a; font-weight: bold; font-size: 26px; font-family: 'Orbitron'">
+            <v-list-item class="logo">
                 <template v-slot:prepend>
                     <img height="40" class="mr-2" src="/img/logo_shadow.png" />
                 </template>
@@ -80,6 +80,16 @@
     </v-navigation-drawer>
 </template>
 
+<style scoped>
+.logo {
+    text-shadow: 2px 0px 2px black;
+    color: #5cad8a;
+    font-weight: bold;
+    font-size: 26px;
+    font-family: 'Orbitron'
+}
+</style>
+
 <script setup>
 import { useDisplay } from 'vuetify'
 
@@ -103,19 +113,19 @@ watch(() => internalShow, (oldValue, newValue) => {
 
 const logout = () => ses.signOut('auth0');
 
-const navbarPosition = computed(() => {
+/*const navbarPosition = computed(() => {
     const display = ref(useDisplay())
-    if(display.value.mobile){
+    if (display.value.mobile) {
         return 'bottom'
     } else {
         return 'left'
     }
-})
+})*/
 
 const navbarStyle = computed(() => {
     const display = ref(useDisplay())
-    if(display.value.mobile){
-        return 'height: 100vh; padding-left: 60px; padding-top: 60px;'
+    if (display.value.mobile) {
+        return 'width: 100vw; padding-left: 60px; padding-top: 60px;'
     }
 })
 

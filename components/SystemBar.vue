@@ -1,6 +1,6 @@
 <template>
-  <v-system-bar color="#343a40" theme="dark">
-    <v-btn class="hidden-lg-and-up mobile-btn" color="black" @click="$emit('change-drawer-state')"><v-icon>mdi-menu</v-icon></v-btn>
+  <v-system-bar color="#343a40" theme="dark" :style="systembarStyle">
+    <v-btn class="hidden-lg-and-up mobile-btn" color="black" variant="flat" @click="$emit('change-drawer-state')"><v-icon class="text-h4">mdi-menu</v-icon></v-btn>
     <v-spacer />
     <span style="margin-right: 10px;">
       {{ stats.wifiSignalStrength }}%
@@ -20,15 +20,17 @@
 
 <style scoped>
   .mobile-btn {
+    color: white;
     position: fixed;
     height: 50px;
-    top: 0;
-    left: 0;
+    top: 5px;
+    left: 5px;
   }
 </style>
 
 <script setup>
 import { onMounted } from 'vue';
+import { useDisplay } from 'vuetify';
 
 const currentTime = ref({})
 const stats = ref({
@@ -46,6 +48,13 @@ const calculateCurrentTime = () => {
     { hour: '2-digit', minute: '2-digit' }
   );
 }
+
+const systembarStyle = computed(() => {
+    const display = ref(useDisplay())
+    if (display.value.mobile) {
+        return 'height: 65px;'
+    }
+})
 
 const databaseIcon = (state) => {
   if (!state) {
