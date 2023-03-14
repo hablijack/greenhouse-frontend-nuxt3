@@ -1,20 +1,38 @@
-# Nuxt 3 Minimal Starter
+# Greenhouse-Frontend [![CircleCI](https://dl.circleci.com/status-badge/img/gh/hablijack/greenhouse-frontend-nuxt3/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/hablijack/greenhouse-frontend-nuxt3/tree/main)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+<img src="https://raw.githubusercontent.com/hablijack/greenhouse-frontend-nuxt3/main/public/img/logo.png" height="100">
+My attempt on controlling our greenhouse watering, plant-light and air-conditioning via a smart webapp.
 
-## Setup
+## Architecture
+
+TODO: add documentation
+
+## Techstack
+
+- Docker
+- Node.JS
+- Nuxt3
+- Vuetify3
+- Chart.JS
+- Websockets
+- REST-API
+- GraphQL
+
+## Configuration
+
+TODO: add documentation
+
+## Satelite concept
+
+TODO: describe me
+
+## Development Setup
 
 Make sure to install the dependencies:
 
 ```bash
 # yarn
 yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
 ```
 
 ## Development Server
@@ -22,21 +40,9 @@ pnpm install
 Start the development server on http://localhost:3000
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 ## Production
 
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+TODO: describe me
