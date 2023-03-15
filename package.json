@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@sidebase/nuxt-auth": "^0.4.3",
-    "nuxt": "^3.2.3"
+    "nuxt": "^3.3.1"
   },
   "dependencies": {
     "@mdi/font": "^7.1.96",
