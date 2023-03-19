@@ -11,9 +11,9 @@ jobs:
       - run:
           name: Build and push Docker Image to DockerHub
           command: |
-            docker build -t hablijack/greenhouse-frontend-nuxt3:1.4.1 .
+            docker build -t hablijack/greenhouse-frontend-nuxt3:1.5.0 .
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push hablijack/greenhouse-frontend-nuxt3:1.4.1
+            docker push hablijack/greenhouse-frontend-nuxt3:1.5.0
 workflows:
   version: 2
   qualitygate_and_build:

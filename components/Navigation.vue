@@ -1,6 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="internalShow" app theme="dark" location="left" :style="navbarStyle"
-        color="#343a40">
+    <v-navigation-drawer v-model="internalShow" app theme="dark" location="left" :style="navbarStyle" color="#343a40">
         <v-list>
             <v-list-item class="hidden-md-and-down">
                 <img width="220" src="/img/green_sphere.gif" />
@@ -65,10 +64,10 @@
                         <v-icon>mdi-account</v-icon>
                     </v-avatar>
                 </template>
-                <v-list-item-title class="text-h6">
+                <v-list-item-title class="text-h6 mt-2">
                     {{ username }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
+                <v-list-item-subtitle class="mt-3">{{ email }}</v-list-item-subtitle>
             </v-list-item>
             <v-divider />
             <v-list-item style="min-height: 20px;">
@@ -113,15 +112,6 @@ watch(() => internalShow, (oldValue, newValue) => {
 
 const logout = () => ses.signOut('auth0');
 
-/*const navbarPosition = computed(() => {
-    const display = ref(useDisplay())
-    if (display.value.mobile) {
-        return 'bottom'
-    } else {
-        return 'left'
-    }
-})*/
-
 const navbarStyle = computed(() => {
     const display = ref(useDisplay())
     if (display.value.mobile) {
@@ -130,8 +120,14 @@ const navbarStyle = computed(() => {
 })
 
 const username = computed(() => {
-    return ses.data.value?.user?.name
+    const fullname = ses.data.value?.user?.name
+    const splitted = fullname.split('.')
+    return splitted[0].charAt(0).toUpperCase() +
+        splitted[0].slice(1) + ' ' +
+        splitted[1].charAt(0).toUpperCase() +
+        splitted[1].slice(1)
 })
+
 const email = computed(() => {
     return ses.data.value?.user?.email
 })
