@@ -12,7 +12,7 @@
     </span>
     <span style="margin-right: 10px;">
       {{ databaseFillmentState(dbstats) }}%
-      <v-icon>{{ databaseIcon(dbstats) }}</v-icon>
+      <v-icon>{{ databaseIcon(databaseFillmentState(dbstats)) }}</v-icon>
     </span>
     <span>{{ currentTime }}</span>
   </v-system-bar>
@@ -57,6 +57,7 @@ const systembarStyle = computed(() => {
 })
 
 const databaseIcon = (state) => {
+  console.log(state)
   if (!state) {
     return "mdi-circle-slice-1";
   } else if (state <= 12.5) {
@@ -114,8 +115,8 @@ const batteryIcon = (stat) => {
 const databaseFillmentState = (dbstats) => {
   if (dbstats) {
     let dbSize = dbstats.measurementSizeByte + dbstats.relayLogSizeByte;
-    let FIVE_GB_IN_BYTE = 5368709120;
-    let percent = dbSize / (FIVE_GB_IN_BYTE / 100);
+    let TEN_MB_IN_BYTE = 10485760;
+    let percent = dbSize / (TEN_MB_IN_BYTE / 100);
     return Math.round(percent);
   } else {
     return 0
