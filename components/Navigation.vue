@@ -21,11 +21,11 @@
                 </template>
                 <v-list-item-title style="line-height: 2rem;" class="text-h6">Dashboard</v-list-item-title>
             </v-list-item>
-            <v-list-item to="/satelites">
+            <v-list-item to="/satellites">
                 <template v-slot:prepend>
                     <v-icon>mdi-home-automation</v-icon>
                 </template>
-                <v-list-item-title style="line-height: 2rem;" class="text-h6">Sateliten</v-list-item-title>
+                <v-list-item-title style="line-height: 2rem;" class="text-h6">Satelliten</v-list-item-title>
             </v-list-item>
             <v-list-item to="/control">
                 <template v-slot:prepend>
@@ -92,7 +92,7 @@
 <script setup>
 import { useDisplay } from 'vuetify'
 
-const ses = useSession()
+const ses = useAuth()
 
 const props = defineProps({
     show: Boolean,

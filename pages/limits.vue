@@ -11,5 +11,5 @@
 </template>
 
 <script setup>
-const { data: sensors } = await useAsyncData('sensors', () => $fetch(useRuntimeConfig().apiBaseUrl + '/backend/sensors'));
+const { data: sensors } = await useAsyncData('sensors', () => $fetch(useRuntimeConfig().public.apiBaseUrl + '/backend/sensors'));
 </script>

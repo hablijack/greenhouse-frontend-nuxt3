@@ -1,6 +1,7 @@
 <template>
   <v-system-bar color="#343a40" theme="dark" :style="systembarStyle">
-    <v-btn class="hidden-lg-and-up mobile-btn" color="black" variant="flat" @click="$emit('change-drawer-state')"><v-icon class="text-h4">mdi-menu</v-icon></v-btn>
+    <v-btn class="hidden-lg-and-up mobile-btn" color="black" variant="flat" @click="$emit('change-drawer-state')"><v-icon
+        class="text-h4">mdi-menu</v-icon></v-btn>
     <v-spacer />
     <span style="margin-right: 10px;">
       {{ stats.wifiSignalStrength }}%
@@ -19,13 +20,13 @@
 </template>
 
 <style scoped>
-  .mobile-btn {
-    color: white;
-    position: fixed;
-    height: 50px;
-    top: 5px;
-    left: 5px;
-  }
+.mobile-btn {
+  color: white;
+  position: fixed;
+  height: 50px;
+  top: 5px;
+  left: 5px;
+}
 </style>
 
 <script setup>
@@ -39,7 +40,7 @@ const stats = ref({
 })
 
 const config = useRuntimeConfig()
-const { data: dbstats } = await useAsyncData('dbstats', () => $fetch(config.apiBaseUrl + '/backend/database/stats'));
+const { data: dbstats } = await useAsyncData('dbstats', () => $fetch(config.public.apiBaseUrl + '/backend/database/stats'));
 
 const calculateCurrentTime = () => {
   const date = new Date();
@@ -50,10 +51,10 @@ const calculateCurrentTime = () => {
 }
 
 const systembarStyle = computed(() => {
-    const display = ref(useDisplay())
-    if (display.value.mobile) {
-        return 'height: 65px;'
-    }
+  const display = ref(useDisplay())
+  if (display.value.mobile) {
+    return 'height: 65px;'
+  }
 })
 
 const databaseIcon = (state) => {
@@ -127,7 +128,7 @@ onMounted(() => {
   calculateCurrentTime()
   setInterval(calculateCurrentTime, 10000);
   const socket = new WebSocket(
-    config.wssBaseUrl + '/backend/sensors/measurements/socket'
+    config.public.wssBaseUrl + '/backend/sensors/measurements/socket'
   );
   socket.onmessage = function (message) {
     let measurements = JSON.parse(message.data)

@@ -1,16 +1,10 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="12" sm="12" md="12" lg="4" v-for="(relay,i) in relays" :key="i">
-          <AutomationCard 
-            :id="relay.id"
-            :icon="relay.icon" 
-            :target="relay.target"
-            :headline="relay.name" 
-            :description="relay.description"
-            :initialTimeTriggerActive="relay.timeTrigger.active"
-            :initialConditionTriggerActive="relay.conditionTrigger.active"
-          />
+      <v-col cols="12" sm="12" md="12" lg="4" v-for="(relay, i) in relays" :key="i">
+        <AutomationCard :id="relay.id" :icon="relay.icon" :target="relay.target" :headline="relay.name"
+          :description="relay.description" :initialTimeTriggerActive="relay.timeTrigger.active"
+          :initialConditionTriggerActive="relay.conditionTrigger.active" />
       </v-col>
     </v-row>
   </v-container>
@@ -18,5 +12,5 @@
 
 <script setup>
 const config = useRuntimeConfig()
-const { data: relays } = await useAsyncData('relays', () => $fetch(config.apiBaseUrl + '/backend/relays'));
+const { data: relays } = await useAsyncData('relays', () => $fetch(config.public.apiBaseUrl + '/backend/relays'));
 </script>

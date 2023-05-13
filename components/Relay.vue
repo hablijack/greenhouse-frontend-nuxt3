@@ -30,7 +30,7 @@
 <script setup>
 const props = defineProps({
   id: String,
-  name: String, 
+  name: String,
   target: String,
   initialValue: Boolean,
   description: String,
@@ -38,8 +38,8 @@ const props = defineProps({
   color: String
 })
 
-const apiBaseUrl = useRuntimeConfig().apiBaseUrl
-const username = useSession().data.value?.user?.name
+const apiBaseUrl = useRuntimeConfig().public.apiBaseUrl
+const username = useAuth().data.value?.user?.name
 
 const relayValue = ref(props.initialValue || false)
 const transmitting = ref(false)

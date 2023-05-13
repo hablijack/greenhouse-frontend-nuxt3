@@ -22,7 +22,7 @@ TODO: add documentation
 
 TODO: add documentation
 
-## Satelite concept
+## Satellite concept
 
 TODO: describe me
 

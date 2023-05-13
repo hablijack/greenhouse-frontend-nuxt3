@@ -47,12 +47,12 @@ const co2_timerange = ref("week");
 const brightness_timerange = ref("week");
 const battery_timerange = ref("week");
 
-const { data: air_temperatures } = await useFetch(config.apiBaseUrl + `/backend/history/air/temperatures?range=${air_temperatures_timerange}`);
-const { data: air_humidity } = await useFetch(config.apiBaseUrl + `/backend/history/air/humidity?range=${air_humidity_timerange}`);
-const { data: wifi } = await useFetch(config.apiBaseUrl + `/backend/history/wifi?range=${wifi_timerange}`);
-const { data: co2 } = await useFetch(config.apiBaseUrl + `/backend/history/co2?range=${co2_timerange}`);
-const { data: brightness } = await useFetch(config.apiBaseUrl + `/backend/history/brightness?range=${brightness_timerange}`);
-const { data: battery } = await useFetch(config.apiBaseUrl + `/backend/history/battery?range=${battery_timerange}`);
+const { data: air_temperatures } = await useFetch(config.public.apiBaseUrl + `/backend/history/air/temperatures?range=${air_temperatures_timerange}`);
+const { data: air_humidity } = await useFetch(config.public.apiBaseUrl + `/backend/history/air/humidity?range=${air_humidity_timerange}`);
+const { data: wifi } = await useFetch(config.public.apiBaseUrl + `/backend/history/wifi?range=${wifi_timerange}`);
+const { data: co2 } = await useFetch(config.public.apiBaseUrl + `/backend/history/co2?range=${co2_timerange}`);
+const { data: brightness } = await useFetch(config.public.apiBaseUrl + `/backend/history/brightness?range=${brightness_timerange}`);
+const { data: battery } = await useFetch(config.public.apiBaseUrl + `/backend/history/battery?range=${battery_timerange}`);
 
 const createChart = (identifier, datasets, scale, unit) => {
   new Chart(identifier, {

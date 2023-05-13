@@ -4,8 +4,8 @@
       <v-col cols="12" sm="12" md="12" lg="6">
         <v-row dense>
           <v-col v-for="relay in relays" v-bind:key="relay.name" cols="12">
-            <Relay :id="relay.identifier" :name="relay.name" :target="relay.target" :initialValue="relay.value" :description="relay.description"
-              :icon="relay.icon" :color="relay.color" />
+            <Relay :id="relay.identifier" :name="relay.name" :target="relay.target" :initialValue="relay.value"
+              :description="relay.description" :icon="relay.icon" :color="relay.color" />
           </v-col>
         </v-row>
       </v-col>
@@ -46,12 +46,12 @@
 
 <script setup>
 import { onMounted } from 'vue';
-const ses = useSession()
+const ses = useAuth()
 const username = ses.data.value?.user?.name
 const logs = ref([])
 const config = useRuntimeConfig()
 
-const { data: relays } = await useAsyncData('relays', () => $fetch(config.apiBaseUrl + '/backend/relays'));
+const { data: relays } = await useAsyncData('relays', () => $fetch(config.public.apiBaseUrl + '/backend/relays'));
 
 const formatTimestamp = (timestamp) => {
   try {
@@ -63,7 +63,7 @@ const formatTimestamp = (timestamp) => {
 
 onMounted(() => {
   const socket = new WebSocket(
-    config.wssBaseUrl + '/backend/relays/socket/' + username
+    config.public.wssBaseUrl + '/backend/relays/socket/' + username
   );
   socket.onmessage = function (message) {
     let newLogEntries = JSON.parse(message.data)
