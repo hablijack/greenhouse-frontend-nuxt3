@@ -1,8 +1,8 @@
 <template>
     <v-card :loading="isLoading">
         <v-card-title>
-            <v-icon size="30">{{ icon }}</v-icon>
-            <span class="text-h6">{{ headline }}</span>
+            <v-icon size="30" class="mr-2">{{ icon }}</v-icon>
+            <span class="text-h6">{{ headline }}: {{ target }}</span>
             <span class="float-right">
                 <v-icon :color="activeIconColor" size="30">mdi-circle</v-icon>
             </span>
@@ -62,6 +62,10 @@ export default {
             required: true,
         },
         icon: {
+            type: String,
+            required: true,
+        },
+        target: {
             type: String,
             required: true,
         },
