@@ -58,7 +58,6 @@ const systembarStyle = computed(() => {
 })
 
 const databaseIcon = (state) => {
-  console.log(state)
   if (!state) {
     return "mdi-circle-slice-1";
   } else if (state <= 12.5) {

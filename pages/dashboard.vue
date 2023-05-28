@@ -38,7 +38,8 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col v-for="sensor in sliceSensors(sensors, 9, 12)" v-bind:key="sensor.name" cols="12" sm="12" md="6" lg="3">
+      <v-col v-for="sensor in sliceSensors(sensors, 9, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
+        lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
           :description="sensor.description" :icon="sensor.icon" color="#5cad8a" />
       </v-col>
@@ -53,7 +54,6 @@ const config = useRuntimeConfig()
 
 const { data: sensors } = await useAsyncData('sensors', () => $fetch(config.public.apiBaseUrl + '/backend/sensors'));
 const { data: relays } = await useAsyncData('relays', () => $fetch(config.public.apiBaseUrl + '/backend/relays'));
-
 onMounted(() => {
   const socket = new WebSocket(
     config.public.wssBaseUrl + '/backend/sensors/measurements/socket'

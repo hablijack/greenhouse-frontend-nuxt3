@@ -13,7 +13,7 @@
                 <v-row align="stretch" no-gutters>
                     <v-col class="text-h4">
                         <span v-if="!measurement && measurement != 0">...</span>
-                        {{ measurement }} {{ unit }}
+                        {{ cardValue }} {{ unit }}
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -40,6 +40,13 @@ export default defineComponent({
         'maxAlarmValue'
     ],
     computed: {
+        cardValue() {
+            if (this.measurement !== undefined) {
+                return parseFloat(this.measurement).toFixed(this.decimals)
+            } else {
+                return null;
+            }
+        },
         cardColor() {
             if (this.measurement <= this.minAlarmValue) {
                 return "#EA8162";
