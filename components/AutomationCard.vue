@@ -18,11 +18,12 @@
             </div>
             <v-card class="mb-6" variant="outlined" :disabled="!timeTriggerEnabled">
                 <v-card-text>
-                    <v-select hide-details :items="dayRules" label="Tages Regel" class="mb-6"
+                    <v-select hide-details v-model="dayRule" :items="dayRules" label="Tages Regel" class="mb-6"
                         :disabled="!timeTriggerEnabled" />
-                    <v-select hide-details :items="hourRules" label="Stunden Regel" class="mb-6"
+                    <v-select hide-details v-model="hourRule" :items="hourRules" label="Stunden Regel" class="mb-6"
                         :disabled="!timeTriggerEnabled" />
-                    <v-select hide-details :items="minuteRules" label="Aktivierungsdauer" :disabled="!timeTriggerEnabled" />
+                    <v-select hide-details v-model="minuteRule" :items="minuteRules" label="Aktivierungsdauer"
+                        :disabled="!timeTriggerEnabled" />
                 </v-card-text>
             </v-card>
             <div class="mt-8 mb-3">
@@ -85,6 +86,10 @@ export default {
             type: Boolean,
             required: true,
         },
+        initialTimeRule: {
+            type: String,
+            required: true,
+        },
     },
     data() {
         return {
@@ -92,9 +97,11 @@ export default {
             conditionTriggerEnabled: this.initialConditionTriggerActive,
             saveButtonEnabled: false,
             isLoading: false,
+            minuteRule: this.initialTimeRule,
             minuteRules: [
                 'für 1 Minute',
                 'für 2 Minuten',
+                'für 3 Minuten',
                 'für 5 Minuten',
                 'für 6 Minuten',
                 'für 7 Minuten',
@@ -103,16 +110,19 @@ export default {
                 'für 15 Minuten',
                 'für 30 Minuten'
             ],
+            hourRule: this.initialTimeRule,
             hourRules: [
                 'Stündlich von 8 - 18 Uhr',
                 'alle 2 Stunden von 8 - 18 Uhr',
-                'um 08, 10, 11, 12, 13, 17, 18 Uhr',
+                'um 08, 10, 12, 14, 17 Uhr',
+                'um 08, 10, 12, 13, 16, 18 Uhr',
                 'Mittags',
                 'Morgens',
                 'Abends',
                 'Morgens und Abends',
                 'Morgens, Mittags und Abends'
             ],
+            dayRule: this.initialTimeRule,
             dayRules: [
                 'Täglich',
                 'Alle 2 Tage',

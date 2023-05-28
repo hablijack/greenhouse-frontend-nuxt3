@@ -12,7 +12,7 @@
             <v-card-text class="pa-0">
                 <v-row align="stretch" no-gutters>
                     <v-col class="text-h4">
-                        <span v-if="!measurement">...</span>
+                        <span v-if="!measurement && measurement != 0">...</span>
                         {{ measurement }} {{ unit }}
                     </v-col>
                 </v-row>
@@ -34,6 +34,7 @@ export default defineComponent({
         'measurement',
         'icon',
         'description',
+        'decimals',
         'color',
         'minAlarmValue',
         'maxAlarmValue'

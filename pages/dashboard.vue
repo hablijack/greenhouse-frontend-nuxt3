@@ -5,7 +5,7 @@
         md="6" lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
           :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
-          :maxAlarmValue="sensor.maxAlarmValue" />
+          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" />
       </v-col>
     </v-row>
     <v-row dense>
@@ -25,7 +25,7 @@
         </v-row>
 
         <v-card min-height="672" max-height="672">
-          <v-img src="/img/webcam_current.jpg" cover></v-img>
+          <v-img :src="cameraPictureUrl()" cover style="transform: rotate(180deg);"></v-img>
         </v-card>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="3">
@@ -62,6 +62,10 @@ onMounted(() => {
     measurements.value = JSON.parse(message.data);
   };
 });
+
+const cameraPictureUrl = () => {
+  return config.public.apiBaseUrl + '/backend/satellites/greenhouse-cam/picture.jpg'
+}
 
 const sliceSensors = (sensors, start, end) => {
   if (sensors) {
