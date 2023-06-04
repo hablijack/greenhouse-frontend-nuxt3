@@ -4,12 +4,8 @@
         class="text-h4">mdi-menu</v-icon></v-btn>
     <v-spacer />
     <span style="margin-right: 10px;">
-      {{ stats.wifiSignalStrength }}%
+      {{ stats.wifiSignalStrength }}dBi
       <v-icon>{{ wifiIcon(stats.wifiSignalStrength) }}</v-icon>
-    </span>
-    <span style="margin-right: 10px;">
-      {{ stats.batteryState }}%
-      <v-icon>{{ batteryIcon(stats.batteryState) }}</v-icon>
     </span>
     <span style="margin-right: 10px;">
       {{ databaseFillmentState(dbstats) }}%

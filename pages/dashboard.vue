@@ -24,13 +24,13 @@
           </v-col>
         </v-row>
 
-        <v-card min-height="672" max-height="672">
+        <v-card>
           <v-img :src="cameraPictureUrl()" cover style="transform: rotate(180deg);"></v-img>
         </v-card>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="3">
         <v-row dense>
-          <v-col v-for="sensor in sliceSensors(sensors, 4, 9)" v-bind:key="sensor.name" cols="12" sm="12" md="6" lg="12">
+          <v-col v-for="sensor in sliceSensors(sensors, 4, 10)" v-bind:key="sensor.name" cols="12" sm="12" md="6" lg="12">
             <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
               :description="sensor.description" :icon="sensor.icon" color="#5cad8a" />
           </v-col>
@@ -38,7 +38,7 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col v-for="sensor in sliceSensors(sensors, 9, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
+      <v-col v-for="sensor in sliceSensors(sensors, 10, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
         lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
           :description="sensor.description" :icon="sensor.icon" color="#5cad8a" />
