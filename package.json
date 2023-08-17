@@ -12,7 +12,7 @@
     "vuetify": "^3.3.13",
     "sass": "^1.65.1",
     "@sidebase/nuxt-auth": "^0.5.0",
-    "next-auth": "^4.23.0",
+    "next-auth": "^4.23.1",
     "@mdi/font": "^7.2.96",
     "chart.js": "^4.3.3",
     "moment": "^2.29.4",
