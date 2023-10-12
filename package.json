@@ -10,7 +10,7 @@
   "dependencies": {
     "nuxt": "^3.7.4",
     "vuetify": "^3.3.20",
-    "sass": "^1.69.2",
+    "sass": "^1.69.3",
     "@sidebase/nuxt-auth": "^0.5.0",
     "next-auth": "^4.23.2",
     "@mdi/font": "^7.3.67",
