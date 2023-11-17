@@ -1490,10 +1490,10 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@sidebase/nuxt-auth@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.6.0.tgz#541679e495e9c0a6da60d73148b98dd825deb4c1"
-  integrity sha512-axAUBQWqcFlUP2WpjNc5Wxo+G6gY/5K1VMOfhUABJEZualaz413W44Kzs+1ITebti93dgTNIN8zu6nM9DsO2TA==
+"@sidebase/nuxt-auth@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.6.1.tgz#65e2515a89c3e035563038108ae631269638860f"
+  integrity sha512-0X1J1nmkcTPh2KbKbZLiPt00FC2tVWTcj0yjYw9qZSsIBldw+28yUZmA6yLgHzmkWqVSkUr+rITm5s283WV3YQ==
   dependencies:
     "@nuxt/kit" "^3.4.2"
     "@vueuse/core" "^9.13.0"
