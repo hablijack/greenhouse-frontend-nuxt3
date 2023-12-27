@@ -13,7 +13,7 @@
     "sass": "^1.69.5",
     "@sidebase/nuxt-auth": "^0.6.3",
     "next-auth": "4.24.5",
-    "@mdi/font": "^7.3.67",
+    "@mdi/font": "^7.4.47",
     "chart.js": "^4.4.1",
     "moment": "^2.29.4",
     "chartjs-adapter-moment": "^1.0.1"
