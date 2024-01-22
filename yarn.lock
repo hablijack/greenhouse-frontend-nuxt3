@@ -1444,10 +1444,10 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.9.1.tgz#d146db7a5949e10837b323ce933ed882ac878262"
   integrity sha512-PyJsSsafjmIhVgaI1Zdj7m8BB8mMckFah/xbpplObyHfiXzKcI5UOUXRyOdHW7nz4DpMCuzLnF7v5IWHenCwYA==
 
-"@sidebase/nuxt-auth@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.6.4.tgz#e81ae1b55fb1bbb5ada5d88b8e5101412cc96437"
-  integrity sha512-sj4eJKUQHA7kraM3fw4uLXGr50Itb5sRS+ZyW91DA95oDxOAgeCXrKfqxiyciIB/kJ4j2ryOJqPdKxNI3j4BIg==
+"@sidebase/nuxt-auth@^0.6.5":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.6.5.tgz#d47af4e1f3ac746d50794803456f1b639245f66e"
+  integrity sha512-iRgsVNWzARstzKAC9V5g1GUHpBg8JnLN2tlsV0ClO/+fd97jfcyszhTANAP5Dr6nafR35XeeDYf3qNIzzrBXqA==
   dependencies:
     "@nuxt/kit" "^3.4.2"
     "@vueuse/core" "^9.13.0"
