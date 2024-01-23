@@ -11,7 +11,7 @@
     "nuxt": "^3.9.3",
     "vuetify": "^3.5.1",
     "sass": "^1.70.0",
-    "@sidebase/nuxt-auth": "^0.6.5",
+    "@sidebase/nuxt-auth": "^0.6.7",
     "next-auth": "4.24.5",
     "@mdi/font": "^7.4.47",
     "chart.js": "^4.4.1",
