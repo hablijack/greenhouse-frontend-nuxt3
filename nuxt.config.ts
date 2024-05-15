@@ -14,7 +14,9 @@ export default defineNuxtConfig({
         },
     },
     auth: {
-        enableGlobalAppMiddleware: true,
+        globalAppMiddleware: {
+            isEnabled: true
+        }
     },
     runtimeConfig: {
         public: {
