@@ -11,6 +11,7 @@
 <script setup>
 import { useDisplay } from 'vuetify';
 
+const display = ref(useDisplay())
 const showLeftMenu = ref(true);
 
 const toggleLeftMenu = () => {
@@ -18,7 +19,6 @@ const toggleLeftMenu = () => {
 }
 
 const mainAreaStyle = computed(() => {
-    const display = ref(useDisplay())
     if (display.value.mobile) {
         return 'margin-top: 40px;'
     }

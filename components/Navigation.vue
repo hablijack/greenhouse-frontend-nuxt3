@@ -91,7 +91,7 @@
 
 <script setup>
 import { useDisplay } from 'vuetify'
-
+const display = ref(useDisplay())
 const ses = useAuth()
 
 const props = defineProps({
@@ -113,7 +113,6 @@ watch(() => internalShow, (oldValue, newValue) => {
 const logout = () => ses.signOut('auth0');
 
 const navbarStyle = computed(() => {
-    const display = ref(useDisplay())
     if (display.value.mobile) {
         return 'width: 100vw; padding-left: 60px; padding-top: 60px;'
     }

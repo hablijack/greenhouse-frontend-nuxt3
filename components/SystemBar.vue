@@ -28,6 +28,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
+const display = ref(useDisplay())
 
 const currentTime = ref({})
 const stats = ref({
@@ -47,7 +48,6 @@ const calculateCurrentTime = () => {
 }
 
 const systembarStyle = computed(() => {
-  const display = ref(useDisplay())
   if (display.value.mobile) {
     return 'height: 65px;'
   }
