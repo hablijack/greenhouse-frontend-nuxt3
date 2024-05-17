@@ -24,9 +24,7 @@
           </v-col>
         </v-row>
 
-        <v-card>
-          <v-img :src="cameraPictureUrl()" cover style="transform: rotate(180deg);"></v-img>
-        </v-card>
+        <v-img :src="cameraPictureUrl()" height="808" position="left top" cover style="transform: rotate(180deg);"></v-img>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="3">
         <v-row dense>

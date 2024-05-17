@@ -1,26 +1,20 @@
 <template>
   <v-app style="background-color: #dfdfdf">
-    <SystemBar @change-drawer-state="toggleLeftMenu" />
-    <Navigation :show="showLeftMenu" @change-drawer-state="toggleLeftMenu" />
-    <v-main :style="mainAreaStyle">
+    <Navigation :showNavigation="showNavigation" />
+    <SystemBar @toggleNavigation="toggleNavigation" />
+    <v-main>
       <slot />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { useDisplay } from 'vuetify';
+  const navigationState = ref(true)
+  const showNavigation = computed(() => {
+    return navigationState.value
+  })
 
-const display = ref(useDisplay())
-const showLeftMenu = ref(true);
-
-const toggleLeftMenu = () => {
-  showLeftMenu.value = !showLeftMenu.value;
-}
-
-const mainAreaStyle = computed(() => {
-    if (display.value.mobile) {
-        return 'margin-top: 40px;'
-    }
-})
+  const toggleNavigation = () => {
+    navigationState.value = !navigationState.value
+  }
 </script>

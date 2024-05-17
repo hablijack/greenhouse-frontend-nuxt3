@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="internalShow" app theme="dark" location="left" :style="navbarStyle" color="#343a40">
+    <v-navigation-drawer v-model="showNavigationModel" theme="dark" :location="$vuetify.display.mobile ? 'bottom' : 'left'" location="left" color="#343a40" style="border: none;">
         <v-list>
             <v-list-item class="hidden-md-and-down">
                 <img width="220" src="/img/green_sphere.gif" />
@@ -90,45 +90,20 @@
 </style>
 
 <script setup>
-import { useDisplay } from 'vuetify'
-const display = ref(useDisplay())
-const ses = useAuth()
+    const ses = useAuth()
 
-const props = defineProps({
-    show: Boolean,
-})
+    const props = defineProps({
+        showNavigation: Boolean
+    })
 
-const internalShow = ref(false);
+    const showNavigationModel = ref(props.showNavigation)
 
-watch(() => props.show, (oldValue, newValue) => {
-    internalShow.value = newValue;
-});
+    const splitted = ses.data.value?.user?.name.split('.')
+    const username = splitted[0].charAt(0).toUpperCase() + splitted[0].slice(1) + ' ' + splitted[1].charAt(0).toUpperCase() + splitted[1].slice(1)
+    const email = ses.data.value?.user?.email
+    const logout = () => {ses.signOut('auth0')};
 
-watch(() => internalShow, (oldValue, newValue) => {
-    if (newValue !== props.show) {
-        this.$emit("change-drawer-state");
-    }
-});
-
-const logout = () => ses.signOut('auth0');
-
-const navbarStyle = computed(() => {
-    if (display.value.mobile) {
-        return 'width: 100vw; padding-left: 60px; padding-top: 60px;'
-    }
-})
-
-const username = computed(() => {
-    const fullname = ses.data.value?.user?.name
-    const splitted = fullname.split('.')
-    return splitted[0].charAt(0).toUpperCase() +
-        splitted[0].slice(1) + ' ' +
-        splitted[1].charAt(0).toUpperCase() +
-        splitted[1].slice(1)
-})
-
-const email = computed(() => {
-    return ses.data.value?.user?.email
-})
+    watch(() => props.showNavigation, (oldValue, newValue) => {
+        showNavigationModel.value = newValue;
+    });
 </script>
-
