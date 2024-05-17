@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-    modules: ['@sidebase/nuxt-auth'],
+    modules: ['@sidebase/nuxt-auth', "nuxt-viewport"],
     css: [
         '@/assets/css/main.css', 
         'vuetify/lib/styles/main.sass',
