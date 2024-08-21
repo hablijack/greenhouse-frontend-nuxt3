@@ -10,7 +10,7 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@sidebase/nuxt-auth": "0.8.2",
-    "chart.js": "^4.4.3",
+    "chart.js": "^4.4.4",
     "chartjs-adapter-moment": "^1.0.1",
     "moment": "^2.30.1",
     "next-auth": "4.22.5",
