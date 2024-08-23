@@ -1910,10 +1910,10 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.18.0.tgz#5d694d345ce36b6ecf657349e03eb87297e68da4"
   integrity sha512-UOo5FdvOL0+eIVTgS4tIdbW+TtnBLWg1YBCcU2KWM7nuNwRz9bksDX1bekJJCpu25N1DVWaCwnT39dVQxzqS8g==
 
-"@sidebase/nuxt-auth@0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.8.2.tgz#cf721bc2460cb5df8f85cd6cfaf71e6fec8a2e30"
-  integrity sha512-D1jUsEZ8NH9invsWX0KQbT+NZdcpDNoQ2ZgWiNILts5983KO8lrYYsjK77jguVZ3Wxl0ae6SwiW9R0YbcKOvlQ==
+"@sidebase/nuxt-auth@0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.9.0.tgz#31daebd77df8241b95ce0fd1f6274350ffec45d7"
+  integrity sha512-k3GbzXiOju91+NDMOL1jheMp96WQ0bZ89LhPtX1g3iR5gXD2ncVrM1YUcjun3HrVhjGJBJne/AeuoIQbZ1tlRA==
   dependencies:
     "@nuxt/kit" "^3.12.4"
     defu "^6.1.4"
