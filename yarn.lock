@@ -1525,10 +1525,10 @@
   resolved "https://registry.yarnpkg.com/@sec-ant/readable-stream/-/readable-stream-0.4.1.tgz#60de891bb126abfdc5410fdc6166aca065f10a0c"
   integrity sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==
 
-"@sidebase/nuxt-auth@0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.10.0.tgz#1d26b8dc2386168439f221ba7d7ec8a245dcb73c"
-  integrity sha512-epAodLKJS7LNclKJ4l6Zs9qkxdhgASll8TourjTInOySCtC29S8nolJ00JxULy7ffBj8HSVoIzFQjPC9LnxxJg==
+"@sidebase/nuxt-auth@0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.10.1.tgz#922c19b6de4f020d7d406592eb6b8e0cd721d316"
+  integrity sha512-fCSDfGl6npVIWrb//NbeKA16ATk1CpjzfRrNAdJ2PRr0BF5aJz6KCvDI8dSzs5VLMJBIRLR39G2rWYq5q+v5iA==
   dependencies:
     "@nuxt/kit" "^3.14.1592"
     defu "^6.1.4"
