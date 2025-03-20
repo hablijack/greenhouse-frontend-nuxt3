@@ -47,6 +47,12 @@
 
 <script setup>
 import { onMounted } from 'vue';
+
+definePageMeta({
+    layout: "default",
+    middleware: ['authenticated']
+});
+
 const measurements = ref({})
 const config = useRuntimeConfig()
 

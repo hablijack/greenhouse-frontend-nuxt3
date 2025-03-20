@@ -89,7 +89,7 @@
             <v-divider />
             <v-list-item style="min-height: 20px;">
                 <v-list-item-subtitle class="ma-3" style="align-items: center;">
-                    <i>© Copyright 2023 Greenhouse</i>
+                    <i>© Copyright 2025 Greenhouse</i>
                 </v-list-item-subtitle>
             </v-list-item>
         </v-list>
@@ -114,12 +114,12 @@
 </style>
 
 <script setup>
-const ses = useAuth()
+const { loggedIn, session, user, clear: clearSession, fetch } = useUserSession()
+
 const config = useRuntimeConfig()
 
-const splitted = ses.data.value?.user?.name.split('.')
-const username = splitted[0].charAt(0).toUpperCase() + splitted[0].slice(1) + ' ' + splitted[1].charAt(0).toUpperCase() + splitted[1].slice(1)
-const email = ses.data.value?.user?.email
+const username = user.value.name
+const email = user.value.email
 
 
 const drawer = ref(true)
@@ -131,9 +131,10 @@ const stats = ref({
 
 const { data: dbstats } = await useAsyncData('dbstats', () => $fetch(config.public.apiBaseUrl + '/backend/database/stats'));
 
-const logout = () => {
-  ses.signOut('auth0')
-};
+async function logout() {
+  await clearSession()
+  await navigateTo('/')
+}
 
 const calculateCurrentTime = () => {
   const date = new Date();

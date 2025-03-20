@@ -1,33 +1,61 @@
 <template>
-    <v-container class="fill-height">
+    <v-container fill-height fluid>
         <v-row align="center" justify="center" dense>
-            <v-col cols="12" sm="12" md="3" align="center">
-                <v-img max-width="300" contain src="img/logo_shadow.png" />
+            <v-col cols="2">
+                <v-img max-width="300" contain src="img/logo.png" />
             </v-col>
-            <v-col cols="12" sm="12" md="9"
-                style="text-align: center; text-shadow: 4px 0px 7px black; color: #5cad8a; font-weight: bold; font-size:8vw; font-family: 'Orbitron'">
+            <v-col cols="7"
+                style="text-align: left; color: #5cad8a; font-weight: bold; font-size:8vw; font-family: 'Orbitron'"
+                justify="center">
                 Greenhouse
             </v-col>
+        </v-row>
 
-            <v-col cols="12" sm="12" class="text-center">
-                <h2>Jetzt anmelden:</h2>
-                <v-btn @click="login" size="x-large" variant="outlined" elevation="16" color="#5cad8a" class="mt-3"
-                    to="/">Login mit Auth0</v-btn>
+        <v-row align="center" justify="center" dense>
+            <v-col cols="4">
+                <form @submit.prevent="login">
+                    <v-card class="elevation-12">
+                        <v-toolbar dark color="primary">
+                            <v-toolbar-title>Login form</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-text-field v-model="credentials.email" prepend-icon="mdi-account" type="email"
+                                label="Email" />
+                            <v-text-field v-model="credentials.password" prepend-icon="mdi-lock" type="password"
+                                label="Passwort" />
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn type="submit" variant="elevated" color="primary" size="x-large">Login</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </form>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
-<script setup>
-const ses = useAuth({ required: false })
-if (ses.status.value === 'authenticated') {
-    await navigateTo({ path: '/dashboard' });
+
+<script setup lang="ts">
+const { loggedIn, user, fetch: refreshSession } = useUserSession()
+console.log(user)
+const credentials = reactive({
+    email: '',
+    password: '',
+})
+async function login() {
+    $fetch('/api/login', {
+        method: 'POST',
+        body: credentials
+    })
+        .then(async () => {
+            // Refresh the session on client-side and redirect to the home page
+            await refreshSession()
+            await navigateTo({ path: '/dashboard' });
+        })
+        .catch(() => alert('Bad credentials'))
 }
-
-const login = () => ses.signIn('auth0');
-
 definePageMeta({
-    layout: "fullscreen",
-    auth: false
+    layout: "fullscreen"
 });
 </script>

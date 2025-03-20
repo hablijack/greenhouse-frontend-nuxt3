@@ -46,7 +46,7 @@
 
 <script setup>
 import { onMounted } from 'vue';
-const ses = useAuth()
+//const ses = useAuth()
 const username = ses.data.value?.user?.name
 const logs = ref([])
 const config = useRuntimeConfig()

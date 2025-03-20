@@ -39,7 +39,7 @@ const props = defineProps({
 })
 
 const apiBaseUrl = useRuntimeConfig().public.apiBaseUrl
-const username = useAuth().data.value?.user?.name
+//const username = useAuth().data.value?.user?.name
 
 const relayValue = ref(props.initialValue || false)
 const transmitting = ref(false)
