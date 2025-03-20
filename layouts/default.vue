@@ -114,7 +114,7 @@
 </style>
 
 <script setup>
-const { loggedIn, session, user, clear: clearSession, fetch } = useUserSession()
+const { user, clear: clearSession } = useUserSession()
 
 const config = useRuntimeConfig()
 
@@ -129,8 +129,8 @@ const stats = ref({
   batteryState: 0,
 })
 
-const { data: dbstats } = await useAsyncData('dbstats', () => $fetch(config.public.apiBaseUrl + '/backend/database/stats'));
-
+const { data: dbstats } = await useAsyncData('dbstats', () => $fetch('/backend/database/stats'));
+console.log(dbstats)
 async function logout() {
   await clearSession()
   await navigateTo('/')
