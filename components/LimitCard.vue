@@ -31,10 +31,10 @@ const config = useRuntimeConfig()
 
 const saveClick = async () => {
     isLoading.value = true;
-    let sensor = await $fetch(`${config.public.apiBaseUrl}/backend/sensor/${props.id}`, { method: 'GET' })
+    let sensor = await $fetch(`/backend/rest/sensor/${props.id}`, { method: 'GET' })
     sensor.minAlarmValue = parseInt(props.minAlarmValue);
     sensor.maxAlarmValue = parseInt(props.maxAlarmValue);
-    await $fetch(`${config.public.apiBaseUrl}/backend/sensor/${props.id}`, {
+    await $fetch(`/backend/rest/sensor/${props.id}`, {
         method: 'PUT',
         body: sensor
     })

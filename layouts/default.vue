@@ -129,8 +129,8 @@ const stats = ref({
   batteryState: 0,
 })
 
-const { data: dbstats } = await useAsyncData('dbstats', () => $fetch('/backend/database/stats'));
-console.log(dbstats)
+const { data: dbstats } = await useAsyncData('dbstats', () => $fetch('/api/rest/database/stats'));
+
 async function logout() {
   await clearSession()
   await navigateTo('/')
@@ -214,7 +214,7 @@ onMounted(() => {
   calculateCurrentTime()
   setInterval(calculateCurrentTime, 10000);
   const socket = new WebSocket(
-    config.public.wssBaseUrl + '/backend/sensors/measurements/socket'
+    '/api/socket/sensors/measurements'
   );
   socket.onmessage = function (message) {
     let measurements = JSON.parse(message.data)

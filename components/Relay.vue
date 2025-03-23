@@ -38,9 +38,9 @@ const props = defineProps({
   color: String
 })
 
-const apiBaseUrl = useRuntimeConfig().public.apiBaseUrl
-//const username = useAuth().data.value?.user?.name
+const { user } = useUserSession()
 
+const username = user.value.email
 const relayValue = ref(props.initialValue || false)
 const transmitting = ref(false)
 
@@ -52,7 +52,7 @@ const relayStyle = computed(() => {
 
 const toggleButtonChangedEvent = (newValue) => {
   transmitting.value = true;
-  $fetch(`${apiBaseUrl}/backend/relay/${props.id}/switch`, {
+  $fetch(`/api/rest/relay/${props.id}/switch`, {
     method: 'POST',
     body: {
       initiator: username,

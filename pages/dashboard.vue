@@ -56,11 +56,11 @@ definePageMeta({
 const measurements = ref({})
 const config = useRuntimeConfig()
 
-const { data: sensors } = await useAsyncData('sensors', () => $fetch(config.public.apiBaseUrl + '/backend/sensors'));
-const { data: relays } = await useAsyncData('relays', () => $fetch(config.public.apiBaseUrl + '/backend/relays'));
+const { data: sensors } = await useAsyncData('sensors', () => $fetch('/api/rest/sensors'));
+const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
 onMounted(() => {
   const socket = new WebSocket(
-    config.public.wssBaseUrl + '/backend/sensors/measurements/socket'
+    config.public.wssBaseUrl + '/api/socket/sensors/measurements'
   );
   socket.onmessage = function (message) {
     measurements.value = JSON.parse(message.data);
@@ -68,7 +68,7 @@ onMounted(() => {
 });
 
 const cameraPictureUrl = () => {
-  return config.public.apiBaseUrl + '/backend/satellites/greenhouse-cam/picture.jpg'
+  return '/api/rest/satellites/greenhouse-cam/picture.jpg'
 }
 
 const sliceSensors = (sensors, start, end) => {

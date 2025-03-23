@@ -41,11 +41,11 @@ const wifi_timerange = ref("day");
 const co2_timerange = ref("day");
 const brightness_timerange = ref("day");
 
-const { data: air_temperatures } = await useFetch(config.public.apiBaseUrl + `/backend/history/air/temperatures?range=${air_temperatures_timerange}`);
-const { data: air_humidity } = await useFetch(config.public.apiBaseUrl + `/backend/history/air/humidity?range=${air_humidity_timerange}`);
-const { data: wifi } = await useFetch(config.public.apiBaseUrl + `/backend/history/wifi?range=${wifi_timerange}`);
-const { data: co2 } = await useFetch(config.public.apiBaseUrl + `/backend/history/co2?range=${co2_timerange}`);
-const { data: brightness } = await useFetch(config.public.apiBaseUrl + `/backend/history/brightness?range=${brightness_timerange}`);
+const { data: air_temperatures } = await useFetch(`/backend/rest/history/air/temperatures?range=${air_temperatures_timerange}`);
+const { data: air_humidity } = await useFetch(`/backend/rest/history/air/humidity?range=${air_humidity_timerange}`);
+const { data: wifi } = await useFetch(`/backend/rest/history/wifi?range=${wifi_timerange}`);
+const { data: co2 } = await useFetch(`/backend/rest/history/co2?range=${co2_timerange}`);
+const { data: brightness } = await useFetch(`/backend/rest/history/brightness?range=${brightness_timerange}`);
 
 const createChart = (identifier, datasets, scale, unit) => {
   new Chart(identifier, {

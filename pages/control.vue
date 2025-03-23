@@ -46,12 +46,11 @@
 
 <script setup>
 import { onMounted } from 'vue';
-//const ses = useAuth()
-const username = ses.data.value?.user?.name
+const { user } = useUserSession()
+const username = user.value.email
 const logs = ref([])
-const config = useRuntimeConfig()
 
-const { data: relays } = await useAsyncData('relays', () => $fetch(config.public.apiBaseUrl + '/backend/relays'));
+const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
 
 const formatTimestamp = (timestamp) => {
   try {
@@ -63,7 +62,7 @@ const formatTimestamp = (timestamp) => {
 
 onMounted(() => {
   const socket = new WebSocket(
-    config.public.wssBaseUrl + '/backend/relays/socket/' + username
+    '/api/socket/relays/' + username
   );
   socket.onmessage = function (message) {
     let newLogEntries = JSON.parse(message.data)

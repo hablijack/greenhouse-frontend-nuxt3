@@ -46,6 +46,6 @@ const satelliteStyle = (online) => {
   );
 }
 
-const { data: children } = await useAsyncData('children', () => $fetch(config.public.apiBaseUrl + '/backend/satellites'));
+const { data: children } = await useAsyncData('children', () => $fetch('/api/rest/satellites'));
 architecture.children = children.value;
 </script>

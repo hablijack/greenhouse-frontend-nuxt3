@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 const { loggedIn, user, fetch: refreshSession } = useUserSession()
-console.log(user)
+
 const credentials = reactive({
     email: '',
     password: '',

@@ -13,5 +13,5 @@
 
 <script setup>
 const config = useRuntimeConfig()
-const { data: relays } = await useAsyncData('relays', () => $fetch(config.public.apiBaseUrl + '/backend/relays'));
+const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
 </script>

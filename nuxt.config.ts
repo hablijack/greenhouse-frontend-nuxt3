@@ -14,19 +14,11 @@ export default defineNuxtConfig({
           'process.env.DEBUG': false,
       },
   },
-
   runtimeConfig: {
       public: {
-          apiBaseUrl: '',
           wssBaseUrl: ''
       },
-      auth0: {
-          clientId: '',
-          clientSecret: '',
-          issuer: 'https://greenhouse-home-webserver.eu.auth0.com'
-      },
   },
-
   compatibilityDate: '2025-03-20',
   modules: ['nuxt-auth-utils']
 })
