@@ -12,6 +12,5 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig()
 const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
 </script>

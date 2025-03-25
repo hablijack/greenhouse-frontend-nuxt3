@@ -16,7 +16,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
       public: {
-          wssBaseUrl: ''
+        wssBaseUrl: 'ws://localhost:8080',
+        apiBaseUrl: 'http://localhost:8080',
       },
   },
   compatibilityDate: '2025-03-20',

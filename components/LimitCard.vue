@@ -27,7 +27,6 @@
 <script setup>
 const saveButtonEnabled = ref(false)
 const isLoading = ref(false)
-const config = useRuntimeConfig()
 
 const saveClick = async () => {
     isLoading.value = true;

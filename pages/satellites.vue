@@ -38,7 +38,6 @@ const architecture = {
   online: true,
   children: [],
 }
-const config = useRuntimeConfig()
 
 const satelliteStyle = (online) => {
   return "color: white; background-color: ".concat(

@@ -4,10 +4,9 @@ export default defineEventHandler(async (event) => {
   requireUserSession(event);
   const config = useRuntimeConfig();
 
-  /*if (!config.apiBaseUrl) {
-    throw new E
-    rror('Missing `runtimeConfig.apiBaseUrl` configuration.');
-  }*/
+  if (!config.public || !config.public.apiBaseUrl) {
+    throw new Error('Missing `runtimeConfig.apiBaseUrl` configuration.');
+  }
 
   const { method, url, headers } = event.node.req;
   const body = method !== 'GET' && method !== 'HEAD' ? await readBody(event) : undefined;
@@ -15,7 +14,7 @@ export default defineEventHandler(async (event) => {
   try {
     const response = await $fetch.raw(url, {
       method,
-      baseURL: 'http://localhost:8080',
+      baseURL: config.public.apiBaseUrl,
       headers: {
         'content-type': 'application/json',
         cookie: headers.cookie,

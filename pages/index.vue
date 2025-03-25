@@ -53,7 +53,10 @@ async function login() {
             await refreshSession()
             await navigateTo({ path: '/dashboard' });
         })
-        .catch(() => alert('Bad credentials'))
+        .catch((error) => {
+            alert('Bad credentials');
+            console.log(error)
+        })
 }
 definePageMeta({
     layout: "fullscreen"

@@ -23,7 +23,7 @@
             </v-list-item>
             <v-list-item class="logo">
                 <template v-slot:prepend>
-                    <img height="40" class="mr-2" src="/img/logo_shadow.png" />
+                    <img height="40" class="mr-2" src="/img/logo.png" />
                 </template>
                 Greenhouse
             </v-list-item>
@@ -68,6 +68,12 @@
                 </template>
                 <v-list-item-title style="line-height: 2rem;" class="text-h6">Historie</v-list-item-title>
             </v-list-item>
+            <v-list-item to="/users">
+                <template v-slot:prepend>
+                    <v-icon>mdi-account</v-icon>
+                </template>
+                <v-list-item-title style="line-height: 2rem;" class="text-h6">Benutzer</v-list-item-title>
+            </v-list-item>
             <v-divider class="mb-4" />
             <v-list-item>
                 <v-btn style="width: 100%" variant="elevated" size="x-large" @click="logout" to="/">
@@ -105,7 +111,6 @@
 
 <style scoped>
 .logo {
-    text-shadow: 2px 0px 2px black;
     color: #5cad8a;
     font-weight: bold;
     font-size: 26px;
@@ -115,8 +120,6 @@
 
 <script setup>
 const { user, clear: clearSession } = useUserSession()
-
-const config = useRuntimeConfig()
 
 const username = user.value.name
 const email = user.value.email

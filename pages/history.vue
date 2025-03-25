@@ -34,7 +34,6 @@
 import { Chart, registerables } from "chart.js";
 import 'chartjs-adapter-moment';
 
-const config = useRuntimeConfig()
 const air_temperatures_timerange = ref("day");
 const air_humidity_timerange = ref("day");
 const wifi_timerange = ref("day");

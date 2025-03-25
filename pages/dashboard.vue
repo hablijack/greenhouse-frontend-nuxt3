@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
     <v-row dense>
-      <v-col v-for="sensor in sliceSensors(sensors, 0, 4)" v-bind:key="sensor.name + sensor.identifier" cols="12" sm="12"
-        md="6" lg="3">
+      <v-col v-for="sensor in sliceSensors(sensors, 0, 4)" v-bind:key="sensor.name + sensor.identifier" cols="12"
+        sm="12" md="6" lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
           :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
           :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" />
@@ -24,11 +24,13 @@
           </v-col>
         </v-row>
 
-        <v-img :src="cameraPictureUrl()" height="808" position="left top" cover style="transform: rotate(180deg);"></v-img>
+        <v-img :src="cameraPictureUrl()" height="808" position="left top" cover
+          style="transform: rotate(180deg);"></v-img>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="3">
         <v-row dense>
-          <v-col v-for="sensor in sliceSensors(sensors, 4, 10)" v-bind:key="sensor.name" cols="12" sm="12" md="6" lg="12">
+          <v-col v-for="sensor in sliceSensors(sensors, 4, 10)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
+            lg="12">
             <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
               :description="sensor.description" :icon="sensor.icon" color="#5cad8a" />
           </v-col>
@@ -36,8 +38,8 @@
       </v-col>
     </v-row>
     <v-row dense>
-      <v-col v-for="sensor in sliceSensors(sensors, 10, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
-        lg="3">
+      <v-col v-for="sensor in sliceSensors(sensors, 10, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12"
+        md="6" lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
           :description="sensor.description" :icon="sensor.icon" color="#5cad8a" />
       </v-col>
@@ -49,18 +51,16 @@
 import { onMounted } from 'vue';
 
 definePageMeta({
-    layout: "default",
-    middleware: ['authenticated']
+  layout: "default",
+  middleware: ['authenticated']
 });
 
 const measurements = ref({})
-const config = useRuntimeConfig()
-
 const { data: sensors } = await useAsyncData('sensors', () => $fetch('/api/rest/sensors'));
 const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
 onMounted(() => {
   const socket = new WebSocket(
-    config.public.wssBaseUrl + '/api/socket/sensors/measurements'
+    '/api/socket/sensors/measurements'
   );
   socket.onmessage = function (message) {
     measurements.value = JSON.parse(message.data);

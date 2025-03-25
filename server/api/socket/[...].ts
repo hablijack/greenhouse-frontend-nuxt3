@@ -1,16 +1,19 @@
 import { defineEventHandler } from 'h3'
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
+export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+  const config = useRuntimeConfig();
 
-const apiProxyMiddleware = createProxyMiddleware({
-    target: 'ws://localhost:8080',
+  if (!config.public || !config.public.wssBaseUrl) {
+    throw new Error('Missing `runtimeConfig.apiBaseUrl` configuration.');
+  }
+  const apiProxyMiddleware = createProxyMiddleware({
+    target: config.public.wssBaseUrl,
     changeOrigin: true,
     ws: true,
     logger: console
 }) 
-
-export default defineEventHandler(async (event) => {
-  await requireUserSession(event)
 
   await new Promise((resolve, reject) => {
     const next = (err?: unknown) => {
