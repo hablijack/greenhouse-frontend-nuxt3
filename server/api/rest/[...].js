@@ -1,7 +1,11 @@
 import { createError, readBody, appendHeader } from 'h3';
 
 export default defineEventHandler(async (event) => {
-  requireUserSession(event);
+  const session = await getUserSession(event);
+ 
+  if(!session.user){
+    return {}
+  }
   const config = useRuntimeConfig();
 
   if (!config.public || !config.public.apiBaseUrl) {

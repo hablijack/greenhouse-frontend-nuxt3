@@ -2,7 +2,8 @@ import { defineEventHandler } from 'h3'
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 export default defineEventHandler(async (event) => {
-  await requireUserSession(event)
+  const session = await getUserSession(event);
+
   const config = useRuntimeConfig();
 
   if (!config.public || !config.public.wssBaseUrl) {
@@ -17,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   await new Promise((resolve, reject) => {
     const next = (err?: unknown) => {
-      if (err) {
+      if (err || !session.user) {
         reject(err)
       } else {
         resolve(true)

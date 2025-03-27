@@ -14,6 +14,8 @@ export default defineNuxtConfig({
           'process.env.DEBUG': false,
       },
   },
+  devtools: { enabled: true },
+  ssr: false,
   runtimeConfig: {
       public: {
         wssBaseUrl: 'ws://localhost:8080',
