@@ -40,11 +40,11 @@ const wifi_timerange = ref("day");
 const co2_timerange = ref("day");
 const brightness_timerange = ref("day");
 
-const { data: air_temperatures } = await useFetch(`/backend/rest/history/air/temperatures?range=${air_temperatures_timerange}`);
-const { data: air_humidity } = await useFetch(`/backend/rest/history/air/humidity?range=${air_humidity_timerange}`);
-const { data: wifi } = await useFetch(`/backend/rest/history/wifi?range=${wifi_timerange}`);
-const { data: co2 } = await useFetch(`/backend/rest/history/co2?range=${co2_timerange}`);
-const { data: brightness } = await useFetch(`/backend/rest/history/brightness?range=${brightness_timerange}`);
+const { data: air_temperatures } = await useFetch(`/api/rest/history/air/temperatures?range=${air_temperatures_timerange}`);
+const { data: air_humidity } = await useFetch(`/api/rest/history/air/humidity?range=${air_humidity_timerange}`);
+const { data: wifi } = await useFetch(`/api/rest/history/wifi?range=${wifi_timerange}`);
+const { data: co2 } = await useFetch(`/api/rest/history/co2?range=${co2_timerange}`);
+const { data: brightness } = await useFetch(`/api/rest/history/brightness?range=${brightness_timerange}`);
 
 const createChart = (identifier, datasets, scale, unit) => {
   new Chart(identifier, {
