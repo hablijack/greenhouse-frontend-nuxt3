@@ -34,7 +34,7 @@ const architecture = {
   name: "Server",
   imageUrl: "server.png",
   class: ["rootNode"],
-  ip: "192.168.178.29:5550",
+  ip: "192.168.178.165:5550",
   online: true,
   children: [],
 }
@@ -45,6 +45,6 @@ const satelliteStyle = (online) => {
   );
 }
 
-const { data: children } = await useAsyncData('children', () => $fetch('/api/rest/satellites'));
-architecture.children = children.value;
+const children = await $fetch('/api/rest/satellites');
+architecture.children = children;
 </script>

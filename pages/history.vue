@@ -40,11 +40,13 @@ const wifi_timerange = ref("day");
 const co2_timerange = ref("day");
 const brightness_timerange = ref("day");
 
-const { data: air_temperatures } = await useFetch(`/api/rest/history/air/temperatures?timerange=${air_temperatures_timerange}`);
-const { data: air_humidity } = await useFetch(`/api/rest/history/air/humidity?timerange=${air_humidity_timerange}`);
-const { data: wifi } = await useFetch(`/api/rest/history/wifi?timerange=${wifi_timerange}`);
-const { data: co2 } = await useFetch(`/api/rest/history/co2?timerange=${co2_timerange}`);
-const { data: brightness } = await useFetch(`/api/rest/history/brightness?timerange=${brightness_timerange}`);
+let air_temperatures = await $fetch(`/api/rest/history/air/temperatures?timerange=${air_temperatures_timerange}`);
+let air_humidity = await $fetch(`/api/rest/history/air/humidity?timerange=${air_humidity_timerange}`);
+let wifi = await $fetch(`/api/rest/history/wifi?timerange=${wifi_timerange}`);
+let co2 = await $fetch(`/api/rest/history/co2?timerange=${co2_timerange}`);
+let brightness = await $fetch(`/api/rest/history/brightness?timerange=${brightness_timerange}`);
+
+
 
 const createChart = (identifier, datasets, scale, unit) => {
   new Chart(identifier, {
@@ -61,7 +63,10 @@ const createChart = (identifier, datasets, scale, unit) => {
         x: {
           type: 'time',
           time: {
-            unit
+            unit: 'hour',
+            displayFormats: {
+                hour: 'HH:MM'
+            }
           }
         },
         y: {
@@ -84,11 +89,11 @@ const createChart = (identifier, datasets, scale, unit) => {
 onMounted(() => {
   if (Chart) {
     Chart.register(...registerables);
-    createChart('air-temperatures', air_temperatures.value, '°C', 'day');
-    createChart('air-humidity', air_humidity.value, '%', 'day');
-    createChart('wifi', wifi.value, 'dBi', 'day');
-    createChart('co2', co2.value, 'ppm', 'day');
-    createChart('brightness', brightness.value, 'lux', 'day');
+    createChart('air-temperatures', air_temperatures, '°C', 'day');
+    createChart('air-humidity', air_humidity, '%', 'day');
+    createChart('wifi', wifi, 'dBi', 'day');
+    createChart('co2', co2, 'ppm', 'day');
+    createChart('brightness', brightness, 'lux', 'day');
   }
 });
 </script>

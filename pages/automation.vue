@@ -12,5 +12,5 @@
 </template>
 
 <script setup>
-const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
+const relays = await $fetch('/api/rest/relays');
 </script>

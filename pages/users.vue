@@ -87,7 +87,7 @@ definePageMeta({
 });
 
 const DEFAULT_USER = { username: '', name: '', role: '', password: '' }
-const { data: loaded_users } = await useFetch('/api/rest/users');
+const loaded_users = await $fetch('/api/rest/users')
 
 const users = ref([])
 const user = ref(DEFAULT_USER)

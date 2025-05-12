@@ -50,7 +50,7 @@ const { user } = useUserSession()
 const username = user.value.email
 const logs = ref([])
 
-const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
+const relays = await $fetch('/api/rest/relays');
 
 const formatTimestamp = (timestamp) => {
   try {

@@ -56,8 +56,8 @@ definePageMeta({
 });
 
 const measurements = ref({})
-const { data: sensors } = await useAsyncData('sensors', () => $fetch('/api/rest/sensors'));
-const { data: relays } = await useAsyncData('relays', () => $fetch('/api/rest/relays'));
+const sensors = await $fetch('/api/rest/sensors');
+const relays = await $fetch('/api/rest/relays');
 onMounted(() => {
   const socket = new WebSocket(
     '/api/socket/sensors/measurements'

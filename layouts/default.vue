@@ -132,7 +132,7 @@ const stats = ref({
   batteryState: 0,
 })
 
-const { data: dbstats } = await useAsyncData('dbstats', () => $fetch('/api/rest/database/stats'));
+const dbstats = await $fetch('/api/rest/database/stats');
 
 async function logout() {
   await clearSession()

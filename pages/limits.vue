@@ -11,5 +11,5 @@
 </template>
 
 <script setup>
-const { data: sensors } = await useAsyncData('sensors', () => $fetch('/api/rest/sensors'));
+const sensors = await $fetch('/api/rest/sensors');
 </script>
