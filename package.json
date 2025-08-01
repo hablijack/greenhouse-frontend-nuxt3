@@ -14,7 +14,7 @@
     "http-proxy-middleware": "^3.0.5",
     "moment": "^2.30.1",
     "nuxt": "^4.0.2",
-    "nuxt-auth-utils": "0.5.20",
+    "nuxt-auth-utils": "0.5.22",
     "sass": "^1.89.2",
     "vuetify": "^3.9.3",
     "zod": "^4.0.14"
