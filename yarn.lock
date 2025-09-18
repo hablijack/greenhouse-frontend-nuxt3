@@ -783,7 +783,7 @@
     which "^5.0.0"
     ws "^8.18.3"
 
-"@nuxt/kit@4.1.2", "@nuxt/kit@^4.1.0":
+"@nuxt/kit@4.1.2", "@nuxt/kit@^4.1.2":
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-4.1.2.tgz#e2d8d6ed1b6a5c2964a9a4a66af04e943b3002ca"
   integrity sha512-P5q41xeEOa6ZQC0PvIP7TSBmOAMxXK4qihDcCbYIJq8RcVsEPbGZVlidmxE6EOw1ucSyodq9nbV31FAKwoL4NQ==
@@ -3967,19 +3967,19 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
-nuxt-auth-utils@0.5.24:
-  version "0.5.24"
-  resolved "https://registry.yarnpkg.com/nuxt-auth-utils/-/nuxt-auth-utils-0.5.24.tgz#8fdce90914966176007e7c03cf586f2827282213"
-  integrity sha512-BfVr/zEGH23Dbs5jCFVg/IQEe+07bRdA0/j5Ufo1aiVzh/pZjYtRWg+cMs7/7wIeQw7zfkrtadhVm4QRidFOmQ==
+nuxt-auth-utils@0.5.25:
+  version "0.5.25"
+  resolved "https://registry.yarnpkg.com/nuxt-auth-utils/-/nuxt-auth-utils-0.5.25.tgz#866fa2bfc54af0627fa8c1548d296af92bcb6e42"
+  integrity sha512-tL9Y0duW3a133BZxy5917KvZ9iLX900PW47Qr80IPytwFspEzyqD7c1/zWACUVPv7QPTTD3LxT7LOtK4aJnfEw==
   dependencies:
     "@adonisjs/hash" "^9.1.1"
-    "@nuxt/kit" "^4.1.0"
+    "@nuxt/kit" "^4.1.2"
     defu "^6.1.4"
     h3 "^1.15.4"
     hookable "^5.5.3"
     jose "^6.1.0"
     ofetch "^1.4.1"
-    openid-client "^6.7.1"
+    openid-client "^6.8.0"
     pathe "^2.0.3"
     scule "^1.3.0"
     uncrypto "^0.1.3"
@@ -4064,7 +4064,7 @@ nypm@^0.6.0, nypm@^0.6.1:
     pkg-types "^2.2.0"
     tinyexec "^1.0.1"
 
-oauth4webapi@^3.8.0:
+oauth4webapi@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.8.1.tgz#a6e205570c09e33aa656982c85e78841a57a6fec"
   integrity sha512-olkZDELNycOWQf9LrsELFq8n05LwJgV8UkrS0cburk6FOwf8GvLam+YB+Uj5Qvryee+vwWOfQVeI5Vm0MVg7SA==
@@ -4121,13 +4121,13 @@ open@^8.0.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-openid-client@^6.7.1:
-  version "6.7.1"
-  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.7.1.tgz#7c2c506cb7c51ad121d65f8c86e769fe5cd452fd"
-  integrity sha512-kOiE4q0kNogr90hXsxPrKeEDuY+V0kkZazvZScOwZkYept9slsaQ3usXTaKkm6I04vLNuw5caBoX7UfrwC6x8w==
+openid-client@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.8.0.tgz#ae60540fc1aaf595ee9100004ebda722e1d80e60"
+  integrity sha512-oG1d1nAVhIIE+JSjLS+7E9wY1QOJpZltkzlJdbZ7kEn7Hp3hqur2TEeQ8gLOHoHkhbRAGZJKoOnEQcLOQJuIyg==
   dependencies:
     jose "^6.1.0"
-    oauth4webapi "^3.8.0"
+    oauth4webapi "^3.8.1"
 
 oxc-minify@^0.87.0:
   version "0.87.0"
