@@ -1,25 +1,35 @@
 <template>
-  <v-card :v-bind="relayValue" :theme="relayValue ? 'dark' : 'bright'" :style="relayStyle">
+  <v-card :theme="relayValue ? 'dark' : 'light'" :style="relayStyle">
     <v-list-item three-line>
-      <div class="text-overline">
-        {{ name }}
-        <span :if="target">: <strong>{{ target }}</strong></span>
-      </div>
-      <v-list-item-title style="height: auto">
-        <ToggleButton :id="id" :defaultState="initialValue" :color="color"
-          :style="transmitting ? 'display: none' : 'display: block'" labelEnableText="AN" labelDisableText="AUS"
-          @change="toggleButtonChangedEvent" />
-        <v-progress-linear :color="relayValue ? 'white' : color" style="width: 100%" indeterminate rounded height="55"
-          v-if="transmitting" />
+      <v-list-item-title class="text-overline">
+        {{ name }}<span v-if="target">: <strong>{{ target }}</strong></span>
       </v-list-item-title>
+      
+      <v-list-item-subtitle class="py-4">
+        <ToggleButton 
+          v-if="!transmitting"
+          :id="id" 
+          :defaultState="initialValue" 
+          :color="color"
+          labelEnableText="AN" 
+          labelDisableText="AUS"
+          @change="toggleButtonChangedEvent" 
+        />
+        <v-progress-linear 
+          v-else
+          :color="relayValue ? 'white' : color" 
+          indeterminate 
+          rounded 
+          height="55"
+        />
+      </v-list-item-subtitle>
+      
       <v-list-item-subtitle>
-        <div style="height: 34px">
-          {{ description }}
-        </div>
+        {{ description }}
       </v-list-item-subtitle>
 
-      <template v-slot:append>
-        <v-icon :v-bind="relayValue" :color="relayValue ? 'white' : '#343a40'" size="120">
+      <template #append>
+        <v-icon :color="relayValue ? 'white' : '#343a40'" size="120">
           {{ icon }}
         </v-icon>
       </template>
@@ -35,32 +45,32 @@ const props = defineProps({
   initialValue: Boolean,
   description: String,
   icon: String,
-  color: String
+  color: String,
 })
 
 const { user } = useUserSession()
+const username = computed(() => user.value?.email || '')
 
-const username = user.value.email
 const relayValue = ref(props.initialValue || false)
 const transmitting = ref(false)
 
-const relayStyle = computed(() => {
-  if (relayValue.value) {
-    return "background-color: ".concat(props.color);
-  }
-})
+const relayStyle = computed(() => 
+  relayValue.value ? `background-color: ${props.color}` : ''
+)
 
-const toggleButtonChangedEvent = (newValue) => {
-  transmitting.value = true;
-  $fetch(`/api/rest/relay/${props.id}/switch`, {
-    method: 'POST',
-    body: {
-      initiator: username,
-      newValue: newValue,
-    }
-  }).then(() => {
-    transmitting.value = false;
-    relayValue.value = newValue;
-  })
+const toggleButtonChangedEvent = async (newValue) => {
+  transmitting.value = true
+  try {
+    await $fetch(`/api/rest/relay/${props.id}/switch`, {
+      method: 'POST',
+      body: {
+        initiator: username.value,
+        newValue,
+      }
+    })
+    relayValue.value = newValue
+  } finally {
+    transmitting.value = false
+  }
 }
 </script>

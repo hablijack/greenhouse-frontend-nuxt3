@@ -8,12 +8,18 @@ const greenhouseTheme = {
   colors: {
     primary: '#5cad8a',
     'primary-darken-1': '#5cad8a',
+    secondary: '#EA8162',
+    accent: '#5cad8a',
+    error: '#EA8162',
+    warning: '#FFA726',
+    info: '#42A5F5',
+    success: '#66BB6A',
   }
 }
 
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
-    ssr: true,
+    ssr: false,
     components,
     directives,
     theme: {
@@ -21,7 +27,16 @@ export default defineNuxtPlugin(nuxtApp => {
       themes: {
         greenhouseTheme,
       }
-    }
+    },
+    defaults: {
+      VCard: {
+        elevation: 2,
+      },
+      VBtn: {
+        color: 'primary',
+        variant: 'elevated',
+      },
+    },
   })
 
   nuxtApp.vueApp.use(vuetify)

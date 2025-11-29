@@ -1,113 +1,63 @@
 <template>
-  <label
-    :for="id + '_button'"
-    :class="{ active: isActive }"
-    class="toggle__button"
-  >
+  <label :for="`${id}_button`" :class="{ active: isActive }" class="toggle-button">
     <input
       type="checkbox"
       :disabled="disabled"
-      :id="id + '_button'"
+      :id="`${id}_button`"
       v-model="checkedValue"
     />
-    <span class="toggle__switch">
-      <span class="toggle__switch__label">
+    <span class="toggle-switch">
+      <span class="toggle-label">
         {{ isActive ? labelEnableText : labelDisableText }}
       </span>
     </span>
   </label>
 </template>
 
-<script>
-export default {
-  name: "ToggleButton",
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+<script setup>
+const props = defineProps({
+  disabled: { type: Boolean, default: false },
+  color: String,
+  labelEnableText: { type: String, default: "On" },
+  labelDisableText: { type: String, default: "Off" },
+  id: { type: String, default: "primary" },
+  defaultState: { type: Boolean, default: false },
+})
 
-    color: {
-      type: String,
-    },
+const emit = defineEmits(['change'])
 
-    labelEnableText: {
-      type: String,
-      default: "On",
-    },
+const currentState = ref(props.defaultState)
 
-    labelDisableText: {
-      type: String,
-      default: "Off",
-    },
+watch(() => props.defaultState, (newValue) => {
+  currentState.value = Boolean(newValue)
+})
 
-    id: {
-      type: String,
-      default: "primary",
-    },
+const isActive = computed(() => currentState.value)
 
-    defaultState: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  data() {
-    return {
-      currentState: this.defaultState,
-    };
-  },
-
-  watch: {
-    defaultState: function defaultState() {
-      this.currentState = Boolean(this.defaultState);
-    },
-  },
-
-  computed: {
-    // currentState() {
-    //     return this.defaultState;
-    // },
-
-    isActive() {
-      return this.currentState;
-    },
-
-    enableText() {
-      return this.labelEnableText;
-    },
-
-    disabledText() {
-      return this.labelDisableText;
-    },
-
-    checkedValue: {
-      get() {
-        return this.currentState;
-      },
-
-      set(newValue) {
-        this.currentState = newValue;
-        this.$emit("change", newValue);
-      },
-    },
-  },
-};
+const checkedValue = computed({
+  get: () => currentState.value,
+  set: (newValue) => {
+    currentState.value = newValue
+    emit('change', newValue)
+  }
+})
 </script>
 
 <style scoped>
-.toggle__button {
+.toggle-button {
   vertical-align: middle;
   user-select: none;
   cursor: pointer;
 }
-.toggle__button input[type="checkbox"] {
+
+.toggle-button input[type="checkbox"] {
   opacity: 0;
   position: absolute;
   width: 1px;
   height: 1px;
 }
-.toggle__button .toggle__switch {
+
+.toggle-switch {
   display: inline-block;
   margin: 5px;
   height: 45px;
@@ -119,8 +69,8 @@ export default {
   transition: all 0.25s;
 }
 
-.toggle__button .toggle__switch::after,
-.toggle__button .toggle__switch::before {
+.toggle-switch::after,
+.toggle-switch::before {
   content: "";
   position: absolute;
   display: block;
@@ -133,40 +83,41 @@ export default {
   transition: all 0.25s cubic-bezier(0.5, -0.6, 0.5, 1.6);
 }
 
-.toggle__button .toggle__switch::after {
+.toggle-switch::after {
   background: #343a40;
   box-shadow: 0 0 1px #666;
 }
-.toggle__button .toggle__switch::before {
+
+.toggle-switch::before {
   background: #343a40;
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
   opacity: 0;
 }
 
-.active .toggle__switch {
+.active .toggle-switch {
   background: black;
   box-shadow: inset 0 0 1px black;
 }
 
-.active .toggle__switch::after,
-.active .toggle__switch::before {
-  transform: translateX(100px - 30px);
+.active .toggle-switch::after,
+.active .toggle-switch::before {
+  transform: translateX(70px);
 }
 
-.active .toggle__switch::after {
+.active .toggle-switch::after {
   left: 71px;
   background: #343a40;
   box-shadow: 0 0 1px #343a40;
 }
 
-.toggle__switch__label {
+.toggle-label {
   color: white;
   margin-left: 57px;
   font-size: 28px;
   line-height: 44px;
 }
 
-.active .toggle__switch__label {
+.active .toggle-label {
   color: white;
   margin-left: 10px;
   font-size: 28px;

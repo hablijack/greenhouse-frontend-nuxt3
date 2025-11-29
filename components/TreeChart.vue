@@ -2,118 +2,104 @@
   <table v-if="treeData.name">
     <tr>
       <td
-        :colspan="
-          Array.isArray(treeData.children) ? treeData.children.length * 2 : 1
-        "
+        :colspan="hasChildren ? treeData.children.length * 2 : 1"
         :class="{
-          parentLevel:
-            Array.isArray(treeData.children) && treeData.children.length,
-          extend:
-            Array.isArray(treeData.children) &&
-            treeData.children.length &&
-            treeData.extend,
+          parentLevel: hasChildren,
+          extend: hasChildren && treeData.extend,
         }"
       >
         <div :class="{ node: true, hasMate: treeData.mate }">
           <div
             class="person"
-            :class="Array.isArray(treeData.class) ? treeData.class : []"
+            :class="treeData.class || []"
             @click="$emit('click-node', treeData)"
           >
             <v-icon
-              style="position: absolute; top: 0; right: 0; z-index: 20"
-              color="#5cad8a"
-              v-if="treeData.online"
-              >mdi-check-circle</v-icon
+              class="status-icon"
+              :color="treeData.online ? '#5cad8a' : '#EA8162'"
             >
-            <v-icon
-              style="position: absolute; top: 0; right: 0; z-index: 20"
-              color="#EA8162"
-              v-if="!treeData.online"
-              >mdi-minus-circle</v-icon
-            >
-            <div class="avat">
+              {{ treeData.online ? 'mdi-check-circle' : 'mdi-minus-circle' }}
+            </v-icon>
+            <div class="avatar">
               <img :src="`/img/${treeData.imageUrl}`" />
             </div>
             <div class="name">{{ treeData.name }}</div>
           </div>
-          <template v-if="Array.isArray(treeData.mate) && treeData.mate.length">
+          
+          <template v-if="hasMates">
             <div
-              class="person"
               v-for="(mate, mateIndex) in treeData.mate"
-              :key="treeData.name + mateIndex"
-              :class="Array.isArray(mate.class) ? mate.class : []"
+              :key="`${treeData.name}-${mateIndex}`"
+              class="person"
+              :class="mate.class || []"
               @click="$emit('click-node', mate)"
             >
-              <div class="avat">
+              <div class="avatar">
                 <img :src="`/img/${mate.imageUrl}`" />
               </div>
               <div class="name">{{ mate.name }}</div>
             </div>
           </template>
         </div>
+        
         <div
+          v-if="hasChildren"
           class="extend_handle"
-          v-if="Array.isArray(treeData.children) && treeData.children.length"
           @click="toggleExtend(treeData)"
-        ></div>
+        />
       </td>
     </tr>
-    <tr
-      v-if="
-        Array.isArray(treeData.children) &&
-        treeData.children.length &&
-        treeData.extend
-      "
-    >
+    
+    <tr v-if="hasChildren && treeData.extend">
       <td
         v-for="(children, index) in treeData.children"
         :key="index"
         colspan="2"
         class="childLevel"
       >
-        <TreeChart :json="children" @click-node="$emit('click-node', $event)" />
+        <TreeChart 
+          :json="children" 
+          @click-node="$emit('click-node', $event)" 
+        />
       </td>
     </tr>
   </table>
 </template>
 
-<script>
-export default {
-  name: "TreeChart",
-  props: ["json"],
-  data() {
-    return {
-      treeData: {},
-    };
-  },
-  watch: {
-    json: {
-      handler: function (Props) {
-        let extendKey = function (jsonData) {
-          jsonData.extend =
-            jsonData.extend === void 0 ? true : !!jsonData.extend;
-          if (Array.isArray(jsonData.children)) {
-            jsonData.children.forEach((c) => {
-              extendKey(c);
-            });
-          }
-          return jsonData;
-        };
-        if (Props) {
-          this.treeData = extendKey(Props);
-        }
-      },
-      immediate: true,
-    },
-  },
-  methods: {
-    toggleExtend: function (treeData) {
-      treeData.extend = !treeData.extend;
-      this.$forceUpdate();
-    },
-  },
-};
+<script setup>
+const props = defineProps({
+  json: Object,
+})
+
+const emit = defineEmits(['click-node'])
+
+const treeData = ref({})
+
+const hasChildren = computed(() => 
+  Array.isArray(treeData.value.children) && treeData.value.children.length
+)
+
+const hasMates = computed(() => 
+  Array.isArray(treeData.value.mate) && treeData.value.mate.length
+)
+
+const extendKey = (jsonData) => {
+  jsonData.extend = jsonData.extend === void 0 ? true : !!jsonData.extend
+  if (Array.isArray(jsonData.children)) {
+    jsonData.children.forEach(extendKey)
+  }
+  return jsonData
+}
+
+const toggleExtend = (treeDataItem) => {
+  treeDataItem.extend = !treeDataItem.extend
+}
+
+watch(() => props.json, (newJson) => {
+  if (newJson) {
+    treeData.value = extendKey(newJson)
+  }
+}, { immediate: true })
 </script>
 
 <style scoped>
@@ -224,7 +210,14 @@ td {
   width: 7em;
   overflow: hidden;
 }
-.node .person .avat {
+.status-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 20;
+}
+
+.node .person .avatar {
   display: block;
   width: 4em;
   height: 4em;
@@ -234,7 +227,8 @@ td {
   border: none;
   box-sizing: border-box;
 }
-.node .person .avat img {
+
+.node .person .avatar img {
   width: 100%;
   height: 100%;
 }
