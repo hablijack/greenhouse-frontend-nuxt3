@@ -1,5 +1,5 @@
 FROM node:lts-alpine as builder
-
+ARG PORT=3000
 RUN mkdir -p /app
 WORKDIR /app
 
