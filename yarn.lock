@@ -3808,10 +3808,10 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
-nuxt-auth-utils@0.5.27:
-  version "0.5.27"
-  resolved "https://registry.yarnpkg.com/nuxt-auth-utils/-/nuxt-auth-utils-0.5.27.tgz#892bcab453ed02975b0798a589d65f1cff78e42a"
-  integrity sha512-nXV/479IaP+g8z3+OqTgv7SNcNqPn0zyhD1t8tBxtskt+LFX1nKCZ6ZbpBGLL2wFdobh+gvzNHQjIIzqigr5Bw==
+nuxt-auth-utils@0.5.28:
+  version "0.5.28"
+  resolved "https://registry.yarnpkg.com/nuxt-auth-utils/-/nuxt-auth-utils-0.5.28.tgz#27894a678086797e4b57c040023160de780ff5e1"
+  integrity sha512-qWwJurmNTt1/Srxs9NqNAUz32mjIVBOFNr/vzoienMSp2qOktjxr5F9Ce0azb01w+KRz1hVfxA0/wtgCVsjZ0A==
   dependencies:
     "@adonisjs/hash" "^9.1.1"
     "@nuxt/kit" "^4.2.2"
