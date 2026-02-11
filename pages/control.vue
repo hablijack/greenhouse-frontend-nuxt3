@@ -27,7 +27,7 @@
                     <td>{{ formatTimestamp(log.timestamp) }}</td>
                     <td>{{ log.initiator }}</td>
                     <td>
-                      <v-chip label outlined :color="log.value ? 'green' : 'gray'">
+                      <v-chip label outlined :color="log.value ? 'green' : 'gray'" v-if="log.relay">
                         {{ log.relay.target }}
                         {{ log.relay.name }}
                       </v-chip>
@@ -45,14 +45,20 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-const { user } = useUserSession()
-const username = user.value.email
-const logs = ref([])
+import { onMounted, ref } from 'vue';
 
+// Initialize logs array as empty
+const logs = ref([]);
+
+// Get relays data
 const relays = await $fetch('/api/rest/relays');
 
-const formatTimestamp = (timestamp) => {
+// Get username from user session
+const { user } = useUserSession()
+const username = user.value.name
+
+// Format timestamp function
+function formatTimestamp(timestamp) {
   try {
     return Intl.DateTimeFormat("de-DE", { dateStyle: 'medium', timeStyle: 'medium' }).format(new Date(timestamp))
   } catch (e) {
@@ -61,13 +67,18 @@ const formatTimestamp = (timestamp) => {
 }
 
 onMounted(() => {
-  const socket = new WebSocket(
-    '/api/socket/relays/' + username
-  );
+  // Use runtime config to get the base URL
+  const config = useRuntimeConfig()
+  const wsUrl = config.public.wssBaseUrl.replace(/^ws/, 'ws') + '/api/socket/relays/' + username
+  
+  const socket = new WebSocket(wsUrl);
   socket.onmessage = function (message) {
     let newLogEntries = JSON.parse(message.data)
     logs.value.unshift(...newLogEntries);
-    logs.value.pop();
+    // Keep only the last 10 entries
+    if (logs.value.length > 10) {
+      logs.value = logs.value.slice(0, 10);
+    }
   };
 });
 </script>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1770793922548" clover="3.2.0">
+  <project timestamp="1770793922548" name="All files">
+    <metrics statements="28" coveredstatements="28" conditionals="8" coveredconditionals="8" methods="10" coveredmethods="10" elements="46" coveredelements="46" complexity="0" loc="28" ncloc="28" packages="1" files="1" classes="1"/>
+    <file name="ToggleButton.vue" path="/home/christoph/Workspace/greenhouse-frontend-nuxt3/components/ToggleButton.vue">
+      <metrics statements="28" coveredstatements="28" conditionals="8" coveredconditionals="8" methods="10" coveredmethods="10"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="40" count="26" type="stmt"/>
+      <line num="57" count="18" type="stmt"/>
+      <line num="58" count="18" type="stmt"/>
+      <line num="59" count="18" type="stmt"/>
+      <line num="60" count="18" type="stmt"/>
+      <line num="61" count="20" type="stmt"/>
+      <line num="62" count="2" type="stmt"/>
+      <line num="64" count="26" type="stmt"/>
+      <line num="65" count="18" type="stmt"/>
+      <line num="66" count="18" type="stmt"/>
+      <line num="67" count="26" type="stmt"/>
+      <line num="69" count="6" type="stmt"/>
+      <line num="70" count="6" type="stmt"/>
+      <line num="73" count="18" type="stmt"/>
+      <line num="81" count="18" type="stmt"/>
+      <line num="85" count="18" type="stmt"/>
+      <line num="90" count="1" type="stmt"/>
+      <line num="93" count="1" type="stmt"/>
+      <line num="94" count="1" type="stmt"/>
+      <line num="95" count="1" type="stmt"/>
+      <line num="96" count="1" type="stmt"/>
+      <line num="97" count="1" type="stmt"/>
+      <line num="102" count="32" type="stmt"/>
+      <line num="117" count="6" type="stmt"/>
+      <line num="125" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

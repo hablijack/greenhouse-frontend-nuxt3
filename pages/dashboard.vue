@@ -59,9 +59,11 @@ const measurements = ref({})
 const sensors = await $fetch('/api/rest/sensors');
 const relays = await $fetch('/api/rest/relays');
 onMounted(() => {
-  const socket = new WebSocket(
-    '/api/socket/sensors/measurements'
-  );
+  // Use runtime config to get the base URL
+  const config = useRuntimeConfig()
+  const wsUrl = config.public.wssBaseUrl.replace(/^ws/, 'ws') + '/api/socket/sensors/measurements'
+  
+  const socket = new WebSocket(wsUrl);
   socket.onmessage = function (message) {
     measurements.value = JSON.parse(message.data);
   };

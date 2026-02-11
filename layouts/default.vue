@@ -216,9 +216,12 @@ const databaseFillmentState = (dbstats) => {
 onMounted(() => {
   calculateCurrentTime()
   setInterval(calculateCurrentTime, 10000);
-  const socket = new WebSocket(
-    '/api/socket/sensors/measurements'
-  );
+  
+  // Use runtime config to get the base URL
+  const config = useRuntimeConfig()
+  const wsUrl = config.public.wssBaseUrl.replace(/^ws/, 'ws') + '/api/socket/sensors/measurements'
+  
+  const socket = new WebSocket(wsUrl);
   socket.onmessage = function (message) {
     let measurements = JSON.parse(message.data)
     let newStats = {
