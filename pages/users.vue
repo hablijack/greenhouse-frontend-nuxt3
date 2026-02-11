@@ -2,7 +2,13 @@
   <v-container fluid>
     <v-col cols="10" sm="10" md="10" lg="6">
       <v-card class="elevation-2">
-        <v-data-table :headers="headers" :hide-default-footer="users.length < 11" :items="users">
+      <v-data-table
+        :headers="headers"
+        :items="users"
+        :search="search"
+        :items-per-page="5"
+        :hide-default-footer="users.length <= 5"
+      >
           <template v-slot:top>
             <v-toolbar flat>
               <v-toolbar-title>
@@ -10,19 +16,34 @@
                 Benutzerverwaltung
               </v-toolbar-title>
 
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                append-inner-icon="mdi-magnify"
+                label="Suche"
+                single-line
+                hide-details
+                dense
+              ></v-text-field>
+
               <v-btn prepend-icon="mdi-plus" variant="elevated" color="primary" text="Neuen Benutzer anlegen" border
                 @click="add"></v-btn>
             </v-toolbar>
           </template>
 
-          <template v-slot:item.title="{ value }">
-            <v-chip :text="value" border="thin opacity-25" prepend-icon="mdi-book" label>
+          <template v-slot:item.username="{ value }">
+            <v-chip :text="value" color="primary" dark label>
               <template v-slot:prepend>
-                <v-icon color="medium-emphasis"></v-icon>
+                <v-icon color="white" icon="mdi-account"></v-icon>
               </template>
             </v-chip>
           </template>
 
+          <template v-slot:item.role="{ value }">
+            <v-chip :text="value" :color="value === 'admin' ? 'red' : 'green'" dark label
+              :prepend-icon="value === 'admin' ? 'mdi-shield-account' : 'mdi-account-group'"
+            </v-chip>
+          </template>
           <template v-slot:item.actions="{ item }">
             <div class="d-flex ga-2 justify-end">
               <v-icon color="medium-emphasis" icon="mdi-pencil" size="small"
@@ -31,8 +52,8 @@
           </template>
 
           <template v-slot:no-data>
-            <v-btn prepend-icon="mdi-backup-restore" rounded="lg" text="Reset data" variant="text" border
-              @click="reset"></v-btn>
+            <v-btn prepend-icon="mdi-backup-restore" rounded="lg" text="Daten zurücksetzen" variant="text" border
+              @click="resetUsers"></v-btn>
           </template>
         </v-data-table>
       </v-card>
@@ -76,6 +97,9 @@ tbody tr:nth-of-type(odd) {
   /* 'teal lighten-5' basides on material design color */
   background-color: rgb(238, 238, 238)
 }
+tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
 </style>
 
 <script setup>
@@ -95,16 +119,20 @@ const dialog = shallowRef(false)
 const isEditing = shallowRef(false)
 
 const headers = [
-  { title: 'Username', key: 'username', align: 'start' },
+  { title: 'Benutzername', key: 'username', align: 'start' },
   { title: 'Name', key: 'name' },
-  { title: 'Rechte', key: 'role' },
-  { title: 'Actions', key: 'actions', align: 'end', sortable: false },
+  { title: 'Rolle', key: 'role' },
+  { title: 'Aktionen', key: 'actions', align: 'end', sortable: false },
 ]
+
+// search field for filtering
+const search = ref('')
 
 onMounted(() => {
   dialog.value = false
   user.value = DEFAULT_USER
-  users.value = loaded_users.value
+  // loaded_users is the actual array returned from $fetch
+  users.value = loaded_users ?? []
 })
 
 function add() {
@@ -126,6 +154,13 @@ function edit(username) {
   }
 
   dialog.value = true
+}
+
+async function resetUsers() {
+  // placeholder for reset logic – currently just reload users
+  users.value = []
+  const reloaded = await $fetch('/api/rest/users')
+  users.value = reloaded ?? []
 }
 
 async function save() {

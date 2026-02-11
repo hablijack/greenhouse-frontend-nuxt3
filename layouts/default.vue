@@ -76,7 +76,7 @@
           </v-list-item>
           <v-divider class="mb-4" />
           <v-list-item>
-            <v-btn style="width: 100%" variant="elevated" size="x-large" @click="logout" to="/">
+            <v-btn style="width: 100%" variant="elevated" size="x-large" color="#6aab8b" @click="logout" to="/">
               <v-icon>mdi-logout</v-icon>
               logout
             </v-btn>
@@ -95,7 +95,7 @@
           <v-divider />
           <v-list-item style="min-height: 20px;">
             <v-list-item-subtitle class="ma-3" style="align-items: center;">
-              <i>© Copyright 2025 Greenhouse</i>
+              <i>© Copyright 2026 Greenhouse</i>
             </v-list-item-subtitle>
           </v-list-item>
         </v-list>
@@ -205,7 +205,7 @@ const batteryIcon = (stat) => {
 const databaseFillmentState = (dbstats) => {
   if (dbstats) {
     let dbSize = dbstats.measurementSizeByte + dbstats.relayLogSizeByte;
-    let TEN_MB_IN_BYTE = 10485760;
+    let TEN_MB_IN_BYTE = 104857600;
     let percent = dbSize / (TEN_MB_IN_BYTE / 100);
     return Math.round(percent);
   } else {

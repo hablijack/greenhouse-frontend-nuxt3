@@ -5,9 +5,10 @@
         <v-card>
           <v-card-title>Satelliten:</v-card-title>
           <v-card-text>
-            <client-only>
-              <TreeChart v-bind="architecture" :json="architecture" />
-            </client-only>
+          <client-only>
+            <!-- Remove v-bind to avoid passing unintended props to TreeChart -->
+            <TreeChart :json="architecture" />
+          </client-only>
           </v-card-text>
         </v-card>
       </v-col>

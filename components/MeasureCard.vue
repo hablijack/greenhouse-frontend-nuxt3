@@ -10,7 +10,13 @@
       </v-list-item-title>
 
       <v-list-item-subtitle class="text-h4 py-2">
-        <span v-if="measurement == null">...</span>
+        <v-progress-circular
+          v-if="measurement == null"
+          indeterminate
+          color="primary"
+          size="40"
+          class="mx-auto"
+        />
         <template v-else>{{ cardValue }} {{ unit }}</template>
       </v-list-item-subtitle>
 
