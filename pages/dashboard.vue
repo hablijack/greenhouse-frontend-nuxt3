@@ -59,9 +59,10 @@ const measurements = ref({})
 const sensors = await $fetch('/api/rest/sensors');
 const relays = await $fetch('/api/rest/relays');
 onMounted(() => {
-  // Use runtime config to get the base URL
-  const config = useRuntimeConfig()
-  const wsUrl = config.public.wssBaseUrl.replace(/^ws/, 'ws') + '/api/socket/sensors/measurements'
+  // Use Nuxt proxy endpoint for WebSocket connection
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+  const host = window.location.host
+  const wsUrl = `${protocol}//${host}/api/socket/sensors/measurements`
   
   const socket = new WebSocket(wsUrl);
   socket.onmessage = function (message) {
