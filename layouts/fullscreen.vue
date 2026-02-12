@@ -8,7 +8,7 @@
 
 <style>
   .fullscreenpage {
-    background-color: #343a40;
+    background: linear-gradient(135deg, #1e272e, #2c3e50);
     color: white;
   }
   html {
