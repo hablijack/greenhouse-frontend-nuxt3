@@ -1,99 +1,147 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-4 pa-md-6">
     <v-row>
       <v-col cols="12">
-        <LineChart text="Lufttemperaturen" identifier="air-temperatures" />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <LineChart text="Luftfeuchtigkeit" identifier="air-humidity" />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <LineChart text="WiFi Signalstärke" identifier="wifi" />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <LineChart text="CO2 Gehalt" identifier="co2" />
+        <div class="d-flex align-center mb-4">
+          <v-icon size="32" class="mr-3" color="primary">mdi-chart-areaspline</v-icon>
+          <div>
+            <h1 class="text-h4 text-md-h3 font-weight-bold">Historie</h1>
+            <p class="text-body-2 text-medium-emphasis mt-1">
+              Entwicklung der Sensorwerte über Zeit
+            </p>
+          </div>
+        </div>
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="12">
-        <LineChart text="Sonneneinstrahlung (Helligkeit)" identifier="brightness" />
-      </v-col>
+    <v-row v-if="pending" justify="center" class="my-12">
+      <v-progress-circular indeterminate color="primary" size="64"></v-progress-circular>
     </v-row>
 
+    <v-alert v-else-if="error" type="error" variant="tonal" class="mb-4">
+      Fehler beim Laden der Sensoren. Bitte versuchen Sie es erneut.
+    </v-alert>
+
+    <template v-else>
+      <v-row v-for="sensor in chartSensors" :key="sensor.id" density="compact">
+        <v-col cols="12">
+          <HistoryChart
+            :title="sensor.name"
+            :api-endpoint="sensor.apiEndpoint"
+            :icon="sensor.icon"
+            :unit="sensor.unit"
+            :min-limit="sensor.minAlarmValue"
+            :max-limit="sensor.maxAlarmValue"
+            :color="sensor.color"
+          />
+        </v-col>
+      </v-row>
+
+      <v-row v-if="chartSensors.length === 0" justify="center" class="my-12">
+        <v-col cols="12" class="text-center">
+          <v-icon size="64" color="grey">mdi-chart-line-variant</v-icon>
+          <p class="text-h6 mt-4 text-medium-emphasis">Keine Sensoren mit Historien-Daten gefunden</p>
+        </v-col>
+      </v-row>
+    </template>
   </v-container>
 </template>
 
 <script setup>
-import { Chart, registerables } from "chart.js";
-import 'chartjs-adapter-moment';
+definePageMeta({
+  layout: "default",
+  middleware: ['authenticated']
+});
 
-const air_temperatures_timerange = ref("day");
-const air_humidity_timerange = ref("day");
-const wifi_timerange = ref("day");
-const co2_timerange = ref("day");
-const brightness_timerange = ref("day");
+const pending = ref(true);
+const error = ref(false);
+const sensors = ref([]);
 
-let air_temperatures = await $fetch(`/api/rest/history/air/temperatures?timerange=${air_temperatures_timerange}`);
-let air_humidity = await $fetch(`/api/rest/history/air/humidity?timerange=${air_humidity_timerange}`);
-let wifi = await $fetch(`/api/rest/history/wifi?timerange=${wifi_timerange}`);
-let co2 = await $fetch(`/api/rest/history/co2?timerange=${co2_timerange}`);
-let brightness = await $fetch(`/api/rest/history/brightness?timerange=${brightness_timerange}`);
+const sensorConfig = {
+  'air_temperature': {
+    name: 'Lufttemperatur',
+    icon: 'mdi-thermometer',
+    unit: '°C',
+    color: '#EA8162',
+    endpoint: '/api/rest/history/air/temperatures',
+    match: (id) => id.toLowerCase().includes('temp')
+  },
+  'air_humidity_inside': {
+    name: 'Luftfeuchtigkeit',
+    icon: 'mdi-water-percent',
+    unit: '%',
+    color: '#42A5F5',
+    endpoint: '/api/rest/history/air/humidity',
+    match: (id) => id.toLowerCase().includes('humidity') && !id.toLowerCase().includes('soil')
+  },
+  'co2': {
+    name: 'CO2-Gehalt',
+    icon: 'mdi-molecule-co2',
+    unit: 'ppm',
+    color: '#78909C',
+    endpoint: '/api/rest/history/co2',
+    match: (id) => id.toLowerCase().includes('co2')
+  },
+  'brightness': {
+    name: 'Helligkeit',
+    icon: 'mdi-brightness-6',
+    unit: 'lux',
+    color: '#FFA726',
+    endpoint: '/api/rest/history/brightness',
+    match: (id) => id.toLowerCase().includes('brightness')
+  },
+  'wifi': {
+    name: 'WiFi Signalstärke',
+    icon: 'mdi-wifi',
+    unit: 'dBi',
+    color: '#AB47BC',
+    endpoint: '/api/rest/history/wifi',
+    match: (id) => id.toLowerCase().includes('wifi')
+  }
+};
 
-
-
-const createChart = (identifier, datasets, scale, unit) => {
-  new Chart(identifier, {
-    type: 'line',
-    data: { datasets },
-    options: {
-      responsive: true,
-      elements: {
-        line: {
-          tension: 0.3
+const chartSensors = computed(() => {
+  const seenEndpoints = new Set();
+  
+  return sensors.value
+    .filter(s => {
+      const identifier = (s.identifier || '').toLowerCase();
+      return !identifier.includes('soil') && !identifier.includes('rain') && !identifier.includes('boden');
+    })
+    .map(sensor => {
+      const identifier = sensor.identifier || '';
+      
+      // Find matching config
+      const config = Object.values(sensorConfig).find(c => c.match(identifier));
+      
+      if (config) {
+        // Skip if we've already seen this endpoint
+        if (seenEndpoints.has(config.endpoint)) {
+          return null;
         }
-      },
-      scales: {
-        x: {
-          type: 'time',
-          time: {
-            unit: 'hour',
-            displayFormats: {
-                hour: 'HH:MM'
-            }
-          }
-        },
-        y: {
-          ticks: {
-            callback: function (value, index, ticks) {
-              return value + ' ' + scale;
-            }
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          position: 'bottom',
-        }
+        seenEndpoints.add(config.endpoint);
+        
+        return {
+          ...sensor,
+          name: config.name,
+          icon: config.icon,
+          unit: config.unit,
+          color: config.color,
+          apiEndpoint: config.endpoint
+        };
       }
-    },
-  });
-}
+      return null;
+    })
+    .filter(s => s !== null);
+});
 
-onMounted(() => {
-  if (Chart) {
-    Chart.register(...registerables);
-    createChart('air-temperatures', air_temperatures, '°C', 'day');
-    createChart('air-humidity', air_humidity, '%', 'day');
-    createChart('wifi', wifi, 'dBi', 'day');
-    createChart('co2', co2, 'ppm', 'day');
-    createChart('brightness', brightness, 'lux', 'day');
+onMounted(async () => {
+  try {
+    sensors.value = await $fetch('/api/rest/sensors');
+  } catch (e) {
+    error.value = true;
+  } finally {
+    pending.value = false;
   }
 });
 </script>

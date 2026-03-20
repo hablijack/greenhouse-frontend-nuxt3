@@ -5,7 +5,7 @@
         sm="12" md="6" lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
           :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
-          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" />
+          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)" />
       </v-col>
     </v-row>
     <v-row dense>
@@ -32,7 +32,7 @@
           <v-col v-for="sensor in sliceSensors(sensors, 4, 10)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
             lg="12">
             <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-              :description="sensor.description" :icon="sensor.icon" color="#5cad8a" />
+              :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)" />
           </v-col>
         </v-row>
       </v-col>
@@ -41,7 +41,7 @@
       <v-col v-for="sensor in sliceSensors(sensors, 10, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12"
         md="6" lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-          :description="sensor.description" :icon="sensor.icon" color="#5cad8a" />
+          :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)" />
       </v-col>
     </v-row>
   </v-container>
@@ -80,5 +80,11 @@ const sliceSensors = (sensors, start, end) => {
   } else {
     return []
   }
+}
+
+const isBooleanSensor = (identifier) => {
+  if (!identifier) return false;
+  const lower = identifier.toLowerCase();
+  return lower.includes('soil') || lower.includes('boden') || lower.includes('rain');
 }
 </script>

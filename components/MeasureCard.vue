@@ -17,6 +17,12 @@
           size="40"
           class="mx-auto"
         />
+        <template v-else-if="isBoolean">
+          <v-chip :color="measurement === 1 ? 'success' : 'error'" size="large" variant="flat">
+            <v-icon start>{{ measurement === 1 ? 'mdi-water' : 'mdi-water-off' }}</v-icon>
+            {{ measurement === 1 ? 'Nass' : 'Trocken' }}
+          </v-chip>
+        </template>
         <template v-else>{{ cardValue }} {{ unit }}</template>
       </v-list-item-subtitle>
 
@@ -38,6 +44,10 @@ const props = defineProps({
   color: String,
   minAlarmValue: Number,
   maxAlarmValue: Number,
+  isBoolean: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const cardValue = computed(() => {
@@ -46,9 +56,18 @@ const cardValue = computed(() => {
 })
 
 const cardColor = computed(() => {
+  if (props.isBoolean) {
+    return props.measurement === 1 ? '#66BB6A' : '#EA8162'
+  }
   if (props.measurement <= props.minAlarmValue || props.measurement >= props.maxAlarmValue) {
     return "#EA8162"
   }
   return "#5cad8a"
 })
 </script>
+
+<style scoped>
+.v-list-item-subtitle.text-h4 {
+  font-size: 34px !important;
+}
+</style>

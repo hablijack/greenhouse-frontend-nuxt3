@@ -110,6 +110,10 @@
 </template>
 
 <style scoped>
+.v-list-item--nav .v-list-item-title {
+  font-size: 20px !important;
+}
+
 .logo {
   color: #5cad8a;
   font-weight: bold;
