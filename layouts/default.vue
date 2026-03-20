@@ -50,6 +50,12 @@
             </template>
             <v-list-item-title style="line-height: 2rem;" class="text-h6">Steuerung</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/planting-tracks">
+            <template v-slot:prepend>
+              <v-icon>mdi-sprout</v-icon>
+            </template>
+            <v-list-item-title style="line-height: 2rem;" class="text-h6">Pflanzspuren</v-list-item-title>
+          </v-list-item>
           <v-list-item to="/limits">
             <template v-slot:prepend>
               <v-icon>mdi-plus-minus-box</v-icon>

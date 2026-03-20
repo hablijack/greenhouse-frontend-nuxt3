@@ -12,6 +12,6 @@
     color: white;
   }
   html {
-    overflow-y: hidden;
+    overflow-y: auto;
   }
 </style>

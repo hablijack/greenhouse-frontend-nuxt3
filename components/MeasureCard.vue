@@ -20,7 +20,11 @@
         <template v-else-if="isBoolean">
           <v-chip :color="measurement === 1 ? 'success' : 'error'" size="large" variant="flat">
             <v-icon start>{{ measurement === 1 ? 'mdi-water' : 'mdi-water-off' }}</v-icon>
-            {{ measurement === 1 ? 'Nass' : 'Trocken' }}
+            {{ measurement === 1 ? 'Wet' : 'Dry' }}
+          </v-chip>
+          <v-chip v-if="plantType" color="#343a40" variant="flat" class="ml-2" size="large">
+            <v-icon start size="small">mdi-sprout</v-icon>
+            {{ plantType }}
           </v-chip>
         </template>
         <template v-else>{{ cardValue }} {{ unit }}</template>
@@ -47,6 +51,10 @@ const props = defineProps({
   isBoolean: {
     type: Boolean,
     default: false
+  },
+  plantType: {
+    type: String,
+    default: null
   }
 })
 

@@ -2,17 +2,15 @@
   <v-container fluid class="pa-4 pa-md-6">
     <v-row>
       <v-col cols="12">
-        <div class="d-flex align-center mb-4">
-          <v-icon size="32" class="mr-3" color="primary">mdi-chart-areaspline</v-icon>
-          <div>
-            <h1 class="text-h4 text-md-h3 font-weight-bold">Historie</h1>
-            <p class="text-body-2 text-medium-emphasis mt-1">
+        <v-card>
+          <v-card-title style="background-color: #343a40; color: white">
+            <v-icon left>mdi-chart-areaspline</v-icon>
+            Historie
+          </v-card-title>
+          <v-card-text class="pt-4">
+            <p class="text-body-2 text-medium-emphasis mb-4">
               Entwicklung der Sensorwerte über Zeit
             </p>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
 
     <v-row v-if="pending" justify="center" class="my-12">
       <v-progress-circular indeterminate color="primary" size="64"></v-progress-circular>
@@ -44,6 +42,10 @@
         </v-col>
       </v-row>
     </template>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

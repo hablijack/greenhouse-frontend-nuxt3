@@ -1,16 +1,17 @@
 <template>
   <v-container fluid>
-    <v-row dense>
+    <v-row density="comfortable">
       <v-col v-for="sensor in sliceSensors(sensors, 0, 4)" v-bind:key="sensor.name + sensor.identifier" cols="12"
         sm="12" md="6" lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
           :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
-          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)" />
+          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)"
+          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row density="comfortable">
       <v-col cols="12" sm="12" md="12" lg="9" style="position: relative">
-        <v-row dense justify="end" style="
+        <v-row density="comfortable" justify="end" style="
             position: absolute;
             bottom: 0;
             left: 0;
@@ -28,20 +29,22 @@
           style="transform: rotate(180deg);"></v-img>
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="3">
-        <v-row dense>
-          <v-col v-for="sensor in sliceSensors(sensors, 4, 10)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
-            lg="12">
-            <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-              :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)" />
-          </v-col>
+        <v-row density="comfortable">
+            <v-col v-for="sensor in sliceSensors(sensors, 4, 10)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
+              lg="12">
+              <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
+                :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)"
+                :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
+            </v-col>
         </v-row>
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row density="comfortable">
       <v-col v-for="sensor in sliceSensors(sensors, 10, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12"
         md="6" lg="3">
         <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-          :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)" />
+          :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)"
+          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
       </v-col>
     </v-row>
   </v-container>
@@ -86,5 +89,15 @@ const isBooleanSensor = (identifier) => {
   if (!identifier) return false;
   const lower = identifier.toLowerCase();
   return lower.includes('soil') || lower.includes('boden') || lower.includes('rain');
+}
+
+const getPlantType = (identifier) => {
+  if (!identifier) return null;
+  const relay = relays.find(r => 
+    r.conditionTrigger && 
+    r.conditionTrigger.triggerSensor &&
+    r.conditionTrigger.triggerSensor.identifier === identifier
+  );
+  return relay?.target || null;
 }
 </script>

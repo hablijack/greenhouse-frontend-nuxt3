@@ -18,7 +18,8 @@
       :id="inputId"
       type="checkbox"
       :disabled="disabled"
-      v-model="checkedValue"
+      :checked="currentState"
+      @change="onInputChange"
       class="ios-toggle__input"
     >
     <div class="ios-toggle__track">
@@ -63,9 +64,14 @@ const checkedValue = computed({
   get: () => currentState.value,
   set: (newValue) => {
     currentState.value = newValue
-    emit('change', newValue)
   }
 })
+
+const onInputChange = (event) => {
+  const newValue = event.target.checked
+  currentState.value = newValue
+  emit('change', newValue)
+}
 </script>
 
 <style scoped>

@@ -10,13 +10,13 @@
     </v-row>
 </div>
 
-<v-row justify="center" dense>
+<v-row justify="center" density="comfortable">
     <v-col cols="12" sm="10" md="6" lg="4" class="login-col">
                 <form @submit.prevent="login">
                     <v-card>
                         <v-card-title style="background-color: #2b2d30; color: white">
                             <!-- Mobile hero title (hidden on large) -->
-                            <v-row align="center" justify="center" dense class="d-lg-none pb-7 pt-5">
+                            <v-row align="center" justify="center" density="comfortable" class="d-lg-none pb-7 pt-5">
                                 <v-col cols="12" class="text-center mobile-title">
                                     Greenhouse
                                 </v-col>

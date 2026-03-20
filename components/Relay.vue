@@ -9,7 +9,7 @@
         <ToggleButton 
           v-if="!transmitting"
           :id="id" 
-          :defaultState="initialValue" 
+          :defaultState="relayValue" 
           :color="color"
           labelEnableText="AN" 
           labelDisableText="AUS"

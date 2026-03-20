@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
-    <v-row dense>
+    <v-row density="comfortable">
       <v-col cols="12" sm="12" md="12" lg="6">
-        <v-row dense>
+        <v-row density="comfortable">
           <v-col v-for="relay in relays" v-bind:key="relay.name" cols="12">
             <Relay :id="relay.identifier" :name="relay.name" :target="relay.target" :initialValue="relay.value"
               :description="relay.description" :icon="relay.icon" :color="relay.color" />
@@ -11,8 +11,11 @@
       </v-col>
       <v-col cols="12" sm="12" md="12" lg="6">
         <v-card style="height: 100%">
-          <v-list-item three-line>
-            <div class="text-overline">Logbuch:</div>
+          <v-card-title style="background-color: #343a40; color: white">
+            <v-icon left>mdi-clipboard-text</v-icon>
+            Logbuch
+          </v-card-title>
+          <v-card-text>
             <v-table class="elevation-1" density="compact">
               <template v-slot:default>
                 <thead>
@@ -37,7 +40,7 @@
                 </tbody>
               </template>
             </v-table>
-          </v-list-item>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>

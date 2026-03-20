@@ -10,9 +10,9 @@
         :hide-default-footer="users.length <= 5"
       >
           <template v-slot:top>
-            <v-toolbar flat>
-              <v-toolbar-title>
-                <v-icon color="medium-emphasis" icon="mdi-account" start></v-icon>
+            <v-toolbar flat style="background-color: #343a40;">
+              <v-toolbar-title style="color: white">
+                <v-icon color="white" icon="mdi-account" start></v-icon>
                 Benutzerverwaltung
               </v-toolbar-title>
 
@@ -23,7 +23,7 @@
                 label="Suche"
                 single-line
                 hide-details
-                dense
+                density="compact"
               ></v-text-field>
 
               <v-btn prepend-icon="mdi-plus" variant="elevated" color="primary" text="Neuen Benutzer anlegen" border

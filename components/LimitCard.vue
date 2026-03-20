@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="isLoading" class="limit-card">
     <v-card-title class="pb-2">
-      <v-row dense align="center" no-gutters>
+      <v-row density="comfortable" align="center" no-gutters>
         <v-col cols="auto">
           <v-avatar :color="statusColor" size="40" class="mr-3">
             <v-icon size="24">{{ icon }}</v-icon>
@@ -61,7 +61,7 @@
           </template>
         </v-range-slider>
 
-        <v-row dense class="mt-1">
+        <v-row density="comfortable" class="mt-1">
           <v-col cols="6">
             <v-text-field
               v-model.number="localMinValue"
