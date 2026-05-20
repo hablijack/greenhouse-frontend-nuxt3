@@ -34,6 +34,6 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.2.9"
+    "vue-tsc": "^3.3.1"
   }
 }
