@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       wasm: true,
+      websocket: true,
     },
   },
 

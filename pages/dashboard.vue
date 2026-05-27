@@ -1,26 +1,17 @@
 <template>
   <v-container fluid>
     <v-row density="comfortable">
-      <v-col v-for="sensor in sliceSensors(sensors, 0, 4)" v-bind:key="sensor.name + sensor.identifier" cols="12"
-        sm="12" md="6" lg="3">
-        <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-          :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
-          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)"
-          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
-      </v-col>
-    </v-row>
-    <v-row density="comfortable">
-      <v-col cols="12" sm="12" md="12" lg="9">
+      <v-col cols="12" sm="12" md="12" lg="6">
         <v-img :src="cameraPictureUrl()" style="transform: rotate(180deg);" class="w-100" contain></v-img>
       </v-col>
-      <v-col cols="12" sm="12" md="12" lg="3">
+      <v-col cols="12" sm="12" md="12" lg="6">
         <v-row density="comfortable">
-            <v-col v-for="sensor in sliceSensors(sensors, 4, 10)" v-bind:key="sensor.name" cols="12" sm="12" md="6"
-              lg="12">
-              <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-                :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)"
-                :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
-            </v-col>
+          <v-col v-for="sensor in sensors" v-bind:key="sensor.name + sensor.identifier" cols="12" sm="6">
+            <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
+              :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
+              :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)"
+              :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -28,14 +19,6 @@
       <v-col v-for="relay in relays" v-bind:key="relay.name" cols="6" sm="4" md="3" lg="2">
         <MiniRelay :color="relay.value ? relay.color : '#343a40'" :name="relay.identifier" :target="relay.target"
           :icon="relay.icon" />
-      </v-col>
-    </v-row>
-    <v-row density="comfortable">
-      <v-col v-for="sensor in sliceSensors(sensors, 10, sensors.length)" v-bind:key="sensor.name" cols="12" sm="12"
-        md="6" lg="3">
-        <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-          :description="sensor.description" :icon="sensor.icon" color="#5cad8a" :is-boolean="isBooleanSensor(sensor.identifier)"
-          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
       </v-col>
     </v-row>
   </v-container>
@@ -66,14 +49,6 @@ onMounted(() => {
 
 const cameraPictureUrl = () => {
   return '/api/rest/satellites/greenhouse-cam/picture.jpg'
-}
-
-const sliceSensors = (sensors, start, end) => {
-  if (sensors) {
-    return sensors.slice(start, end)
-  } else {
-    return []
-  }
 }
 
 const isBooleanSensor = (identifier) => {
