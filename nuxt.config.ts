@@ -54,8 +54,27 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Greenhouse automation and monitoring system' }
+        { name: 'description', content: 'Greenhouse automation and monitoring system' },
+        { name: 'X-Frame-Options', content: 'DENY' },
+        { name: 'X-Content-Type-Options', content: 'nosniff' },
+        { name: 'Referrer-Policy', content: 'strict-origin-when-cross-origin' },
+        { name: 'Permissions-Policy', content: 'camera=(), microphone=(), geolocation=()' },
       ],
+      script: [
+        {
+          src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
+          integrity: 'sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz',
+          crossorigin: 'anonymous',
+        },
+      ],
+    },
+  },
+
+  routeRules: {
+    '/api/**': {
+      headers: {
+        'X-Robots-Tag': 'noindex, nofollow',
+      },
     },
   },
 })

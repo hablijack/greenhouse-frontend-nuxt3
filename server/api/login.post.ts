@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { rateLimiter } from '@jfungus/ratelimit-h3'
 
 const bodySchema = z.object({
   email: z.string().email(),
@@ -10,7 +11,14 @@ interface User {
   username: string;
 }
 
+const loginRateLimiter = rateLimiter({
+  limit: 5,
+  windowMs: 60 * 1000,
+})
+
 export default defineEventHandler(async (event) => {
+  await loginRateLimiter(event)
+
   const config = useRuntimeConfig();
   if (!config.public || !config.public.apiBaseUrl) {
     throw new Error('Missing `runtimeConfig.apiBaseUrl` configuration.');
@@ -28,6 +36,9 @@ export default defineEventHandler(async (event) => {
 
   if (response._data && response.status && response.status === 200) {
     const { name, username } = response._data as User;
+    
+    await clearUserSession(event)
+    
     await setUserSession(event, {
       user: {
         name: name,

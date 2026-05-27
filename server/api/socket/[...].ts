@@ -1,12 +1,10 @@
 import { defineEventHandler } from 'h3'
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-
-const apiProxyMiddleware = createProxyMiddleware({
-  target: 'ws://192.168.178.162:5550',
+const getWebSocketProxyMiddleware = () => createProxyMiddleware({
+  target: process.env.WSS_TARGET_URL || 'ws://localhost:5550',
   changeOrigin: true,
   ws: true,
-  logger: console
 })
 
 export default defineEventHandler(async (event) => {
@@ -17,11 +15,11 @@ export default defineEventHandler(async (event) => {
   await new Promise((resolve, reject) => {
     const next = (err?: unknown) => {
       if (err || !session.user) {
-        reject(err)
+        reject(createError({ statusCode: 401, statusMessage: 'Unauthorized' }))
       } else {
         resolve(true)
       }
     }
-    apiProxyMiddleware(event.node.req, event.node.res, next)
+    getWebSocketProxyMiddleware()(event.node.req, event.node.res, next)
   })
 })

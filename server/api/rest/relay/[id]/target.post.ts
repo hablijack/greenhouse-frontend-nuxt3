@@ -18,10 +18,10 @@ export default defineEventHandler(async (event) => {
   
   const relayId = getRouterParam(event, 'id')
   
-  if (!relayId) {
+  if (!relayId || !/^[a-zA-Z0-9_-]+$/.test(relayId)) {
     return createError({
       statusCode: 400,
-      message: 'Relay ID is required'
+      message: 'Invalid Relay ID format'
     })
   }
   
@@ -41,10 +41,10 @@ export default defineEventHandler(async (event) => {
     return response._data
   } catch (error: unknown) {
     const err = error as { message?: string; data?: unknown }
+    console.error('Relay target update failed:', err.message)
     return createError({
       statusCode: 500,
-      statusMessage: err.message || 'Unknown error',
-      data: err.data,
+      statusMessage: 'Failed to update relay target',
     })
   }
 })

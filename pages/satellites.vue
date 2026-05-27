@@ -108,11 +108,25 @@ const webcamSatellite = computed(() => {
 
 const cameraPictureUrl = '/api/rest/satellites/greenhouse-cam/picture.jpg';
 
+const isValidIp = (ip) => {
+  const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/;
+  const ipv6Regex = /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}(:\d+)?$/;
+  return ipv4Regex.test(ip) || ipv6Regex.test(ip);
+}
+
 const openHealthcheck = (ip) => {
+  if (!isValidIp(ip)) {
+    console.warn('Invalid IP address:', ip);
+    return;
+  }
   window.open(`http://${ip}/health`, '_blank');
 }
 
 const openInterface = (ip) => {
+  if (!isValidIp(ip)) {
+    console.warn('Invalid IP address:', ip);
+    return;
+  }
   window.open(`http://${ip}`, '_blank');
 }
 
