@@ -23,7 +23,8 @@ export default defineWebSocketHandler({
       })
       const sealed = cookies['h3']
       if (!sealed) {
-        console.log('[WS] no session cookie found')
+        console.log('[WS] no session cookie found, cookies keys:', Object.keys(cookies))
+        console.log('[WS] raw cookie:', cookie.slice(0, 200))
         throw new Response('Unauthorized', { status: 401 })
       }
       const unsealed = await unsealSession(null as any, {
