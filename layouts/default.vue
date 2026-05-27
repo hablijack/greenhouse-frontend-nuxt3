@@ -233,6 +233,9 @@ onMounted(() => {
   const wsUrl = `${protocol}//${host}/api/socket/sensors/measurements`
   
   const socket = new WebSocket(wsUrl);
+  socket.onopen = () => console.log('[WS] layout connected');
+  socket.onerror = (err) => console.error('[WS] layout error:', err);
+  socket.onclose = (ev) => console.log('[WS] layout closed:', ev.code, ev.reason);
   socket.onmessage = function (message) {
     let measurements = JSON.parse(message.data)
     let newStats = {

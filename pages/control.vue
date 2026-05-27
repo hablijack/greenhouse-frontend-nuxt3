@@ -76,6 +76,9 @@ onMounted(() => {
   const wsUrl = `${protocol}//${host}/api/socket/relays/${username}`
   
   const socket = new WebSocket(wsUrl);
+  socket.onopen = () => console.log('[WS] control connected');
+  socket.onerror = (err) => console.error('[WS] control error:', err);
+  socket.onclose = (ev) => console.log('[WS] control closed:', ev.code, ev.reason);
   socket.onmessage = function (message) {
     let newLogEntries = JSON.parse(message.data)
     logs.value.unshift(...newLogEntries);

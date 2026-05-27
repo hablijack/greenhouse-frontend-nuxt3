@@ -1,20 +1,17 @@
 <template>
   <v-container fluid>
-    <v-row density="comfortable">
-      <v-col cols="12" sm="12" md="12" lg="6">
-        <v-img :src="cameraPictureUrl()" style="transform: rotate(180deg);" class="w-100" contain></v-img>
-      </v-col>
-      <v-col cols="12" sm="12" md="12" lg="6">
-        <v-row density="comfortable">
-          <v-col v-for="sensor in sensors" v-bind:key="sensor.name + sensor.identifier" cols="12" sm="6">
-            <MeasureCard :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-              :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
-              :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)"
-              :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <div class="dashboard-layout">
+      <div class="camera-wrapper">
+        <v-img :src="cameraPictureUrl()" style="transform: rotate(180deg);" contain></v-img>
+      </div>
+      <div class="cards-grid">
+        <MeasureCard v-for="sensor in sensors" v-bind:key="sensor.name + sensor.identifier"
+          :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
+          :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
+          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)"
+          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
+      </div>
+    </div>
     <v-row v-if="relays && relays.length" density="comfortable">
       <v-col v-for="relay in relays" v-bind:key="relay.name" cols="6" sm="4" md="3" lg="2">
         <MiniRelay :color="relay.value ? relay.color : '#343a40'" :name="relay.identifier" :target="relay.target"
@@ -42,6 +39,9 @@ onMounted(() => {
   const wsUrl = `${protocol}//${host}/api/socket/sensors/measurements`
   
   const socket = new WebSocket(wsUrl);
+  socket.onopen = () => console.log('[WS] dashboard connected');
+  socket.onerror = (err) => console.error('[WS] dashboard error:', err);
+  socket.onclose = (ev) => console.log('[WS] dashboard closed:', ev.code, ev.reason);
   socket.onmessage = function (message) {
     measurements.value = JSON.parse(message.data);
   };
@@ -67,3 +67,32 @@ const getPlantType = (identifier) => {
   return relay?.target || null;
 }
 </script>
+
+<style scoped>
+.dashboard-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.camera-wrapper {
+  flex: 0 0 auto;
+  max-width: 500px;
+  width: 100%;
+}
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  flex: 1 1 300px;
+  min-width: 200px;
+}
+
+.cards-grid > * {
+  flex: 1 1 calc(33.333% - 16px);
+  min-width: 220px;
+}
+</style>
