@@ -21,7 +21,7 @@ export default defineWebSocketHandler({
         const i = c.indexOf('=')
         if (i > 0) cookies[c.slice(0, i).trim()] = c.slice(i + 1).trim()
       })
-      const sealed = cookies['h3']
+      const sealed = cookies['nuxt-session']
       if (!sealed) {
         console.log('[WS] no session cookie found, cookies keys:', Object.keys(cookies))
         console.log('[WS] raw cookie:', cookie.slice(0, 200))
@@ -29,7 +29,7 @@ export default defineWebSocketHandler({
       }
       const unsealed = await unsealSession(null as any, {
         password: sessionPassword,
-        name: 'h3',
+        name: 'nuxt-session',
       }, sealed)
       const user = (unsealed as any)?.data?.user
       if (!user) {

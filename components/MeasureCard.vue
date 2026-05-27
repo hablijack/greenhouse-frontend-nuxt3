@@ -13,7 +13,7 @@
         <v-progress-circular
           v-if="measurement == null"
           indeterminate
-          color="primary"
+          color="white"
           size="40"
           class="mx-auto"
         />

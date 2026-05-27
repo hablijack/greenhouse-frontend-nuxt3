@@ -1,98 +1,145 @@
 <template>
   <v-container fluid>
-    <div class="dashboard-layout">
-      <div class="camera-wrapper">
-        <v-img :src="cameraPictureUrl()" style="transform: rotate(180deg);" contain></v-img>
+    <v-row v-if="relays && relays.length" class="relay-row" no-gutters>
+      <div v-for="relay in relays" :key="relay.name" class="relay-item">
+        <MiniRelay
+          :color="relay.value ? relay.color : '#343a40'"
+          :name="relay.identifier"
+          :target="relay.target"
+          :icon="relay.icon"
+        />
       </div>
-      <div class="cards-grid">
-        <MeasureCard v-for="sensor in sensors" v-bind:key="sensor.name + sensor.identifier"
-          :headline="sensor.name" :measurement="measurements[sensor.identifier]" :unit="sensor.unit"
-          :description="sensor.description" :icon="sensor.icon" :minAlarmValue="sensor.minAlarmValue"
-          :decimals="sensor.decimals" :maxAlarmValue="sensor.maxAlarmValue" :is-boolean="isBooleanSensor(sensor.identifier)"
-          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null" />
-      </div>
-    </div>
-    <v-row v-if="relays && relays.length" density="comfortable">
-      <v-col v-for="relay in relays" v-bind:key="relay.name" cols="6" sm="4" md="3" lg="2">
-        <MiniRelay :color="relay.value ? relay.color : '#343a40'" :name="relay.identifier" :target="relay.target"
-          :icon="relay.icon" />
-      </v-col>
     </v-row>
+
+    <DashboardGrid ref="gridRef">
+      <DashboardWidget :colspan="cameraColspan">
+        <div class="camera-wrapper">
+          <v-img
+            :src="cameraPictureUrl()"
+            style="transform: rotate(180deg);"
+            height="538"
+            cover
+            @load="onCameraLoad"
+          />
+        </div>
+      </DashboardWidget>
+
+      <DashboardWidget
+        v-for="sensor in sensors"
+        :key="sensor.name + sensor.identifier"
+        :colspan="sensorColspan"
+      >
+        <MeasureCard
+          :headline="sensor.name"
+          :measurement="measurements[sensor.identifier]"
+          :unit="sensor.unit"
+          :description="sensor.description"
+          :icon="sensor.icon"
+          :min-alarm-value="sensor.minAlarmValue"
+          :decimals="sensor.decimals"
+          :max-alarm-value="sensor.maxAlarmValue"
+          :is-boolean="isBooleanSensor(sensor.identifier)"
+          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null"
+        />
+      </DashboardWidget>
+    </DashboardGrid>
   </v-container>
 </template>
 
-<script setup>
-import { onMounted } from 'vue';
-
+<script setup lang="ts">
 definePageMeta({
   layout: "default",
   middleware: ['authenticated']
-});
+})
 
 const measurements = ref({})
-const sensors = await $fetch('/api/rest/sensors');
-const relays = await $fetch('/api/rest/relays');
+const sensors = await $fetch('/api/rest/sensors')
+const relays = await $fetch('/api/rest/relays')
+
+const gridRef = ref<any>(null)
+
+const cameraColspan = computed(() => {
+  const cols = gridRef.value?.columnCount?.value ?? 4
+  if (cols >= 6) return 3
+  if (cols >= 4) return 2
+  return 2
+})
+
+const sensorColspan = computed(() => {
+  const cols = gridRef.value?.columnCount?.value ?? 4
+  if (cols >= 4) return 2
+  return 1
+})
+
+let refreshTimeout: ReturnType<typeof setTimeout> | null = null
+
+function scheduleRefresh() {
+  if (refreshTimeout) clearTimeout(refreshTimeout)
+  refreshTimeout = setTimeout(() => {
+    gridRef.value?.refresh()
+  }, 200)
+}
+
 onMounted(() => {
-  // Use Nuxt proxy endpoint for WebSocket connection
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
   const host = window.location.host
   const wsUrl = `${protocol}//${host}/api/socket/sensors/measurements`
-  
-  const socket = new WebSocket(wsUrl);
-  socket.onopen = () => console.log('[WS] dashboard connected');
-  socket.onerror = (err) => console.error('[WS] dashboard error:', err);
-  socket.onclose = (ev) => console.log('[WS] dashboard closed:', ev.code, ev.reason);
+
+  const socket = new WebSocket(wsUrl)
+  socket.onopen = () => console.log('[WS] dashboard connected')
+  socket.onerror = (err) => console.error('[WS] dashboard error:', err)
+  socket.onclose = (ev) => console.log('[WS] dashboard closed:', ev.code, ev.reason)
   socket.onmessage = function (message) {
-    measurements.value = JSON.parse(message.data);
-  };
-});
+    measurements.value = JSON.parse(message.data)
+  }
+})
 
-const cameraPictureUrl = () => {
-  return '/api/rest/satellites/greenhouse-cam/picture.jpg'
+watch(measurements, () => {
+  scheduleRefresh()
+}, { deep: true })
+
+function onCameraLoad() {
+  nextTick(() => {
+    gridRef.value?.refresh()
+  })
 }
 
-const isBooleanSensor = (identifier) => {
-  if (!identifier) return false;
-  const lower = identifier.toLowerCase();
-  return !lower.includes('temp') && (lower.includes('soil') || lower.includes('boden') || lower.includes('rain'));
+function isBooleanSensor(identifier: string | null | undefined): boolean {
+  if (!identifier) return false
+  const lower = identifier.toLowerCase()
+  return !lower.includes('temp') && (lower.includes('soil') || lower.includes('boden') || lower.includes('rain'))
 }
 
-const getPlantType = (identifier) => {
-  if (!identifier) return null;
-  const relay = relays.find(r => 
-    r.conditionTrigger && 
+function getPlantType(identifier: string | null | undefined): string | null {
+  if (!identifier) return null
+  const relay = relays.find((r: any) =>
+    r.conditionTrigger &&
     r.conditionTrigger.triggerSensor &&
     r.conditionTrigger.triggerSensor.identifier === identifier
-  );
-  return relay?.target || null;
+  )
+  return relay?.target || null
+}
+
+function cameraPictureUrl(): string {
+  return '/api/rest/satellites/greenhouse-cam/picture.jpg'
 }
 </script>
 
 <style scoped>
-.dashboard-layout {
+.relay-row {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.relay-item {
+  width: 150px;
+  flex: 0 0 150px;
 }
 
 .camera-wrapper {
-  flex: 0 0 auto;
-  max-width: 500px;
   width: 100%;
-}
-
-.cards-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  flex: 1 1 300px;
-  min-width: 200px;
-}
-
-.cards-grid > * {
-  flex: 1 1 calc(33.333% - 16px);
-  min-width: 220px;
+  min-height: 538px;
 }
 </style>
