@@ -1,7 +1,7 @@
 import { defineWebSocketHandler, unsealSession } from 'h3'
 import WebSocket from 'ws'
 
-const backendUrl = process.env.WSS_TARGET_URL || 'ws://localhost:5550'
+const backendUrl = process.env.WSS_TARGET_URL || process.env.NUXT_WSS_BASE_URL || process.env.NUXT_PUBLIC_WSS_BASE_URL || 'ws://backend:8080'
 const sessionPassword = process.env.NUXT_SESSION_PASSWORD || process.env.SESSION_PASSWORD || ''
 
 export default defineWebSocketHandler({
