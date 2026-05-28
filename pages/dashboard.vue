@@ -18,7 +18,7 @@
             :src="cameraPictureUrl()"
             style="transform: rotate(180deg);"
             height="538"
-            cover
+            contain
             @load="onCameraLoad"
           />
         </div>
@@ -60,14 +60,15 @@ const gridRef = ref<any>(null)
 
 const cameraColspan = computed(() => {
   const cols = gridRef.value?.columnCount?.value ?? 4
-  if (cols >= 6) return 3
-  if (cols >= 4) return 2
+  if (cols >= 8) return 5
+  if (cols >= 6) return 4
+  if (cols >= 4) return 3
   return 2
 })
 
 const sensorColspan = computed(() => {
   const cols = gridRef.value?.columnCount?.value ?? 4
-  if (cols >= 4) return 2
+  if (cols >= 4) return 1.5
   return 1
 })
 
@@ -134,8 +135,8 @@ function cameraPictureUrl(): string {
 }
 
 .relay-item {
-  width: 150px;
-  flex: 0 0 150px;
+  width: 100px;
+  flex: 0 0 100px;
 }
 
 .camera-wrapper {

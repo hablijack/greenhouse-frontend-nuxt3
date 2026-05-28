@@ -1,5 +1,5 @@
 <template>
-  <v-card :color="cardColor" theme="dark">
+  <v-card :color="cardColor" theme="dark" class="measure-card">
     <v-list-item three-line>
       <template #append>
         <v-icon size="120">{{ icon }}</v-icon>
@@ -75,6 +75,10 @@ const cardColor = computed(() => {
 </script>
 
 <style scoped>
+.measure-card {
+  height: 130px;
+}
+
 .v-list-item-subtitle.text-h4 {
   font-size: 34px !important;
 }
