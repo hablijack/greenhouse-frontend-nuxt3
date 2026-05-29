@@ -74,6 +74,12 @@
             </template>
             <v-list-item-title style="line-height: 2rem;" class="text-h6">Historie</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/ai">
+            <template v-slot:prepend>
+              <v-icon>mdi-robot</v-icon>
+            </template>
+            <v-list-item-title style="line-height: 2rem;" class="text-h6">KI-Assistent</v-list-item-title>
+          </v-list-item>
           <v-list-item to="/users">
             <template v-slot:prepend>
               <v-icon>mdi-account</v-icon>

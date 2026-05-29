@@ -42,6 +42,14 @@
           :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null"
         />
       </DashboardWidget>
+
+      <DashboardWidget :colspan="aiColspan">
+        <AiDashboardPanel
+          :measurements="measurements"
+          :relays="relays"
+          :sensors="sensors"
+        />
+      </DashboardWidget>
     </DashboardGrid>
   </v-container>
 </template>
@@ -70,6 +78,14 @@ const sensorColspan = computed(() => {
   const cols = gridRef.value?.columnCount?.value ?? 4
   if (cols >= 4) return 1.5
   return 1
+})
+
+const aiColspan = computed(() => {
+  const cols = gridRef.value?.columnCount?.value ?? 4
+  if (cols >= 8) return 3
+  if (cols >= 6) return 3
+  if (cols >= 4) return 2
+  return 2
 })
 
 let refreshTimeout: ReturnType<typeof setTimeout> | null = null
