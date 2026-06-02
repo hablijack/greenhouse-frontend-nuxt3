@@ -1,12 +1,5 @@
 <template>
   <v-container fluid>
-    <AiDashboardPanel
-      :measurements="measurements"
-      :relays="relays"
-      :sensors="sensors"
-      class="mb-2"
-    />
-
     <v-row v-if="relays && relays.length" class="relay-row" no-gutters>
       <div v-for="relay in relays" :key="relay.name" class="relay-item">
         <MiniRelay
@@ -18,13 +11,20 @@
       </div>
     </v-row>
 
+    <AiDashboardPanel
+      :measurements="measurements"
+      :relays="relays"
+      :sensors="sensors"
+      class="mb-2"
+    />
+
     <DashboardGrid ref="gridRef">
       <DashboardWidget :colspan="cameraColspan">
         <div class="camera-wrapper">
           <v-img
             :src="cameraPictureUrl()"
             style="transform: rotate(180deg);"
-            height="538"
+            height="544"
             contain
             @load="onCameraLoad"
           />
@@ -35,6 +35,7 @@
         v-for="sensor in sensors"
         :key="sensor.name + sensor.identifier"
         :colspan="sensorColspan"
+        :width="sensorWidth"
       >
         <MeasureCard
           :headline="sensor.name"
@@ -73,11 +74,8 @@ const cameraColspan = computed(() => {
   return 2
 })
 
-const sensorColspan = computed(() => {
-  const cols = gridRef.value?.columnCount?.value ?? 4
-  if (cols >= 4) return 1.5
-  return 1
-})
+const sensorColspan = 1.5
+const sensorWidth = 360
 
 let refreshTimeout: ReturnType<typeof setTimeout> | null = null
 
@@ -148,6 +146,9 @@ function cameraPictureUrl(): string {
 
 .camera-wrapper {
   width: 100%;
-  min-height: 538px;
+  min-height: 544px;
+  border-radius: 8px;
+  background: rgb(52, 58, 64);
+  overflow: hidden;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="muuri-item" :data-colspan="colspan">
+  <div class="muuri-item" :data-colspan="colspan" :data-width="width">
     <div class="muuri-item-content">
       <slot />
     </div>
@@ -9,8 +9,10 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
   colspan?: number
+  width?: number
 }>(), {
   colspan: 1,
+  width: 0,
 })
 </script>
 

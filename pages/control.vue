@@ -48,10 +48,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useDisplay } from 'vuetify'
 
 // Initialize logs array as empty
 const logs = ref([]);
+
+const { smAndDown } = useDisplay()
+const maxLogEntries = computed(() => smAndDown.value ? 10 : 50)
 
 // Get relays data
 const relays = await $fetch('/api/rest/relays');
@@ -82,9 +86,9 @@ onMounted(() => {
   socket.onmessage = function (message) {
     let newLogEntries = JSON.parse(message.data)
     logs.value.unshift(...newLogEntries);
-    // Keep only the last 10 entries
-    if (logs.value.length > 10) {
-      logs.value = logs.value.slice(0, 10);
+    // Keep only the last entries based on screen size
+    if (logs.value.length > maxLogEntries.value) {
+      logs.value = logs.value.slice(0, maxLogEntries.value);
     }
   };
 });

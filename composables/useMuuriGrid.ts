@@ -55,8 +55,13 @@ export function useMuuriGrid(
     if (!containerRef.value) return
     const items: NodeListOf<HTMLElement> = containerRef.value.querySelectorAll(itemSelector)
     items.forEach((el: HTMLElement) => {
-      const colspan = parseFloat(el.dataset.colspan || '1')
-      el.style.width = `${calculateItemWidth(colspan)}px`
+      const fixedWidth = parseFloat(el.dataset.width || '0')
+      if (fixedWidth > 0) {
+        el.style.width = `${fixedWidth}px`
+      } else {
+        const colspan = parseFloat(el.dataset.colspan || '1')
+        el.style.width = `${calculateItemWidth(colspan)}px`
+      }
     })
   }
 
