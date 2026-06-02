@@ -26,6 +26,12 @@
           <v-card-text class="mt-5">
             <div>{{ child.description }}</div>
             <div><strong>IP: </strong>{{ child.ip }}</div>
+            <div class="d-flex align-center mt-1">
+              <v-icon :color="wifiColor(child.wifi ?? 0)" class="mr-1">
+                {{ wifiIcon(child.wifi ?? 0) }}
+              </v-icon>
+              <span class="text-caption">{{ child.wifi ?? 0 }}%</span>
+            </div>
             <div v-if="child.identifier === 'greenhouse_cam'" class="mt-3">
               <v-img :src="cameraPictureUrl" contain class="rounded" style="transform: rotate(180deg);" />
             </div>
@@ -95,6 +101,20 @@ const architecture = {
   online: true,
   children: [],
 }
+
+const wifiIcon = (strength) => {
+  if (strength <= 25) return 'mdi-wifi-strength-1';
+  if (strength <= 50) return 'mdi-wifi-strength-2';
+  if (strength <= 75) return 'mdi-wifi-strength-3';
+  return 'mdi-wifi-strength-4';
+};
+
+const wifiColor = (strength) => {
+  if (strength <= 25) return '#EA8162';
+  if (strength <= 50) return '#FFB74D';
+  if (strength <= 75) return '#FFD54F';
+  return '#5cad8a';
+};
 
 const satelliteStyle = (online) => {
   return "color: white; background-color: ".concat(
