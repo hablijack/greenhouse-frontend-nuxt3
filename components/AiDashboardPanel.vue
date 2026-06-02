@@ -123,9 +123,9 @@ const urgencyLabel = computed(() => {
 const cardColor = computed(() => {
   if (!analysis.value) return '#343a40'
   switch (analysis.value.urgency) {
-    case 'high': return '#C62828'
-    case 'medium': return '#E65100'
-    default: return '#2E7D32'
+    case 'high': return '#EA8162'
+    case 'medium': return '#FFA726'
+    default: return '#5cad8a'
   }
 })
 

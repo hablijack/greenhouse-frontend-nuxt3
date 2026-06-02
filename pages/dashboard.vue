@@ -1,5 +1,12 @@
 <template>
   <v-container fluid>
+    <AiDashboardPanel
+      :measurements="measurements"
+      :relays="relays"
+      :sensors="sensors"
+      class="mb-2"
+    />
+
     <v-row v-if="relays && relays.length" class="relay-row" no-gutters>
       <div v-for="relay in relays" :key="relay.name" class="relay-item">
         <MiniRelay
@@ -42,14 +49,6 @@
           :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null"
         />
       </DashboardWidget>
-
-      <DashboardWidget :colspan="aiColspan">
-        <AiDashboardPanel
-          :measurements="measurements"
-          :relays="relays"
-          :sensors="sensors"
-        />
-      </DashboardWidget>
     </DashboardGrid>
   </v-container>
 </template>
@@ -78,14 +77,6 @@ const sensorColspan = computed(() => {
   const cols = gridRef.value?.columnCount?.value ?? 4
   if (cols >= 4) return 1.5
   return 1
-})
-
-const aiColspan = computed(() => {
-  const cols = gridRef.value?.columnCount?.value ?? 4
-  if (cols >= 8) return 3
-  if (cols >= 6) return 3
-  if (cols >= 4) return 2
-  return 2
 })
 
 let refreshTimeout: ReturnType<typeof setTimeout> | null = null
