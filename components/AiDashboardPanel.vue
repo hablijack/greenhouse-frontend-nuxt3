@@ -8,24 +8,21 @@
         KI-Analyse
       </v-list-item-title>
       <v-list-item-subtitle class="text-h6 d-flex align-center ga-2">
-        <v-chip v-if="analysis" :color="urgencyColor" size="small" variant="flat">
-          {{ urgencyLabel }}
-        </v-chip>
         <span class="text-body-2">Pflanzengesundheit</span>
       </v-list-item-subtitle>
     </v-list-item>
 
-    <v-card-text v-if="analysis" class="py-1">
-      <p class="text-body-2 mb-2">{{ analysis.summary }}</p>
-      <v-list v-if="analysis.recommendations?.length" density="compact" class="bg-transparent">
-        <v-list-item v-for="(rec, i) in analysis.recommendations.slice(0, 3)" :key="i" class="pa-0 ma-0">
-          <template #prepend>
-            <v-icon color="warning" size="x-small" class="mr-1">mdi-lightbulb-outline</v-icon>
-          </template>
-          <v-list-item-title class="text-caption">{{ rec }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-      <v-alert v-if="!analysis" type="info" variant="tonal" density="compact" class="mt-2">
+    <v-card-text class="py-1">
+      <template v-if="Object.keys(analyses).length">
+        <div v-for="(result, plant) in analyses" :key="plant" class="d-flex align-center ga-2 mb-1 text-body-2">
+          <strong class="text-caption" style="min-width: 5em;">{{ plant }}</strong>
+          <v-chip :color="getUrgencyColor(result.urgency)" size="x-small" variant="flat">
+            {{ getUrgencyLabel(result.urgency) }}
+          </v-chip>
+          <span class="text-caption">{{ result.summary }}</span>
+        </div>
+      </template>
+      <v-alert v-else type="info" variant="tonal" density="compact" class="mt-2">
         Klicke auf "Analysieren" für eine KI-Bewertung der aktuellen Sensordaten.
       </v-alert>
     </v-card-text>
@@ -83,7 +80,7 @@ const props = defineProps<{
 }>()
 
 const loading = ref(false)
-const analysis = ref<any>(null)
+const analyses = ref<Record<string, any>>({})
 const showChat = ref(false)
 const chatQuestion = ref('')
 const chatAnswer = ref('')
@@ -102,45 +99,44 @@ const availablePlants = computed(() => {
   return Array.from(plants)
 })
 
-const urgencyColor = computed(() => {
-  if (!analysis.value) return 'grey'
-  switch (analysis.value.urgency) {
+const cardColor = computed(() => {
+  const urgencies = Object.values(analyses.value).map(a => a.urgency)
+  if (!urgencies.length) return '#343a40'
+  if (urgencies.includes('high')) return '#EA8162'
+  if (urgencies.includes('medium')) return '#FFA726'
+  return '#5cad8a'
+})
+
+function getUrgencyColor(urgency: string): string {
+  switch (urgency) {
     case 'high': return 'error'
     case 'medium': return 'warning'
     default: return 'success'
   }
-})
+}
 
-const urgencyLabel = computed(() => {
-  if (!analysis.value) return ''
-  switch (analysis.value.urgency) {
+function getUrgencyLabel(urgency: string): string {
+  switch (urgency) {
     case 'high': return 'Kritisch'
     case 'medium': return 'Achtung'
     default: return 'Optimal'
   }
-})
+}
 
-const cardColor = computed(() => {
-  if (!analysis.value) return '#343a40'
-  switch (analysis.value.urgency) {
-    case 'high': return '#EA8162'
-    case 'medium': return '#FFA726'
-    default: return '#5cad8a'
-  }
-})
-
-function buildSensorData(): Record<string, any> {
+function getPlantTypes(): string[] {
   const plantTypes = new Set<string>()
   if (props.relays) {
     for (const relay of props.relays) {
       if (relay.target) plantTypes.add(relay.target)
     }
   }
-  const primaryPlant = plantTypes.values().next().value || 'general'
+  return Array.from(plantTypes)
+}
 
+function buildSensorData(plantType: string): Record<string, any> {
   const m = props.measurements || {}
   return {
-    plantType: primaryPlant,
+    plantType,
     temperature: m['air_temp_inside'] || 0,
     humidity: m['air_humidity_inside'] || 0,
     soilMoisture: m['soil_humidity_line1'] || 0,
@@ -152,12 +148,30 @@ function buildSensorData(): Record<string, any> {
 async function refreshAnalysis() {
   loading.value = true
   try {
-    const data = buildSensorData()
-    const response = await $fetch('/api/rest/sensor-data', {
-      method: 'POST',
-      body: data,
-    })
-    analysis.value = response
+    const plantTypes = getPlantTypes()
+    if (!plantTypes.length) plantTypes.push('general')
+
+    const results = await Promise.all(plantTypes.map(async (plant) => {
+      try {
+        const data = buildSensorData(plant)
+        const response = await $fetch('/api/rest/sensor-data', {
+          method: 'POST',
+          body: data,
+        })
+        return { plant, response }
+      } catch (err) {
+        console.error(`AI analysis failed for ${plant}:`, err)
+        return null
+      }
+    }))
+
+    const newAnalyses: Record<string, any> = {}
+    for (const result of results) {
+      if (result) {
+        newAnalyses[result.plant] = result.response
+      }
+    }
+    analyses.value = newAnalyses
   } catch (err) {
     console.error('AI analysis failed:', err)
   } finally {
@@ -191,7 +205,7 @@ watch(() => props.measurements, () => {
   const count = Object.keys(props.measurements || {}).length
   if (count > 0 && count !== measurementsCount.value) {
     measurementsCount.value = count
-    if (!analysis.value) {
+    if (!Object.keys(analyses.value).length) {
       refreshAnalysis()
     }
   }
