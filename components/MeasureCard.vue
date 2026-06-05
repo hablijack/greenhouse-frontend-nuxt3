@@ -18,13 +18,9 @@
           class="mx-auto"
         />
         <template v-else-if="isBoolean">
-          <v-chip :color="measurement === 1 ? 'success' : 'error'" size="large" variant="flat">
+          <v-chip :color="chipColor" size="large" variant="flat">
             <v-icon start>{{ measurement === 1 ? 'mdi-water' : 'mdi-water-off' }}</v-icon>
             {{ measurement === 1 ? 'Wet' : 'Dry' }}
-          </v-chip>
-          <v-chip v-if="plantType" color="#343a40" variant="flat" class="ml-2" size="large">
-            <v-icon start size="small">mdi-sprout</v-icon>
-            {{ plantType }}
           </v-chip>
         </template>
         <template v-else>{{ cardValue }} {{ unit }}</template>
@@ -52,10 +48,15 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  plantType: {
-    type: String,
-    default: null
+  informational: {
+    type: Boolean,
+    default: false
   }
+})
+
+const chipColor = computed(() => {
+  if (props.informational) return '#6c757d'
+  return props.measurement === 1 ? 'success' : 'error'
 })
 
 const cardValue = computed(() => {
@@ -65,6 +66,7 @@ const cardValue = computed(() => {
 
 const cardColor = computed(() => {
   if (props.isBoolean) {
+    if (props.informational) return '#6c757d'
     return props.measurement === 1 ? '#66BB6A' : '#EA8162'
   }
   if (props.measurement <= props.minAlarmValue || props.measurement >= props.maxAlarmValue) {

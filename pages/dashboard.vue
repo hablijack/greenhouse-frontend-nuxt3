@@ -38,7 +38,7 @@
         :width="sensorWidth"
       >
         <MeasureCard
-          :headline="sensor.name"
+          :headline="getSensorHeadline(sensor)"
           :measurement="measurements[sensor.identifier]"
           :unit="sensor.unit"
           :description="sensor.description"
@@ -47,7 +47,7 @@
           :decimals="sensor.decimals"
           :max-alarm-value="sensor.maxAlarmValue"
           :is-boolean="isBooleanSensor(sensor.identifier)"
-          :plant-type="isBooleanSensor(sensor.identifier) ? getPlantType(sensor.identifier) : null"
+          :informational="isRainSensor(sensor.identifier)"
         />
       </DashboardWidget>
     </DashboardGrid>
@@ -114,6 +114,21 @@ function isBooleanSensor(identifier: string | null | undefined): boolean {
   if (!identifier) return false
   const lower = identifier.toLowerCase()
   return !lower.includes('temp') && (lower.includes('soil') || lower.includes('boden') || lower.includes('rain'))
+}
+
+function isRainSensor(identifier: string | null | undefined): boolean {
+  if (!identifier) return false
+  return identifier.toLowerCase().includes('rain')
+}
+
+function getSensorHeadline(sensor: any): string {
+  if (isBooleanSensor(sensor.identifier)) {
+    const plantType = getPlantType(sensor.identifier)
+    if (plantType) {
+      return `${sensor.name}: ${plantType}`
+    }
+  }
+  return sensor.name
 }
 
 function getPlantType(identifier: string | null | undefined): string | null {
