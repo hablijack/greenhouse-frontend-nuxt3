@@ -149,29 +149,19 @@ async function refreshAnalysis() {
   loading.value = true
   try {
     const plantTypes = getPlantTypes()
-    if (!plantTypes.length) plantTypes.push('general')
-
-    const results = await Promise.all(plantTypes.map(async (plant) => {
-      try {
-        const data = buildSensorData(plant)
-        const response = await $fetch('/api/rest/sensor-data', {
-          method: 'POST',
-          body: data,
-        })
-        return { plant, response }
-      } catch (err) {
-        console.error(`AI analysis failed for ${plant}:`, err)
-        return null
-      }
-    }))
-
-    const newAnalyses: Record<string, any> = {}
-    for (const result of results) {
-      if (result) {
-        newAnalyses[result.plant] = result.response
-      }
+    if (!plantTypes.length) {
+      const data = buildSensorData('general')
+      const response = await $fetch('/api/rest/sensor-data', { method: 'POST', body: data })
+      analyses.value = { Allgemein: response }
+      return
     }
-    analyses.value = newAnalyses
+
+    const requests = plantTypes.map(plant => buildSensorData(plant))
+    const response: any = await $fetch('/api/rest/sensor-data/batch', {
+      method: 'POST',
+      body: requests,
+    })
+    analyses.value = response.plants || {}
   } catch (err) {
     console.error('AI analysis failed:', err)
   } finally {
