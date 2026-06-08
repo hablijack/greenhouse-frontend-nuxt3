@@ -4796,13 +4796,13 @@ http-proxy-agent@^7.0.2:
     agent-base "^7.1.0"
     debug "^4.3.4"
 
-http-proxy-middleware@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-4.0.0.tgz"
-  integrity sha512-wuHwaUtmC0XzJNHqRp41zXtt5ojpHbusXGhq6781VvnjWUYPu7opmOF3eomGNujT07kEOnHWZyV9UZzKimVCKA==
+http-proxy-middleware@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-4.1.0.tgz#f2e4a9348cc4f9263364e48374e23a384c03ce89"
+  integrity sha512-XUOAjKncPZjsrgDTTem+CUED6A+piUAKTOwBM8g1gAublBX/GdxTHP8mO+og1EW1evYP8wd0G2c111tExwo/jw==
   dependencies:
     debug "^4.4.3"
-    httpxy "^0.5.1"
+    httpxy "^0.5.3"
     is-glob "^4.0.3"
     is-plain-obj "^4.1.0"
     micromatch "^4.0.8"
@@ -4820,7 +4820,7 @@ https-proxy-agent@^7.0.5, https-proxy-agent@^7.0.6:
     agent-base "^7.1.2"
     debug "4"
 
-httpxy@^0.5.1:
+httpxy@^0.5.1, httpxy@^0.5.3:
   version "0.5.3"
   resolved "https://registry.npmjs.org/httpxy/-/httpxy-0.5.3.tgz"
   integrity sha512-SMS9V6Sn7VWaS11lYhoAr0ceoaiolTWf4jYdJn0NJhCdKMu9R2H9Fh0LBDWBHQF6HRLI1PmaePYsjanSpE5PEw==
