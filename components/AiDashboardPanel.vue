@@ -88,9 +88,9 @@ const chatLoading = ref(false)
 
 const chatPlantType = ref('Allgemein')
 
+// Consolidated: extracts unique relay targets + adds "Allgemein" option
 const availablePlants = computed(() => {
-  const plants = new Set<string>()
-  plants.add('Allgemein')
+  const plants = new Set<string>(['Allgemein'])
   if (props.relays) {
     for (const relay of props.relays) {
       if (relay.target) plants.add(relay.target)
@@ -98,6 +98,17 @@ const availablePlants = computed(() => {
   }
   return Array.from(plants)
 })
+
+// Shared helper: extracts unique relay targets (used by both availablePlants and refreshAnalysis)
+function getRelayTargets(): string[] {
+  const targets = new Set<string>()
+  if (props.relays) {
+    for (const relay of props.relays) {
+      if (relay.target) targets.add(relay.target)
+    }
+  }
+  return Array.from(targets)
+}
 
 const cardColor = computed(() => {
   const urgencies = Object.values(analyses.value).map(a => a.urgency)
@@ -123,16 +134,6 @@ function getUrgencyLabel(urgency: string): string {
   }
 }
 
-function getPlantTypes(): string[] {
-  const plantTypes = new Set<string>()
-  if (props.relays) {
-    for (const relay of props.relays) {
-      if (relay.target) plantTypes.add(relay.target)
-    }
-  }
-  return Array.from(plantTypes)
-}
-
 function buildSensorData(plantType: string): Record<string, any> {
   const m = props.measurements || {}
   return {
@@ -148,7 +149,7 @@ function buildSensorData(plantType: string): Record<string, any> {
 async function refreshAnalysis() {
   loading.value = true
   try {
-    const plantTypes = getPlantTypes()
+    const plantTypes = getRelayTargets()
     if (!plantTypes.length) {
       const data = buildSensorData('general')
       const response = await $fetch('/api/rest/sensor-data', { method: 'POST', body: data })
