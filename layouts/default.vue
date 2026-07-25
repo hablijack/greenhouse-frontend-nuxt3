@@ -1,19 +1,19 @@
 <template>
-    <v-app style="background-color: #dfdfdf">
+    <v-app class="default-layout">
 
-      <v-system-bar app color="#343a40" theme="dark" :height="$vuetify.display.mobile ? '70' : undefined">
-        <v-col class="text-left hidden-lg-and-up">
+      <v-system-bar app color="#343a40" theme="dark" class="system-bar" :height="$vuetify.display.mobile ? '70' : undefined">
+        <v-col class="text-left hidden-lg-and-up menu-btn-col">
           <v-app-bar-nav-icon variant="tonal" @click="drawer = !drawer"></v-app-bar-nav-icon>
         </v-col>
-        <span style="margin-right: 10px;">
+        <span class="system-bar-item">
           {{ stats.wifiSignalStrength }}dBi
           <v-icon>{{ wifiIcon(stats.wifiSignalStrength) }}</v-icon>
         </span>
-        <span style="margin-right: 10px;">
+        <span class="system-bar-item">
           {{ databaseFillmentState(dbstats) }}%
           <v-icon>{{ databaseIcon(databaseFillmentState(dbstats)) }}</v-icon>
         </span>
-        <span>{{ currentTime }}</span>
+        <span class="system-bar-item">{{ currentTime }}</span>
       </v-system-bar>
 
       <v-navigation-drawer app v-model="drawer" theme="dark" color="#343a40">
@@ -36,59 +36,59 @@
             <template v-slot:prepend>
               <v-icon>mdi-home</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Dashboard</v-list-item-title>
+            <v-list-item-title class="text-h6">Dashboard</v-list-item-title>
           </v-list-item>
           <v-list-item to="/satellites">
             <template v-slot:prepend>
               <v-icon>mdi-home-automation</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Satelliten</v-list-item-title>
+            <v-list-item-title class="text-h6">Satelliten</v-list-item-title>
           </v-list-item>
           <v-list-item to="/control">
             <template v-slot:prepend>
               <v-icon>mdi-toggle-switch</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Steuerung</v-list-item-title>
+            <v-list-item-title class="text-h6">Steuerung</v-list-item-title>
           </v-list-item>
           <v-list-item to="/planting-tracks">
             <template v-slot:prepend>
               <v-icon>mdi-sprout</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Pflanzspuren</v-list-item-title>
+            <v-list-item-title class="text-h6">Pflanzspuren</v-list-item-title>
           </v-list-item>
           <v-list-item to="/limits">
             <template v-slot:prepend>
               <v-icon>mdi-plus-minus-box</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Grenzwerte</v-list-item-title>
+            <v-list-item-title class="text-h6">Grenzwerte</v-list-item-title>
           </v-list-item>
           <v-list-item to="/automation">
             <template v-slot:prepend>
               <v-icon>mdi-cog-box</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Automatik</v-list-item-title>
+            <v-list-item-title class="text-h6">Automatik</v-list-item-title>
           </v-list-item>
           <v-list-item to="/history">
             <template v-slot:prepend>
               <v-icon>mdi-chart-areaspline</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Historie</v-list-item-title>
+            <v-list-item-title class="text-h6">Historie</v-list-item-title>
           </v-list-item>
           <v-list-item to="/ai">
             <template v-slot:prepend>
               <v-icon>mdi-robot</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">KI-Assistent</v-list-item-title>
+            <v-list-item-title class="text-h6">KI-Assistent</v-list-item-title>
           </v-list-item>
           <v-list-item to="/users">
             <template v-slot:prepend>
               <v-icon>mdi-account</v-icon>
             </template>
-            <v-list-item-title style="line-height: 2rem;" class="text-h6">Benutzer</v-list-item-title>
+            <v-list-item-title class="text-h6">Benutzer</v-list-item-title>
           </v-list-item>
           <v-divider class="mb-4" />
           <v-list-item>
-            <v-btn style="width: 100%" variant="elevated" size="x-large" color="#6aab8b" @click="logout" to="/">
+            <v-btn class="logout-btn" variant="elevated" size="x-large" color="#6aab8b" @click="logout" to="/">
               <v-icon>mdi-logout</v-icon>
               logout
             </v-btn>
@@ -105,7 +105,7 @@
             <v-list-item-subtitle class="mt-3">{{ email }}</v-list-item-subtitle>
           </v-list-item>
           <v-divider />
-          <v-list-item style="min-height: 20px;">
+          <v-list-item class="copyright-item">
             <v-list-item-subtitle class="ma-3" style="align-items: center;">
               <i>© Copyright 2026 Greenhouse</i>
             </v-list-item-subtitle>
@@ -122,6 +122,30 @@
 </template>
 
 <style scoped>
+.default-layout {
+  background-color: #dfdfdf;
+}
+
+.system-bar {
+  gap: 10px;
+}
+
+.system-bar-item {
+  margin-right: 10px;
+}
+
+.menu-btn-col {
+  /* intentional */
+}
+
+.copyright-item {
+  min-height: 20px;
+}
+
+.logout-btn {
+  width: 100%;
+}
+
 .v-list-item--nav .v-list-item-title {
   font-size: 20px !important;
 }
@@ -134,12 +158,13 @@
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 const { user, clear: clearSession } = useUserSession()
 
-const username = user.value.name
-const email = user.value.email
+const username = computed(() => user.value?.name ?? 'Gast')
+const email = computed(() => user.value?.email ?? '')
 
+let timeInterval: ReturnType<typeof setInterval> | null = null
 
 const drawer = ref(null)
 const currentTime = ref({})
@@ -148,7 +173,8 @@ const stats = ref({
   batteryState: 0,
 })
 
-const dbstats = await $fetch('/api/rest/database/stats');
+const { data: dbstatsData } = await useFetch('/api/rest/database/stats')
+const dbstats = computed(() => dbstatsData.value ?? null)
 
 async function logout() {
   await clearSession()
@@ -163,62 +189,16 @@ const calculateCurrentTime = () => {
   );
 }
 
-const databaseIcon = (state) => {
-  if (!state) {
-    return "mdi-circle-slice-1";
-  } else if (state <= 12.5) {
-    return "mdi-circle-slice-1";
-  } else if (state <= 25) {
-    return "mdi-circle-slice-2";
-  } else if (state <= 37.5) {
-    return "mdi-circle-slice-3";
-  } else if (state <= 50) {
-    return "mdi-circle-slice-4";
-  } else if (state <= 62.5) {
-    return "mdi-circle-slice-5";
-  } else if (state <= 75) {
-    return "mdi-circle-slice-6";
-  } else if (state <= 87.5) {
-    return "mdi-circle-slice-7";
-  } else {
-    return "mdi-circle-slice-8";
-  }
+// Generic icon helper for threshold-based icon selection
+function iconForThreshold(value: number, prefix: string, maxSteps: number): string {
+  const step = 100 / maxSteps
+  return `${prefix}-${Math.ceil(Math.min(value, 100) / step)}`
 }
-const wifiIcon = (strength) => {
-  if (strength <= 25) {
-    return "mdi-wifi-strength-1";
-  } else if (strength <= 50) {
-    return "mdi-wifi-strength-2";
-  } else if (strength <= 75) {
-    return "mdi-wifi-strength-3";
-  } else {
-    return "mdi-wifi-strength-4";
-  }
-}
-const batteryIcon = (stat) => {
-  if (stat <= 10) {
-    return "mdi-battery-10";
-  } else if (stat <= 20) {
-    return "mdi-battery-20";
-  } else if (stat <= 30) {
-    return "mdi-battery-30";
-  } else if (stat <= 40) {
-    return "mdi-battery-40";
-  } else if (stat <= 50) {
-    return "mdi-battery-50";
-  } else if (stat <= 60) {
-    return "mdi-battery-60";
-  } else if (stat <= 70) {
-    return "mdi-battery-70";
-  } else if (stat <= 80) {
-    return "mdi-battery-80";
-  } else if (stat <= 90) {
-    return "mdi-battery-90";
-  } else {
-    return "mdi-battery";
-  }
-}
-const databaseFillmentState = (dbstats) => {
+
+const databaseIcon = (state: number): string => iconForThreshold(state, 'mdi-circle-slice', 8)
+const wifiIcon = (strength: number): string => iconForThreshold(strength, 'mdi-wifi-strength', 4)
+const batteryIcon = (stat: number): string => iconForThreshold(stat, 'mdi-battery', 10)
+const databaseFillmentState = (dbstats: any) => {
   if (dbstats) {
     let dbSize = dbstats.measurementSizeByte + dbstats.relayLogSizeByte;
     let TEN_MB_IN_BYTE = 104857600;
@@ -231,7 +211,7 @@ const databaseFillmentState = (dbstats) => {
 
 onMounted(() => {
   calculateCurrentTime()
-  setInterval(calculateCurrentTime, 10000);
+  timeInterval = setInterval(calculateCurrentTime, 10000);
   
   // Use Nuxt proxy endpoint for WebSocket connection
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
@@ -250,5 +230,12 @@ onMounted(() => {
     }
     stats.value = newStats
   };
+});
+
+onUnmounted(() => {
+  if (timeInterval) {
+    clearInterval(timeInterval)
+    timeInterval = null
+  }
 });
 </script>

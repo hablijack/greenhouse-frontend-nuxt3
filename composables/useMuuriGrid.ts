@@ -1,5 +1,16 @@
 import Muuri from 'muuri'
 
+// Responsive breakpoints for column count calculation
+const BREAKPOINTS = [
+  { max: 600, cols: 2 },
+  { max: 960, cols: 3 },
+  { max: 1280, cols: 4 },
+  { max: 1920, cols: 6 },
+] as const
+
+const DEFAULT_GAP = 8
+const DEFAULT_LAYOUT_DURATION = 400
+
 interface MuuriGridOptions {
   columns?: number
   itemSelector?: string
@@ -17,19 +28,19 @@ export function useMuuriGrid(
     itemSelector = '.muuri-item',
     fillGaps = true,
     dragEnabled = false,
-    layoutDuration = 400,
-    gap = 8,
+    layoutDuration = DEFAULT_LAYOUT_DURATION,
+    gap = DEFAULT_GAP,
   } = options
 
   const grid = shallowRef<any>(null)
   const columnCount = ref(options.columns ?? getColumnCountForWidth(0))
 
   function getColumnCountForWidth(width: number): number {
-    if (width < 600) return 2
-    if (width < 960) return 3
-    if (width < 1280) return 4
-    if (width < 1920) return 6
-    return 8
+    for (const bp of BREAKPOINTS) {
+      if (width < bp.max) return bp.cols
+    }
+    const last = BREAKPOINTS[BREAKPOINTS.length - 1]
+    return last ? last.cols + 2 : 8 // fallback: 8
   }
 
   function updateColumnCount() {

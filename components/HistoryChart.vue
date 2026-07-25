@@ -85,6 +85,30 @@ const adjustColorOpacity = (color, opacity) => {
   return color;
 };
 
+// Build annotation config based on limit props — eliminates massive duplication
+function buildAnnotations() {
+  const annotations = {};
+  const hasMin = props.minLimit !== null && props.minLimit !== undefined;
+  const hasMax = props.maxLimit !== null && props.maxLimit !== undefined;
+  const limitStyle = { backgroundColor: 'rgba(234, 129, 98, 0.15)', borderColor: 'rgba(234, 129, 98, 0.3)', borderWidth: 1 };
+  const lineStyle = { borderColor: '#EA8162', borderWidth: 2, borderDash: [5, 5] };
+
+  if (hasMin && hasMax) {
+    annotations.belowMin = { type: 'box', yMin: 0, yMax: props.minLimit, ...limitStyle };
+    annotations.aboveMax = { type: 'box', yMin: props.maxLimit, yMax: 'max', ...limitStyle };
+    annotations.minLine = { type: 'line', yMin: props.minLimit, yMax: props.minLimit, ...lineStyle };
+    annotations.maxLine = { type: 'line', yMin: props.maxLimit, yMax: props.maxLimit, ...lineStyle };
+  } else if (hasMin) {
+    annotations.belowMin = { type: 'box', yMin: 0, yMax: props.minLimit, ...limitStyle };
+    annotations.minLine = { type: 'line', yMin: props.minLimit, yMax: props.minLimit, ...lineStyle };
+  } else if (hasMax) {
+    annotations.aboveMax = { type: 'box', yMin: props.maxLimit, yMax: 'max', ...limitStyle };
+    annotations.maxLine = { type: 'line', yMin: props.maxLimit, yMax: props.maxLimit, ...lineStyle };
+  }
+
+  return annotations;
+}
+
 const fetchData = async () => {
   pending.value = true;
   error.value = false;
@@ -150,76 +174,7 @@ const renderChart = () => {
   if (datasets.length === 0) return;
   if (!datasets[0].data || datasets[0].data.length === 0) return;
 
-  const annotations = {};
-  
-  if (props.minLimit !== null && props.minLimit !== undefined && props.maxLimit !== null && props.maxLimit !== undefined) {
-    annotations.belowMin = {
-      type: 'box',
-      yMin: 0,
-      yMax: props.minLimit,
-      backgroundColor: 'rgba(234, 129, 98, 0.15)',
-      borderColor: 'rgba(234, 129, 98, 0.3)',
-      borderWidth: 1
-    };
-    annotations.aboveMax = {
-      type: 'box',
-      yMin: props.maxLimit,
-      yMax: 'max',
-      backgroundColor: 'rgba(234, 129, 98, 0.15)',
-      borderColor: 'rgba(234, 129, 98, 0.3)',
-      borderWidth: 1
-    };
-    annotations.minLine = {
-      type: 'line',
-      yMin: props.minLimit,
-      yMax: props.minLimit,
-      borderColor: '#EA8162',
-      borderWidth: 2,
-      borderDash: [5, 5]
-    };
-    annotations.maxLine = {
-      type: 'line',
-      yMin: props.maxLimit,
-      yMax: props.maxLimit,
-      borderColor: '#EA8162',
-      borderWidth: 2,
-      borderDash: [5, 5]
-    };
-  } else if (props.minLimit !== null && props.minLimit !== undefined) {
-    annotations.belowMin = {
-      type: 'box',
-      yMin: 0,
-      yMax: props.minLimit,
-      backgroundColor: 'rgba(234, 129, 98, 0.15)',
-      borderColor: 'rgba(234, 129, 98, 0.3)',
-      borderWidth: 1
-    };
-    annotations.minLine = {
-      type: 'line',
-      yMin: props.minLimit,
-      yMax: props.minLimit,
-      borderColor: '#EA8162',
-      borderWidth: 2,
-      borderDash: [5, 5]
-    };
-  } else if (props.maxLimit !== null && props.maxLimit !== undefined) {
-    annotations.aboveMax = {
-      type: 'box',
-      yMin: props.maxLimit,
-      yMax: 'max',
-      backgroundColor: 'rgba(234, 129, 98, 0.15)',
-      borderColor: 'rgba(234, 129, 98, 0.3)',
-      borderWidth: 1
-    };
-    annotations.maxLine = {
-      type: 'line',
-      yMin: props.maxLimit,
-      yMax: props.maxLimit,
-      borderColor: '#EA8162',
-      borderWidth: 2,
-      borderDash: [5, 5]
-    };
-  }
+  const annotations = buildAnnotations();
 
   chartInstance = new Chart(ctx, {
     type: 'line',
