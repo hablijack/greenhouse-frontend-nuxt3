@@ -17,7 +17,7 @@
     "chartjs-adapter-moment": "^1.0.1",
     "chartjs-plugin-annotation": "^3.1.0",
     "http-proxy-middleware": "^4.2.0",
-    "moment": "^2.30.1",
+    "moment": "^2.31.0",
     "muuri": "^0.9.5",
     "nuxt": "^4.5.1",
     "nuxt-auth-utils": "0.5.30",
