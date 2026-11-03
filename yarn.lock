@@ -1780,7 +1780,7 @@
     which "^6.0.1"
     ws "^8.20.0"
 
-"@nuxt/kit@4.5.1", "@nuxt/kit@^4.3.1", "@nuxt/kit@^4.4.4", "@nuxt/kit@^4.5.0":
+"@nuxt/kit@4.5.1":
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-4.5.1.tgz#68f218c3ea5318ccb7e9914aa293cf3eb0d60a7d"
   integrity sha512-xDXQspE2blxaZwxwGknL/BqaIbkLizl85Ov+pbSlPPd/rw2KjJGx88RHU5SwoQNwCiSC5hWZBnVAznIsq1xNHQ==
@@ -1806,6 +1806,30 @@
     unctx "^3.0.0"
     untyped "^2.0.0"
     verkit "^0.2.0"
+
+"@nuxt/kit@^4.4.4", "@nuxt/kit@^4.5.0", "@nuxt/kit@^4.6.0":
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-4.6.4.tgz#d33b4fcb063af56f4e0f607ef77485b7e2a191de"
+  integrity sha512-S7JqP/CCJejDNGADlCIct/SHEPf+Jz3Chrxq7GDgyRPRkRD2flbxoanGq4bkib9kD9QBXJlF4TuCsqqL9a7COw==
+  dependencies:
+    consola "^3.4.2"
+    defu "^6.1.7"
+    destr "^2.0.5"
+    errx "^0.2.2"
+    exsolve "^1.2.0"
+    ignore "^7.0.14"
+    klona "^2.0.6"
+    microdiff "^1.6.0"
+    nostics "^1.3.0"
+    package-manager-detector "^1.9.0"
+    pathe "^2.0.3"
+    rc9 "^3.1.0"
+    scule "^1.3.0"
+    std-env "^4.3.0"
+    tinyexec "^1.3.1"
+    tinyglobby "^0.2.17"
+    unctx "^3.0.1"
+    verkit "^0.5.0"
 
 "@nuxt/nitro-server@4.5.1":
   version "4.5.1"
@@ -4167,7 +4191,7 @@ define-lazy-prop@^3.0.0:
   resolved "https://registry.yarnpkg.com/define-lazy-prop/-/define-lazy-prop-3.0.0.tgz#dbb19adfb746d7fc6d734a06b72f4a00d021255f"
   integrity sha512-N+MeXYoqr3pOgn8xfyRPREN7gHakLYjhsHhWGT3fWAiL4IkAt0iDw14QiiEm2bE30c5XX5q0FtAA3CK5f9/BUg==
 
-defu@^6.1.4, defu@^6.1.6, defu@^6.1.7:
+defu@^6.1.4, defu@^6.1.5, defu@^6.1.6, defu@^6.1.7:
   version "6.1.7"
   resolved "https://registry.yarnpkg.com/defu/-/defu-6.1.7.tgz#72543567c8e9f97ff13ce402b6dbe09ac5ae4d23"
   integrity sha512-7z22QmUWiQ/2d0KkdYmANbRUVABpZ9SNYyH5vx6PZ+nE5bcC0l7uFvEfHlyld/HcGBFTL536ClDt3DEcSlEJAQ==
@@ -4357,6 +4381,11 @@ errx@^0.1.0:
   resolved "https://registry.yarnpkg.com/errx/-/errx-0.1.0.tgz#4881e411d90a3b1e1620a07604f50081dd59f3aa"
   integrity sha512-fZmsRiDNv07K6s2KkKFTiD2aIvECa7++PKyD5NC32tpRw46qZA3sOz+aM+/V9V0GDHxVTKLziveV4JhzBHDp9Q==
 
+errx@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/errx/-/errx-0.2.2.tgz#33a094dc8238e13b2182d20e8d406572a09ae86b"
+  integrity sha512-HaPN6cxm6iZ9bIbQQ5orChcw7SY5smUzM08ZMc6OtV4UQhrrc3Ms1G8Ww2n/9lXkWqiioNTssF8bCvchrSbFEQ==
+
 es-errors@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/es-errors/-/es-errors-1.3.0.tgz#05f75a25dab98e4fb1dcd5e1472c0546d5057c8f"
@@ -4529,6 +4558,11 @@ exsolve@^1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/exsolve/-/exsolve-1.1.3.tgz#175a6336d6cb1c9cfee822a092665ee0b79e716d"
   integrity sha512-kuzL9zherLQoqDeQaS55AiiIg1kb4KYXaSusTtgZTPlvKP2gGCI82LNmBNh5RjDVUXIcmgx+/Mx7vPwRzBbhJA==
+
+exsolve@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/exsolve/-/exsolve-1.2.0.tgz#b04645ff58c203984e2f06fd19d2551c914c78ca"
+  integrity sha512-h1pQPR9XoeSMdntRNCjyTznaume4UpfXrULBnlkZ2CUM/G5eSa+pBByGldO5uR8dxbPC+OuJXsPPNf+JZ81ADg==
 
 fast-fifo@^1.2.0, fast-fifo@^1.3.2:
   version "1.3.2"
@@ -4768,7 +4802,7 @@ gzip-size@^7.0.0:
   dependencies:
     duplexer "^0.1.2"
 
-h3@^1.15.10, h3@^1.15.11, h3@^1.15.4:
+h3@^1.15.10, h3@^1.15.11:
   version "1.15.11"
   resolved "https://registry.yarnpkg.com/h3/-/h3-1.15.11.tgz#831179fc6b4bc06de8ad1077e7a5c7d63b796577"
   integrity sha512-L3THSe2MPeBwgIZVSH5zLdBBU90TOxarvhK9d04IDY2AmVS8j2Jz2LIWtwsGOU3lu2I5jCN7FNvVfY2+XyF+mg==
@@ -4899,6 +4933,11 @@ ieee754@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
+
+ignore@^7.0.14:
+  version "7.0.14"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.14.tgz#a52b081dfb4d77e947e04d5f9e320b16f1873959"
+  integrity sha512-wCBiZ77u1tuWde6G/nfOtLaCTYcFDU5yCzARzK10y+rLhzYoL7a7yEemcopcc2Mzow7gZOIjnV2ym1NYmdiJOQ==
 
 ignore@^7.0.5, ignore@^7.0.6:
   version "7.0.6"
@@ -5864,6 +5903,11 @@ merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
+microdiff@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/microdiff/-/microdiff-1.6.0.tgz#5a205ff44ab63c2eea7761b1578b6c0e2d4d119b"
+  integrity sha512-w7JWt8Bno6I8h0rEqlxr4lNG4UbT1FVtWo42wWosIiaJ+rP3pXh7shCYDnyqBrYx36LJ1CZ64p8A62aVp0sJpQ==
+
 micromatch@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.8.tgz#d66fa18f3a47076789320b9b1af32bd86d9fa202"
@@ -6185,22 +6229,21 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
-nuxt-auth-utils@0.5.32:
-  version "0.5.32"
-  resolved "https://registry.yarnpkg.com/nuxt-auth-utils/-/nuxt-auth-utils-0.5.32.tgz#eaeede7999955b2f06de1b642e82fb7bbb3ccd9e"
-  integrity sha512-QtvKTxx3WrEBVwxJ1qHBfE1LZD927fk3Ubfj11zaBqlh2HvsXLjnzHfgbXYHpA86TyZMRINc8/RfryeLlYvkLg==
+nuxt-auth-utils@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/nuxt-auth-utils/-/nuxt-auth-utils-0.6.0.tgz#f8705188c43d95cb3226cef84a7c7d72b91771d4"
+  integrity sha512-st7055bprIVXXINwItxlVFQgLEEIgQ7D1/NdpdnmkXtn9edlGiy4YiXlU3ac9rcnaFWMpoAceHg4yl243nYjMw==
   dependencies:
     "@adonisjs/hash" "^9.1.1"
-    "@nuxt/kit" "^4.3.1"
+    "@nuxt/kit" "^4.6.0"
     "@nuxt/schema" "^4.6.0"
-    defu "^6.1.4"
-    h3 "^1.15.4"
+    defu "^6.1.5"
     hookable "^6.0.1"
     jose "^6.1.3"
     ofetch "^1.5.1"
     openid-client "^6.8.2"
-    pathe "^2.0.3"
     scule "^1.3.0"
+    ufo "^1.6.4"
     uncrypto "^0.1.3"
 
 nuxt@^4.5.1:
@@ -6427,6 +6470,11 @@ package-json-from-dist@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz#4f1471a010827a86f94cfd9b0727e36d267de505"
   integrity sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==
+
+package-manager-detector@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-1.9.0.tgz#217ed03645bfeb563e9efce4c5bbbfbb652754ab"
+  integrity sha512-zAMfbta9nPA8AKkA4WdmNAT8R8s6Dk0/xwPsqNnRidMFcLo1YkLuPDTgs2f64XdzS8vbLNnoJ+uUIkgbz7oRHA==
 
 parse-json@^5.2.0:
   version "5.2.0"
@@ -6863,6 +6911,14 @@ rc9@^3.0.0, rc9@^3.0.1:
   integrity sha512-gMDyleLWVE+i6Sgtc0QbbY6pEKqYs97NGi6isHQPqYlLemPoO8dxQ3uGi0f4NiP98c+jMW6cG1Kx9dDwfvqARQ==
   dependencies:
     defu "^6.1.6"
+    destr "^2.0.5"
+
+rc9@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/rc9/-/rc9-3.1.0.tgz#383f44c0f0bdefcf411c1ce9403c528064a8bd1a"
+  integrity sha512-ufjkNVzbRHKcCOmTahZkmVsyc3W+MSk3jY03m+a7tGHkIsdVMG9l10/3HvFbWkkKzY5VFp3pkRsIo/UYgmFL7Q==
+  dependencies:
+    defu "^6.1.7"
     destr "^2.0.5"
 
 readable-stream@^2.0.5:
@@ -7649,6 +7705,11 @@ tinyexec@^1.2.4:
   resolved "https://registry.yarnpkg.com/tinyexec/-/tinyexec-1.2.4.tgz#ae45bb2edebda94c70f4ea897e0f1243e470db71"
   integrity sha512-SHf/r48b7vOrjve9PxJo3MN5v5yuyjHvdUcrQffT3WXMUfnGmHDVbC4k3sHJaJTgZCwpUplIaAo5ANtMyp3YHg==
 
+tinyexec@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/tinyexec/-/tinyexec-1.3.1.tgz#16a2e3c6e23fafce72640e678e651db36145b9c6"
+  integrity sha512-GCvB3aoys96IuDFBMcTB46JOR6mdMtAToqwiW8JlWhsoh1mhHi/xn9ss/Dg7N555GiJyEt2qzoG/NHCwM6h1EA==
+
 tinyglobby@^0.2.16, tinyglobby@^0.2.17:
   version "0.2.17"
   resolved "https://registry.yarnpkg.com/tinyglobby/-/tinyglobby-0.2.17.tgz#562a9a6c9eb2b3b123d39719f9af5bb44fcd7631"
@@ -7797,6 +7858,11 @@ unctx@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/unctx/-/unctx-3.0.0.tgz#82e2f20c8f9db13a443871caddfdd1af7af2eff1"
   integrity sha512-DoXdZVeyi2jyEsn86i8MO5RTItm1kffUkH9/+DQORn3Q688AMOy2551CIl6AdGL2UpwD675wtbNOl75wIQN/uA==
+
+unctx@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/unctx/-/unctx-3.0.1.tgz#16dc56fc256a2bf4df485d9f38866634109058a1"
+  integrity sha512-5RAt2etv7g362RXyd33R82gm9u/kbtQlpoaOs9Bgm4E32GRMJ0xjbZyvdxUTmiuHk3V1IQb1aUNrp5IWY+JaWw==
 
 undici-types@~8.3.0:
   version "8.3.0"
@@ -8019,6 +8085,11 @@ verkit@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/verkit/-/verkit-0.2.0.tgz#23d545800c8d918f31cf67e761149b80b0249a90"
   integrity sha512-6M8R2xSKplkQ+0mAm07IMh548GLLPUnRQZJCCe/W4rfk/SXW2bs8ZJSWa5kjdIdsx3hLG5oLWROJ4+N5hpX08g==
+
+verkit@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/verkit/-/verkit-0.5.0.tgz#8b7617dda9ad2edb7851c6a4ff5f3ca428482401"
+  integrity sha512-u4J1hr6Y+C/hit34GwL3eIcUf3wngT8TlYUjK7tk0jxydKLAq3sYvifjdTDA6U3KCKRcQCQDGf/srjxfZF3l7g==
 
 vite-dev-rpc@^2.0.0:
   version "2.0.0"
