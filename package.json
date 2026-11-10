@@ -20,7 +20,7 @@
     "moment": "^2.31.0",
     "muuri": "^0.9.5",
     "nuxt": "^4.5.1",
-    "nuxt-auth-utils": "0.6.1",
+    "nuxt-auth-utils": "0.6.2",
     "sass": "^1.107.1",
     "vuetify": "^4.3.2",
     "zod": "^4.6.7"
